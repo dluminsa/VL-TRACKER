@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import numpy as np
-from openpyxl import * #load_workbook
+from openpyxl import *
 from openpyxl.styles import *
 from openpyxl.worksheet.datavalidation import DataValidation
 import time
