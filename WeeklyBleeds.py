@@ -2,10 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 import numpy as np
-import openpyxl
-from openpyxl import *
-from openpyxl.styles import *
-from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 
 st.set_page_config(
