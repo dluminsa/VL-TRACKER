@@ -219,8 +219,8 @@ if file and district is not None:
     if df is not None:           
         dfe = dfc.set_index('facility')            
         st.write(dfe.head(2))     
-    if df is not None:
-        #if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
+    if df is not None:        
+        if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
                 # Convert DataFrame to Excel
