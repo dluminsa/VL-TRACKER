@@ -3,9 +3,11 @@ import pandas as pd
 import os
 import random
 #import numpy as np
+from openpyxl import Workbook
 from pathlib import Path
-from openpyxl import * #load_workbook
-from openpyxl.styles import *
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+#from openpyxl import * #load_workbook
+#from openpyxl.styles import *
 from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 
 
@@ -301,8 +303,8 @@ if file and district is not None:
                 # Serve the file for download
                 with open(file_path, 'rb') as f:
                       file_contents = f.read()
-                st.download_button(label='Download VL LINELIST', data=file_contents)            
-                #st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                #st.download_button(label='Download VL LINELIST', data=file_contents)            
+                st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 
              
             
