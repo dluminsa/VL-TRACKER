@@ -140,7 +140,7 @@ if cphl is not None and emr is not None:
                     
     #if df is not None and df2 is not None: 
     a = dft.shape[0]
-    st.markdown(f'I see over **{a}** results at CPHL that are not yet entered into EMR')
+    st.success(f'I see over **{a}** results at CPHL that are not yet entered into EMR')
                     
 
 
