@@ -261,7 +261,7 @@ if file and district is not None:
                         ws[f'{letter}{num}'].fill = yellow   
                     else:
                         ws[f'{letter}{num}'].fill = green
-                    ws[f'{letter}{num}'].border = Border(top= Side(style = 'thick'),
+                        ws[f'{letter}{num}'].border = Border(top= Side(style = 'thick'),
                                                         left= Side(style = 'thick'),
                                                         right= Side(style = 'thick'),
                                                         bottom= Side(style = 'thick')) 
@@ -297,16 +297,16 @@ if file and district is not None:
                 Path(directory).mkdir(parents=True, exist_ok=True)
 
       # Save the workbook
-               wb.save(file_path)
+                wb.save(file_path)
     
     # Serve the file for download
-               with open(file_path, 'rb') as f:
-                    file_contents = f.read()
+                with open(file_path, 'rb') as f:
+                     file_contents = f.read()
         
-               st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         
                 
-                st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
+                 st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
             
     if df is not None and district is not None:
         def download_with_duplicates(df):
