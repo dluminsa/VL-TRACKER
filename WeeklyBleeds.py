@@ -463,8 +463,9 @@ if df is not None:
     # Serve the file for download
         with open(file_path, 'rb') as f:
             file_contents = f.read()
-        if st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
-             st.success(f'Your file has been downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'):
+       
 
 
 
