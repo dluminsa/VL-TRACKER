@@ -380,7 +380,7 @@ if file is not None:
 
 if df is not None:
     def download_weekly(df):
-        st.write(f"<h6>WEEKLY BLEEDS</h6>", unsafe_allow_html=True)
+        st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
 
         if df is not None:
             dft = weekly.copy()
