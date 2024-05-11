@@ -389,9 +389,9 @@ if df is not None:
                     # Create a download button for each facility
 
             st.download_button(
-                        label="WEEKLY",
+                        label="WEEKLY BLEEDS",
                         data=csv_data,
-                        file_name=f"WEEKLY.csv",
+                        file_name=f"WEEKLY_BLEEDS.csv",
                         mime="text/csv"
                     )
 
@@ -407,7 +407,7 @@ if df is not None:
 if df is not None:
         ran = random.random()
         rand = round(ran,2)
-        st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        #st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
     #if st.button('DOWNLOAD CURRENT LINELIST'):
     #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
