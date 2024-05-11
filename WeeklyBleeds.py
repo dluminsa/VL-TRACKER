@@ -405,9 +405,9 @@ if df is not None:
         main()
         
 if df is not None:
-    ran = random.random()
-    rand = round(ran,2)
-    st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        ran = random.random()
+        rand = round(ran,2)
+        st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
     #if st.button('DOWNLOAD CURRENT LINELIST'):
     #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
