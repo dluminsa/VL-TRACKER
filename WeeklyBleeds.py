@@ -404,7 +404,7 @@ if df is not None:
         main()
         
 if df is not None:
-    #if st.button('DOWNLOAD CURRENT LINELIST'):
+    if st.button('DOWNLOAD CURRENT LINELIST'):
     #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
         ws = wb.active
@@ -465,8 +465,7 @@ if df is not None:
             file_contents = f.read()
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        if st.download_button():
-                st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
 
 
 
