@@ -184,16 +184,16 @@ if cphl is not None and emr is not None:
 
         ran = random.random()
         rand = round(ran,2)
-                        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{named}_missing_results {rand}.xlsx')
-                directory = os.path.dirname(file_path)
-                Path(directory).mkdir(parents=True, exist_ok=True)
+        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{named}_missing_results {rand}.xlsx')
+        directory = os.path.dirname(file_path)
+        Path(directory).mkdir(parents=True, exist_ok=True)
 
                   # Save the workbook
-                wb.save(file_path)
-                # Serve the file for download
-                with open(file_path, 'rb') as f:
-                      file_contents = f.read()           
-                st.download_button(label=f'DONLOAD MISSING RESULTS FOR {named} ', data=file_contents,file_name=f'{named}_missing_results {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        wb.save(file_path)
+         # Serve the file for download
+        with open(file_path, 'rb') as f:
+                  file_contents = f.read()           
+        st.download_button(label=f'DONLOAD MISSING RESULTS FOR {named} ', data=file_contents,file_name=f'{named}_missing_results {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
        
     if df is not None:
