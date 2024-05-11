@@ -306,7 +306,7 @@ if file and district is not None:
                 st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         
                 
-                 st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
+                st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
             
     if df is not None and district is not None:
         def download_with_duplicates(df):
