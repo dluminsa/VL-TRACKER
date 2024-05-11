@@ -176,7 +176,7 @@ if cphl is not None and emr is not None:
             ws.column_dimensions[letter].width =15
 
         ran = random.random()
-        rand = round(ran,3)
+        rand = round(ran,2)
 
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'missing_results {rand}.xlsx')
 
