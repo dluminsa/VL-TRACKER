@@ -1,7 +1,8 @@
 import streamlit as st 
 import pandas as pd
 import os
-import numpy as np
+import random
+#import numpy as np
 from openpyxl import * #load_workbook
 from openpyxl.styles import *
 from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
@@ -288,8 +289,8 @@ if file and district is not None:
 
                 ws.sheet_view.ShowGridLines = False        
 
-                ran = np.random.rand()*0.1
-                rand = round(ran,3)
+                ran = random.random()
+                rand = round(ran,2)
                 file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{district} VL_COV {rand}.xlsx')
                 wb.save(file_path)
                 st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
