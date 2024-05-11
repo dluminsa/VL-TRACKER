@@ -292,7 +292,11 @@ if file and district is not None:
 
                 ran = random.random()
                 rand = round(ran,2)
-                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL COV {rand}.xlsx')
+                # file_name = f'VL_COV_{rand}.xlsx'
+                # file_path = os.path.join(Path.home(), 'Downloads', file_name)
+
+                
+                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL_COV {rand}.xlsx')
                 directory = os.path.dirname(file_path)
                 Path(directory).mkdir(parents=True, exist_ok=True)
 
