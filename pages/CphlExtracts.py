@@ -8,7 +8,7 @@ from pathlib import Path
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 #from openpyxl import * #load_workbook
 #from openpyxl.styles import *
-from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
+# from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 
 
 SEMBABULE = {'Ssembabule HC IV':2232,'Kyabi HC III':511,'Ntuusi HC III':1006, 'Lwemiyaga HC III':959,
@@ -222,7 +222,7 @@ if file and district is not None:
         dfe = dfc.set_index('facility')            
         st.write(dfe.head(2))     
     if df is not None:        
-        if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
+       # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
                 # Convert DataFrame to Excel
@@ -294,7 +294,7 @@ if file and district is not None:
 
                 ran = random.random()
                 rand = round(ran,2)
-                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
+                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL COV {rand}.xlsx')
                 directory = os.path.dirname(file_path)
                 Path(directory).mkdir(parents=True, exist_ok=True)
 
@@ -303,8 +303,8 @@ if file and district is not None:
                 # Serve the file for download
                 with open(file_path, 'rb') as f:
                       file_contents = f.read()
-                #st.download_button(label='Download VL LINELIST', data=file_contents)            
-                st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                #st.download_button(label='Download VL COV', data=file_contents)            
+                st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 
              
             
