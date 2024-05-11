@@ -145,7 +145,7 @@ if cphl is not None and emr is not None:
 
 
     # st.success('Analysis done')
-    if st.button('DOWNLOAD FILE'):
+    #if st.button('DOWNLOAD FILE'):
         wb = Workbook()
         ws = wb.active
 
