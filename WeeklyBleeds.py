@@ -402,8 +402,10 @@ if df is not None:
 
     if __name__ == "__main__":
         main()
+        
 if df is not None:
-    if st.button('DOWNLOAD CURRENT LINELIST'):
+    #if st.button('DOWNLOAD CURRENT LINELIST'):
+    #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
         ws = wb.active
 
