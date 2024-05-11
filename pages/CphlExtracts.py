@@ -304,7 +304,6 @@ if file and district is not None:
                 with open(file_path, 'rb') as f:
                       file_contents = f.read()           
                 st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-                
              
             
     if df is not None and district is not None:
