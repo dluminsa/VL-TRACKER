@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import random
-#import numpy as np
+import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
@@ -252,27 +252,27 @@ if file is not None:
             dfv = df[(df['Vyear']==2024) & (df['Vmonth']>3)].copy()
             dfv['DUE'] = dfv['DUE'].astype(str)
             dfv['DUE1'] = dfv['DUE1'].astype(str)
+            
             #REBLEEDS
             REBLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'ALREADY'))].copy()
-            REBLED['STATUS'] = REBLED.apply(lambda d: fill(d['Rmonth']), axis=1)
-            REBLED['STATUS'] = REBLED['STATUS'].replace('BLED', 'REBLED')
-            #REBLED['STATUS'] = np.nan
-            #REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
-            REBLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'ALREADY'))].copy()
+            #REBLED['STATUS'] = REBLED.apply(lambda d: fill(d['Rmonth']), axis=1)
+            #REBLED['STATUS'] = REBLED['STATUS'].replace('BLED', 'REBLED')
             REBLED['STATUS'] = np.nan
             REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
             REBLEDpivo = pd.pivot_table(REBLED, index= 'BWEEK', values='A', aggfunc = 'count')
             REBLEDF = REBLEDpivo.reset_index()
             REBLEDF = REBLEDF.rename(columns={'A': 'REBLED'})
+            
             #BLEEDS, original dataframe should be dfv
             BLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'DUE'))].copy()
-            BLED['STATUS'] = BLED.apply(lambda d: fill(d['Rmonth']), axis=1)
-            #BLED['STATUS'] = np.nan
-            #BLED['STATUS'] = BLED['STATUS'].fillna('BLED')
+            #BLED['STATUS'] = BLED.apply(lambda d: fill(d['Rmonth']), axis=1)
+            BLED['STATUS'] = np.nan
+            BLED['STATUS'] = BLED['STATUS'].fillna('BLED')
             BLEDpivo = pd.pivot_table(BLED, index= 'BWEEK', values='A', aggfunc = 'count')
             BLEDF = BLEDpivo.reset_index()
             BLEDF = BLEDF.rename(columns={'A': 'BLED'})
             BLEDF = BLEDF.rename(columns={'A': 'BLED'})
+            
             #TOTAL BLEEDS
             TOTAL = pd.pivot_table(dfv, index= 'BWEEK', values='A', aggfunc = 'count')
             TOTAL = TOTAL.reset_index()   
