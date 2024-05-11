@@ -2,9 +2,13 @@ import streamlit as st
 import pandas as pd
 import os
 import glob
+import numpy as np
 import random
-from openpyxl import * #load_workbook
-from openpyxl.styles import *
+from openpyxl import Workbook
+from pathlib import Path
+from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+# from openpyxl import * #load_workbook
+# from openpyxl.styles import *
 #import numpy as np
 cola, colb = st.columns([1,1])
 
@@ -66,6 +70,9 @@ if cphl is not None and emr is not None:
                 else:
                     df[['ART-NUMERIC', 'Dyear','Dmonth', 'Dday']] = df[['ART-NUMERIC', 'Dyear','Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
+                    named = df['facility'].unique()
+                    named = np.array2string(named)
+                    named = named.strip('[]')
                     dfc['ART'] = dfc['A'].replace('[^0-9]','', regex = True)
                     dfc = dfc.dropna(subset=['ART'])
                     dfc['VOD'] = dfc['VOB']
@@ -177,14 +184,18 @@ if cphl is not None and emr is not None:
 
         ran = random.random()
         rand = round(ran,2)
+                        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{named}_missing_results {rand}.xlsx')
+                directory = os.path.dirname(file_path)
+                Path(directory).mkdir(parents=True, exist_ok=True)
 
-        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'missing_results {rand}.xlsx')
+                  # Save the workbook
+                wb.save(file_path)
+                # Serve the file for download
+                with open(file_path, 'rb') as f:
+                      file_contents = f.read()           
+                st.download_button(label=f'DONLOAD MISSING RESULTS FOR {named} ', data=file_contents,file_name=f'{named}_missing_results {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
-        # Save the workbook
-        wb.save(file_path)
-        #col1, col2 = st.columns([1,2])
-        st.markdown(f'**YOUR FILE HAS BEEN DOWNLOADED AS missing_results {rand} IN YOUR DOWNLOAD FOLDER**')
-        #col2.success(f'File saved as missing_results {rand} in your download folder ')
+       
     if df is not None:
         dfu = dft.set_index('ART-NO')
         st.write(dfu.head(3))
