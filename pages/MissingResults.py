@@ -146,54 +146,54 @@ if cphl is not None and emr is not None:
 
     # st.success('Analysis done')
     #if st.button('DOWNLOAD FILE'):
-        wb = Workbook()
-        ws = wb.active
-
-        # Convert DataFrame to Excel
-        for r_idx, row in enumerate(dft.iterrows(), start=1):
-            for c_idx, value in enumerate(row[1], start=1):
+    wb = Workbook()
+    ws = wb.active
+ 
+    # Convert DataFrame to Excel
+    for r_idx, row in enumerate(dft.iterrows(), start=1):
+           for c_idx, value in enumerate(row[1], start=1):
                 ws.cell(row=r_idx, column=c_idx, value=value)
-        ws.insert_rows(0,2)
+    ws.insert_rows(0,2)
 
-        blue = PatternFill(fill_type = 'solid', start_color = 'C8CDCD')
+    blue = PatternFill(fill_type = 'solid', start_color = 'C8CDCD')
         # ws.column_dimensions['H'].width = 14
 
-        for num in range (1, ws.max_row+1):
-            for letter in ['E', 'F', 'G', 'H']:
-                ws[f'{letter}{num}'].font = Font(b= True, i = True)
-                ws[f'{letter}{num}'].font = Font(b= True, i = True)
-                ws[f'{letter}{num}'].fill = blue
-                ws[f'{letter}{num}'].border = Border(top = Side(style = 'thin', color ='000000'),
+    for num in range (1, ws.max_row+1):
+         for letter in ['E', 'F', 'G', 'H']:
+              ws[f'{letter}{num}'].font = Font(b= True, i = True)
+              ws[f'{letter}{num}'].font = Font(b= True, i = True)
+              ws[f'{letter}{num}'].fill = blue
+              ws[f'{letter}{num}'].border = Border(top = Side(style = 'thin', color ='000000'),
                                                     right = Side(style = 'thin', color ='000000'),
                                                     left = Side(style = 'thin', color ='000000'),
                                                     bottom = Side(style = 'thin', color ='000000'))
-        ws['B1'] ='EMR DETAILS'
-        ws['F1'] = 'CPHL DETAILS'
-        ws['A2'] = 'ART-NO'
-        ws['B2'] = 'RETUR VISIT DATE'
-        ws['C2'] = 'EMR VL RESULTS'
-        ws['D2'] = 'EMR VL DATE' 
-        ws['E2'] = 'ART NO'
-        ws['F2']  = 'CPHL RESULTS'
-        ws['G2'] = 'CPHL DATE'
-        ws['H2'] = 'COMPARE'
+    ws['B1'] ='EMR DETAILS'
+    ws['F1'] = 'CPHL DETAILS'
+    ws['A2'] = 'ART-NO'
+    ws['B2'] = 'RETUR VISIT DATE'
+    ws['C2'] = 'EMR VL RESULTS'
+    ws['D2'] = 'EMR VL DATE' 
+    ws['E2'] = 'ART NO'
+    ws['F2']  = 'CPHL RESULTS'
+    ws['G2'] = 'CPHL DATE'
+    ws['H2'] = 'COMPARE'
 
-        letters = ['B', 'C', 'D','F','G','H']
-        for letter in letters:
-            ws.column_dimensions[letter].width =15
+    letters = ['B', 'C', 'D','F','G','H']
+    for letter in letters:
+          ws.column_dimensions[letter].width =15
 
-        ran = random.random()
-        rand = round(ran,2)
-        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{named}_missing_results {rand}.xlsx')
-        directory = os.path.dirname(file_path)
-        Path(directory).mkdir(parents=True, exist_ok=True)
+    ran = random.random()
+    rand = round(ran,2)
+    file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{named}_missing_results {rand}.xlsx')
+    directory = os.path.dirname(file_path)
+    Path(directory).mkdir(parents=True, exist_ok=True)
 
                   # Save the workbook
-        wb.save(file_path)
-         # Serve the file for download
-        with open(file_path, 'rb') as f:
-                  file_contents = f.read()           
-        st.download_button(label=f'DONLOAD MISSING RESULTS FOR {named} ', data=file_contents,file_name=f'{named}_missing_results {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    wb.save(file_path)
+     # Serve the file for download
+    with open(file_path, 'rb') as f:
+              file_contents = f.read()           
+    st.download_button(label=f'DONLOAD MISSING RESULTS FOR {named} ', data=file_contents,file_name=f'{named}_missing_results {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
        
     if df is not None:
