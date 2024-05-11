@@ -449,14 +449,31 @@ if df is not None:
 
         ran = random.random()
         rand = round(ran,2)
+        
 
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
         directory = os.path.dirname(file_path)
         Path(directory).mkdir(parents=True, exist_ok=True)
 
-        # Save the workbook
+      # Save the workbook
         wb.save(file_path)
-        st.success('YOUR FILE HAS BEEN DOWNLOADED AS VL LINELIST {rand} IN YOUR DOWNLOAD FOLDER')
+    
+    # Serve the file for download
+        with open(file_path, 'rb') as f:
+        file_contents = f.read()
+        st.download_button(label='Download VL LINELIST', data=file_contents, file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+
+
+
+
+        #file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
+        #directory = os.path.dirname(file_path)
+        #Path(directory).mkdir(parents=True, exist_ok=True)
+
+        # Save the workbook
+        #wb.save(file_path)
+        #st.success('YOUR FILE HAS BEEN DOWNLOADED AS VL LINELIST {rand} IN YOUR DOWNLOAD FOLDER')
         
 
 
