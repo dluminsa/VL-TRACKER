@@ -2,9 +2,10 @@ import streamlit as st
 import pandas as pd
 import os
 import glob
+import random
 from openpyxl import * #load_workbook
 from openpyxl.styles import *
-import numpy as np
+#import numpy as np
 cola, colb = st.columns([1,1])
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
@@ -174,7 +175,7 @@ if cphl is not None and emr is not None:
         for letter in letters:
             ws.column_dimensions[letter].width =15
 
-        ran = np.random.rand()*0.1
+        ran = random.random()
         rand = round(ran,3)
 
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'missing_results {rand}.xlsx')
