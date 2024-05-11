@@ -14,6 +14,7 @@ st.set_page_config(
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 current_time = time.localtime()
 week = time.strftime("%U", current_time)
+week = int(week) + 1
 
 
 st.markdown(f"******* **REMINDER!! we are currently in week {week}** *****")
@@ -404,7 +405,10 @@ if df is not None:
         main()
         
 if df is not None:
-    if st.button('DOWNLOAD CURRENT LINELIST'):
+    ran = random.random()
+    rand = round(ran,2)
+    st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+    #if st.button('DOWNLOAD CURRENT LINELIST'):
     #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
         ws = wb.active
@@ -449,10 +453,6 @@ if df is not None:
         ws.column_dimensions['J'].width = 20
         ws['J1'].alignment = Alignment(wrap_text=True)
 
-        ran = random.random()
-        rand = round(ran,2)
-        
-
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
         directory = os.path.dirname(file_path)
         Path(directory).mkdir(parents=True, exist_ok=True)
@@ -465,7 +465,7 @@ if df is not None:
             file_contents = f.read()
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
+        
 
 
 
