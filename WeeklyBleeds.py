@@ -1,7 +1,8 @@
 import streamlit as st 
 import pandas as pd
 import os
-import numpy as np
+import random
+#import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
@@ -139,6 +140,12 @@ if file is not None:
             df = pd.concat([a,b])
             dfe = df.shape[0]
             #print(dfa, dfb, dfc, dfd, dfe)
+            # AVOIDING NUMPY
+            def fill(r):
+                if r > 0:
+                    return 'BLED'
+                else:
+                    return 'BLED'
 
             #SORTING THE TX_NEW
 
@@ -247,8 +254,10 @@ if file is not None:
             dfv['DUE1'] = dfv['DUE1'].astype(str)
             #REBLEEDS
             REBLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'ALREADY'))].copy()
-            REBLED['STATUS'] = np.nan
-            REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
+            REBLED['STATUS'] = REBLED.apply(lambda d: fill(d['Rmonth']), axis=1)
+            REBLED['STATUS'] = REBLED['STATUS'].replace('BLED', 'REBLED')
+            #REBLED['STATUS'] = np.nan
+            #REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
             REBLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'ALREADY'))].copy()
             REBLED['STATUS'] = np.nan
             REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
@@ -257,8 +266,9 @@ if file is not None:
             REBLEDF = REBLEDF.rename(columns={'A': 'REBLED'})
             #BLEEDS, original dataframe should be dfv
             BLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'DUE'))].copy()
-            BLED['STATUS'] = np.nan
-            BLED['STATUS'] = BLED['STATUS'].fillna('BLED')
+            BLED['STATUS'] = BLED.apply(lambda d: fill(d['Rmonth']), axis=1)
+            #BLED['STATUS'] = np.nan
+            #BLED['STATUS'] = BLED['STATUS'].fillna('BLED')
             BLEDpivo = pd.pivot_table(BLED, index= 'BWEEK', values='A', aggfunc = 'count')
             BLEDF = BLEDpivo.reset_index()
             BLEDF = BLEDF.rename(columns={'A': 'BLED'})
@@ -436,8 +446,8 @@ if df is not None:
         ws.column_dimensions['J'].width = 20
         ws['J1'].alignment = Alignment(wrap_text=True)
 
-        ran = np.random.rand()*0.1
-        rand = round(ran,3)
+        ran = random.random()
+        rand = round(ran,2)
 
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
 
