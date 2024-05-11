@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import random
 #import numpy as np
+from pathlib import Path
 from openpyxl import * #load_workbook
 from openpyxl.styles import *
 from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
@@ -291,8 +292,20 @@ if file and district is not None:
 
                 ran = random.random()
                 rand = round(ran,2)
-                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{district} VL_COV {rand}.xlsx')
-                wb.save(file_path)
+                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL COV {rand}.xlsx')
+                directory = os.path.dirname(file_path)
+                Path(directory).mkdir(parents=True, exist_ok=True)
+
+      # Save the workbook
+               wb.save(file_path)
+    
+    # Serve the file for download
+               with open(file_path, 'rb') as f:
+                    file_contents = f.read()
+        
+               st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        
+                
                 st.success(f'**YOUR FILE HAS BEEN DOWNLOADED AS {district} VL_COV {rand} IN YOUR DOWNLOAD FOLDER**')
             
     if df is not None and district is not None:
