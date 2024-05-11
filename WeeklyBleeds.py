@@ -6,6 +6,7 @@ import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
+from pathlib import Path
 
 st.set_page_config(
     page_title = 'VL TRACKER'
@@ -450,6 +451,8 @@ if df is not None:
         rand = round(ran,2)
 
         file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
+        directory = os.path.dirname(file_path)
+        Path(directory).mkdir(parents=True, exist_ok=True)
 
         # Save the workbook
         wb.save(file_path)
