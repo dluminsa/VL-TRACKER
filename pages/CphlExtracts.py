@@ -297,9 +297,13 @@ if file and district is not None:
             # Save the workbook
                 wb.save(file_path)
                 # Serve the file for download
-                with open(file_path, 'rb') as f:
-                        file_contents = f.read()
-                st.download_button(label="Download Excel File", data=file_contents, file_name=file_name)
+                #wb.save(file_path)
+
+# Display a download link for the user
+                st.markdown(f"## [Download Excel File](data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{base64.b64encode(open(file_path, 'rb').read()).decode()})")
+                # with open(file_path, 'rb') as f:
+                #         file_contents = f.read()
+                # st.download_button(label="Download Excel File", data=file_contents, file_name=file_name)
 
             
     #             # file_name = f'VL_COV_{rand}.xlsx'
