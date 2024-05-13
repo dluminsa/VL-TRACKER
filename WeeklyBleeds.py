@@ -389,7 +389,7 @@ if df is not None:
                     # Create a download button for each facility
 
             st.download_button(
-                        label="WEEKLY BLEEDS",
+                        label=" DOWNLOAD WEEKLY BLEEDS",
                         data=csv_data,
                         file_name=f"WEEKLY_BLEEDS.csv",
                         mime="text/csv"
