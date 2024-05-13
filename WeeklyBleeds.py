@@ -342,6 +342,7 @@ if file is not None:
             'DUE FOR VL' : [d]}
             PERFORMANCE = pd.DataFrame(data)
             PERFORMANCE = PERFORMANCE.set_index('TX_CURR')
+            #st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
             CURB = CURB.rename(columns = {'DUE' : 'VL STATUS'})
             linelist = CURB[['A', 'AS', 'RD', 'Ryear', 'Rmonth', 'Rday', 'VD', 'VL STATUS']].copy()
             linelist['AS'] = linelist['AS'].astype(str)
@@ -365,6 +366,7 @@ if file is not None:
             bymonth = bymonth.set_index('MONTH')
             bymonth = bymonth.transpose()
             st.markdown("**PERFORMANCE**, _from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
+            st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
             st.write(PERFORMANCE)
             st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
             st.table(bymonth)
