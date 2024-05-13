@@ -11,7 +11,7 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 # from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 
 
-SEMBABULE = {'Ssembabule HC IV':2232,'Kyabi HC III':511,'Ntuusi HC III':1006, 'Lwemiyaga HC III':959,
+SEMBABULE = {'Ssembabule HC IV':2232,'Kyabi HC III':511,'Ntuusi HC IV':1006, 'Lwemiyaga HC III':959,
             'Makoole HC II':245,'Mateete HC III':2338, 'Lwebitakuli Gvt HC III':567,'Ntete HC II':78,'Sembabule Kabaale HC II':59}
 
 BUKOMANSIMBI = {'Butenga HC IV':1434,'Mirambi HC III':327,'Kagoggo HC II': 88,'Kisojjo HC II GOVT':73,'Bigasa HC III':807,
