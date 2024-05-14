@@ -337,7 +337,7 @@ if file and district is not None:
                 uniques = dft['facility'].unique()
 
                 # Create an expander to contain the download buttons
-                with st.expander(f"Download files for {district} Facilities without duplicates)"):
+                with st.expander(f"Download files for {district} Facilities with duplicates)"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
                         dfs = dfs[['facility', 'ART-NUMERIC', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
