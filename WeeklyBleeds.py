@@ -306,36 +306,7 @@ if file is not None:
             dfg = dfg.rename(columns = {'BWEEK': 'WEEK'})
             dfg = dfg.set_index('WEEK')
             weekly = dfg.copy()
-            
-            #BLEEDING VS APPOINTMENT
-            #..APPT = dfcurr[['A', 'WEEK', 'DUE']].copy()
-            #APPT['DUE'] = APPT['DUE'].astype(str)
-            #NOT_DUE = APPT[APPT['DUE']=='ALREADY']
-            #NOTDUE = pd.pivot_table(NOT_DUE, index='WEEK', values='A', aggfunc = 'count')
-            #NOTD = NOTDUE.reset_index()
-            #NOTD = NOTD.rename(columns={'A': 'NOT DUE'})
-            #DUE = APPT[APPT['DUE']=='DUE']
-            #DU = pd.pivot_table(DUE, index='WEEK', values='A', aggfunc = 'count')
-            #DU = DU.reset_index()
-            #DU = DU.rename(columns={'A': 'DUE'})
-            #BLED = APPT[APPT['DUE']=='BLED']
-            #BLE = pd.pivot_table(BLED, index='WEEK', values='A', aggfunc = 'count')
-            #BLE = BLE.reset_index()
-            #BLE = BLE.rename(columns={'A': 'BLED'})
-            #BLE['WEEK'] = pd.to_numeric(BLE['WEEK'], errors='coerce')
-            #NOTD['WEEK'] = pd.to_numeric(NOTD['WEEK'], errors='coerce')
-            #first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
-            #first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
-            #first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
-            #DU['WEEK'] = pd.to_numeric(DU['WEEK'], errors='coerce')
-            #first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
-            #second = pd.merge(first, DU, on ='WEEK', how= 'outer')
-            #appot = pd.pivot_table(dfcurr, index='WEEK', values='A', aggfunc='count')
-            #appte = appot.reset_index()
-            #appte = appte.rename(columns={'A': 'ON APPT'})
-            #APPTSUM = pd.merge(appte, second, on= 'WEEK', how ='outer')
-            #APPTSUM = APPTSUM.set_index('WEEK')
-            
+           
              #DETERMINING TX_CURR
             #MODIFY HERE TO INCLUDE 2025 LATER
             CURR = df.copy()
@@ -372,7 +343,7 @@ if file is not None:
             pivotrbm = pivotrbm.set_index('WEEK')
             pivotmissed = pd.concat([pivotrbm, pivotm])
             pivotmissed = pivotmissed.rename(columns= {'A': 'RETURNED NOT BLED'})
-            pivotmissed['WEEK'] =  pivotmissed['WEEK'].astype(int)
+            pivotmissed['WEEK'] =  pd.to_numeric(pivotmissed['WEEK'], errors='coerce')
             MISSED = pd.concat([MARCHm, CURRm])
             rm = MISSED.shape[0]
             st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
