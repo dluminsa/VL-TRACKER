@@ -463,7 +463,7 @@ if file is not None:
             cola.write('**BLEEDS  DONE PER WEEK**')
             cola.write(weekly)
             colb.write('OF THOSE ON APPOINTMENT, HOW MANY HAVE BEEN BLED')
-            colb.write(APPTSUM)
+            #colb.write(APPTSUM)
             st.markdown('**Sample linelist**')
             st.write(linelist.head(10))
     
