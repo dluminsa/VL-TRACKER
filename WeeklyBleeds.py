@@ -346,14 +346,14 @@ if file is not None:
             APPONT = CURR.copy()
             
             #NEW CODE..................
+
+            #MISSED APPOINTMENT BUT DUE FOR VL
             CURRa = CURRa[CURRa['ELL'] == 'ELLIGIBLE'].copy()
             CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
-            
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
             MARCHm = CURRa[CURRa['Rmonth']==3].copy()
             CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
             CURRm['WEEK'] = pd.to_numeric(CURRm['WEEK'], errors='coerce')
-            
             current_time = time.localtime()
             week = time.strftime("%U", current_time)
             week = int(week) + 1
@@ -363,7 +363,7 @@ if file is not None:
             ram = CURRm.shape[0]
             pivotm = pd.pivot_table(CURRm, index = 'WEEK', values = 'A', aggfunc = 'count')
             pivotm = pivotm.reset_index()
-            pivotm = pivotm.reset_index()
+            pivotm = pivotm.set_index('WEEK')
             MARCHm = MARCHm[MARCHm['DUE']=='DUE'].copy()
             MARCHm['WEEK'] = MARCHm['WEEK'].fillna('MARCH')
             rbm = MARCHm.shape[0]
@@ -376,6 +376,9 @@ if file is not None:
             rm = MISSED.shape[0]
             st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
             st.write(pivotmissed)
+
+            #RETURNED BUT NOT BLED
+            CURRb = CURRb[CURRb['ELL'] == 'ELLIGIBLE'].copy()
             CURRb = CURRb[['A', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE', 'WEEK']]
             CURRb['RD1month'] = pd.to_numeric(CURRb['RD1month'], errors = 'coerce')
             MARCH = CURRb[CURRb['RD1month']==3].copy()
