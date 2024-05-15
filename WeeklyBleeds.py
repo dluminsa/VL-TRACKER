@@ -156,6 +156,16 @@ if file is not None:
                     return ('ELLIGIBLE')
                 else:
                     return('NOT')
+             #LAST WEEK, THIS WEEK
+            def this(a):
+                if a == week-1:
+                    return 'LAST WEEK'
+                elif a == week:
+                    return 'THIS WEEK'
+                elif a == week+1:
+                    return 'NEXT WEEK'
+                else:
+                    return a
 
             #FOR THOSE DUE
             def Due(x, y):
@@ -245,9 +255,9 @@ if file is not None:
             CURRb = CURRb.drop(columns=['WEEK'])
             CURRa = CURRa.drop(columns=['WEEK1'])
             CURRb = CURRb.rename(columns={'WEEK1': 'WEEK'})
-            dfcurr = pd.concat([CURRa, CURRb])
-            dfcurr['ELL'] = dfcurr['ELL'].astype(str)
-            dfcurr = dfcurr[dfcurr['ELL'] == 'ELLIGIBLE'].copy()
+            #..dfcurr = pd.concat([CURRa, CURRb])
+            #..dfcurr['ELL'] = dfcurr['ELL'].astype(str)
+            #..dfcurr = dfcurr[dfcurr['ELL'] == 'ELLIGIBLE'].copy()
             #COMPUTING WEEKLY BLEEDS
             #CHOOSE BLEEDS DONE IN THE QUARTER
             df[['Vday', 'Vyear','Vmonth']] = df[['Vday', 'Vyear', 'Vmonth']].apply(pd.to_numeric, errors='coerce')
@@ -290,33 +300,107 @@ if file is not None:
             dfg = dfg.set_index('WEEK')
             weekly = dfg.copy()
             #BLEEDING VS APPOINTMENT
-            APPT = dfcurr[['A', 'WEEK', 'DUE']].copy()
-            APPT['DUE'] = APPT['DUE'].astype(str)
-            NOT_DUE = APPT[APPT['DUE']=='ALREADY']
-            NOTDUE = pd.pivot_table(NOT_DUE, index='WEEK', values='A', aggfunc = 'count')
-            NOTD = NOTDUE.reset_index()
-            NOTD = NOTD.rename(columns={'A': 'NOT DUE'})
-            DUE = APPT[APPT['DUE']=='DUE']
-            DU = pd.pivot_table(DUE, index='WEEK', values='A', aggfunc = 'count')
-            DU = DU.reset_index()
-            DU = DU.rename(columns={'A': 'DUE'})
-            BLED = APPT[APPT['DUE']=='BLED']
-            BLE = pd.pivot_table(BLED, index='WEEK', values='A', aggfunc = 'count')
-            BLE = BLE.reset_index()
-            BLE = BLE.rename(columns={'A': 'BLED'})
-            BLE['WEEK'] = pd.to_numeric(BLE['WEEK'], errors='coerce')
-            NOTD['WEEK'] = pd.to_numeric(NOTD['WEEK'], errors='coerce')
-            first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
-            first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
-            first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
-            DU['WEEK'] = pd.to_numeric(DU['WEEK'], errors='coerce')
-            first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
-            second = pd.merge(first, DU, on ='WEEK', how= 'outer')
-            appot = pd.pivot_table(dfcurr, index='WEEK', values='A', aggfunc='count')
-            appte = appot.reset_index()
-            appte = appte.rename(columns={'A': 'ON APPT'})
-            APPTSUM = pd.merge(appte, second, on= 'WEEK', how ='outer')
-            APPTSUM = APPTSUM.set_index('WEEK')
+            #..APPT = dfcurr[['A', 'WEEK', 'DUE']].copy()
+            #APPT['DUE'] = APPT['DUE'].astype(str)
+            #NOT_DUE = APPT[APPT['DUE']=='ALREADY']
+            #NOTDUE = pd.pivot_table(NOT_DUE, index='WEEK', values='A', aggfunc = 'count')
+            #NOTD = NOTDUE.reset_index()
+            #NOTD = NOTD.rename(columns={'A': 'NOT DUE'})
+            #DUE = APPT[APPT['DUE']=='DUE']
+            #DU = pd.pivot_table(DUE, index='WEEK', values='A', aggfunc = 'count')
+            #DU = DU.reset_index()
+            #DU = DU.rename(columns={'A': 'DUE'})
+            #BLED = APPT[APPT['DUE']=='BLED']
+            #BLE = pd.pivot_table(BLED, index='WEEK', values='A', aggfunc = 'count')
+            #BLE = BLE.reset_index()
+            #BLE = BLE.rename(columns={'A': 'BLED'})
+            #BLE['WEEK'] = pd.to_numeric(BLE['WEEK'], errors='coerce')
+            #NOTD['WEEK'] = pd.to_numeric(NOTD['WEEK'], errors='coerce')
+            #first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
+            #first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
+            #first = pd.merge(NOTD, BLE, on ='WEEK', how= 'outer')
+            #DU['WEEK'] = pd.to_numeric(DU['WEEK'], errors='coerce')
+            #first['WEEK'] = pd.to_numeric(first['WEEK'], errors='coerce')
+            #second = pd.merge(first, DU, on ='WEEK', how= 'outer')
+            #appot = pd.pivot_table(dfcurr, index='WEEK', values='A', aggfunc='count')
+            #appte = appot.reset_index()
+            #appte = appte.rename(columns={'A': 'ON APPT'})
+            #APPTSUM = pd.merge(appte, second, on= 'WEEK', how ='outer')
+            #APPTSUM = APPTSUM.set_index('WEEK')
+            #NEW CODE..................
+            CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
+            CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
+            MARCHm = CURRa[CURRa['Rmonth']==3].copy()
+            CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
+            CURRm = CURRm[CURRm['WEEK'] < week].copy()
+            CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
+            ram = CURRm.shape[0]
+            pivotm = pd.pivot_table(CURRm, index = 'WEEK', values = 'A', aggfunc = 'count')
+            pivotm = pivotm.reset_index()
+            pivotm = pivotm.reset_index()
+            MARCHm = MARCHm[MARCHm['DUE']=='DUE'].copy()
+            MARCHm['WEEK'] = MARCHm['WEEK'].fillna('MARCH')
+            rbm = MARCHm.shape[0]
+            pivotrbm = pd.pivot_table(MARCHm, index = 'WEEK', values = 'A', aggfunc = 'count')
+            pivotrbm = pivotrbm.reset_index()
+            pivotrbm = pivotrbm.set_index('WEEK')
+            pivotmissed = pd.concat([pivotrbm, pivotm])
+            pivotmissed = pivotmissed.rename(columns= {'A': 'RETURNED NOT BLED'})
+            MISSED = pd.concat([MARCHm, CURRm])
+            rm = MISSED.shape[0]
+            st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
+            st.write(pivotmissed)
+            CURRb = CURRb[['A', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE', 'WEEK']]
+            CURRb['RD1month'] = pd.to_numeric(CURRb['RD1month'], errors = 'coerce')
+            MARCH = CURRb[CURRb['RD1month']==3].copy()
+            CURRr =  CURRb[CURRb['RD1month'].isin([4,5,6])].copy()
+            CURRr = CURRr[CURRr['WEEK'] < week].copy()
+            CURRr = CURRr[CURRr['DUE'] =='DUE'].copy()
+            ra = CURRr.shape[0]
+            pivotr = pd.pivot_table(CURRr, index = 'WEEK', values = 'A', aggfunc = 'count')
+            MARCH = MARCH[MARCH['DUE']=='DUE']
+            rb = MARCH.shape[0]
+            MARCH['WEEK'] = MARCH['WEEK'].fillna('MARCH')
+            pivotrb = pd.pivot_table(MARCH, index = 'WEEK', values = 'A', aggfunc = 'count')
+            pivotreturned = pd.concat([pivotrb, pivotr])
+            pivotreturned = pivotreturned.reset_index()
+            pivotreturned = pivotreturned.rename(columns= {'A': 'RETURNED NOT BLED'})
+            pivotreturned['WEEK.'] = pivotreturned.apply(lambda q: this(q['WEEK']), axis=1)
+            pivotreturned = pivotreturned.drop(columns='WEEK')
+            pivotreturned = pivotreturned.set_index('WEEK.')
+            RETURNED = pd.concat([MARCH, CURRr])
+            r = RETURNED.shape[0]
+            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
+            st.write(pivotreturned)
+            APPONT['Rmonth'] = pd.to_numeric(APPONT['Rmonth'], errors = 'coerce')
+            APPONT = APPONT[APPONT['Rmonth'].isin([4,5,6])].copy()
+            APPONT['WEEK'] = pd.to_numeric(APPONT['WEEK'], errors = 'coerce')
+            APPONT = APPONT[APPONT['WEEK']>=week].copy()
+            pivoappt = pd.pivot_table(APPONT, index = 'WEEK', values = 'A', aggfunc = 'count')
+            pivoappt = pivoappt.reset_index()
+            pivoappt = pivoappt.rename(columns={'A': 'ON APPT'})
+            APPONT = APPONT[APPONT['ELL'] == 'ELLIGIBLE'].copy()
+            APPONT = APPONT[APPONT['DUE']=='DUE'].copy()
+            pivoapptd = pd.pivot_table(APPONT, index = 'WEEK', values = 'A', aggfunc = 'count')
+            pivoapptd = pivoapptd.reset_index()
+            pivoapptd = pivoapptd.rename(columns={'A': 'DUE FOR BLEEDING'})
+            appt = pd.merge(pivoappt, pivoapptd, on = 'WEEK', how='outer')
+            appt['WEEK'] = pd.to_numeric(appt['WEEK'], errors = 'coerce')
+            appt['WEEK.'] = appt.apply(lambda q: this(q['WEEK']),axis = 1)
+            appt = appt.set_index('WEEK.')
+            appt = appt.drop(columns = 'WEEK')
+            st.write(appt)
+
+        
+
+
+        
+            
+        
+        
+
+
+        
             #DETERMINING TX_CURR
             #MODIFY HERE TO INCLUDE 2025 LATER
             CURR = df.copy()
