@@ -494,7 +494,7 @@ if df is not None:
         main()
 
 if df is not None:
-    def download_retuned(df):
+    def download_returned(df):
         st.write(f"<h6>DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED</h6>", unsafe_allow_html=True)
 
         if df is not None:
