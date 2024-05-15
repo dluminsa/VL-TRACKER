@@ -372,6 +372,7 @@ if file is not None:
             pivotrbm = pivotrbm.set_index('WEEK')
             pivotmissed = pd.concat([pivotrbm, pivotm])
             pivotmissed = pivotmissed.rename(columns= {'A': 'RETURNED NOT BLED'})
+            pivotmissed['WEEK'] =  pivotmissed['WEEK'].astype(int)
             MISSED = pd.concat([MARCHm, CURRm])
             rm = MISSED.shape[0]
             st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
