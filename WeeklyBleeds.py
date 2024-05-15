@@ -328,6 +328,16 @@ if file is not None:
             #appte = appte.rename(columns={'A': 'ON APPT'})
             #APPTSUM = pd.merge(appte, second, on= 'WEEK', how ='outer')
             #APPTSUM = APPTSUM.set_index('WEEK')
+            
+             #DETERMINING TX_CURR
+            #MODIFY HERE TO INCLUDE 2025 LATER
+            CURR = df.copy()
+            CURR[['Rday', 'Ryear','Rmonth']] = CURR[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
+            CURR = CURR[CURR['Ryear']==2024].copy()
+            CURR = CURR[((CURR['Rmonth']>3) | ((CURR['Rmonth']==3) & (CURR['Rday'] >3)))].copy()
+            CUR = CURR.copy()
+            APPONT = CURR.copy()
+            
             #NEW CODE..................
             CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
@@ -397,11 +407,11 @@ if file is not None:
         
             #DETERMINING TX_CURR
             #MODIFY HERE TO INCLUDE 2025 LATER
-            CURR = df.copy()
-            CURR[['Rday', 'Ryear','Rmonth']] = CURR[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
-            CURR = CURR[CURR['Ryear']==2024].copy()
-            CURR = CURR[((CURR['Rmonth']>3) | ((CURR['Rmonth']==3) & (CURR['Rday'] >3)))].copy()
-            CUR = CURR.copy()
+            # CURR = df.copy()
+            # CURR[['Rday', 'Ryear','Rmonth']] = CURR[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
+            # CURR = CURR[CURR['Ryear']==2024].copy()
+            # CURR = CURR[((CURR['Rmonth']>3) | ((CURR['Rmonth']==3) & (CURR['Rday'] >3)))].copy()
+            # CUR = CURR.copy()
             a = CUR.shape[0]
             CUR['ELL'] = CUR['ELL'].astype(str)
             #COUNT THOSE NOT ELLIGIBLE
