@@ -445,7 +445,7 @@ if file is not None:
             st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
             weeks = 26+1 - week
             bleed = int(H/weeks)
-            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} to hit 95%'**)
+            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} to hit 95%**')
             st.write(PERFORMANCE)
             st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
             st.table(bymonth)
