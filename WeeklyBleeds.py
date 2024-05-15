@@ -346,7 +346,9 @@ if file is not None:
             APPONT = CURR.copy()
             
             #NEW CODE..................
+            CURRa = CURRa[CURRa['ELL'] == 'ELLIGIBLE'].copy()
             CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
+            
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
             MARCHm = CURRa[CURRa['Rmonth']==3].copy()
             CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
@@ -355,7 +357,6 @@ if file is not None:
             current_time = time.localtime()
             week = time.strftime("%U", current_time)
             week = int(week) + 1
-            st.write(week)
             CURRm = CURRm[CURRm['WEEK'] < week].copy()
             CURR['DUE'] = CURR['DUE'].astype(str)
             CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
@@ -484,8 +485,7 @@ if df is not None:
         st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
 
         if df is not None:
-            #dft = weekly.copy()
-            dft = MISSED.copy()
+            dft = weekly.copy()
             csv_data = dft.to_csv(index=True)
 
                     # Create a download button for each facility
