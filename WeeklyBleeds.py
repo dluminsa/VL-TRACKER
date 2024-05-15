@@ -484,7 +484,8 @@ if df is not None:
         st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
 
         if df is not None:
-            dft = weekly.copy()
+            #dft = weekly.copy()
+            dft = MISSED.copy()
             csv_data = dft.to_csv(index=True)
 
                     # Create a download button for each facility
