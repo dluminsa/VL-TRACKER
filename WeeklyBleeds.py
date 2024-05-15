@@ -229,20 +229,25 @@ if file is not None:
             df['BWEEK'] = df.apply(lambda wee: week(wee['Vyear'],wee['Vmonth'], wee['Vday']), axis=1)
             #APPLYIN THE DUE FORMULA ON VL DATES
             df['DUE'] = df.apply(lambda due: Due(due['Vyear'], due['Vmonth']), axis=1)
+            
             #APPLYING THE DUE FORMUA TO VD1 DATES
             df[['VD1day', 'VD1year','VD1month']] = df[['VD1day', 'VD1year', 'VD1month']].apply(pd.to_numeric, errors='coerce')
             df['DUE1'] = df.apply(lambda due: Due(due['VD1year'], due['VD1month']), axis=1)
+            
             #APPLYING THE WEEK FORMULA TO RETURN VISIT DATES
             df[['Rday', 'Ryear','Rmonth']] = df[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
             df['WEEK'] = df.apply(lambda row: week(row['Ryear'], row['Rmonth'], row['Rday']),axis=1)
+            
             #APPLYING THE WEEK FORMULA TO RETURN VISIT DATES 1
             df[['RD1day', 'RD1year','RD1month']] = df[['RD1day', 'RD1year', 'RD1month']].apply(pd.to_numeric, errors='coerce')
             df['WEEK1'] = df.apply(lambda row: week(row['RD1year'], row['RD1month'], row['RD1day']),axis=1)
             #APPLYING THE FORMULA TO RULE OUT TX NEW
             df['Ayear'] = pd.to_numeric(df['Ayear'], errors= 'coerce')
+            
             #APPLYING THE FORMULA TO RULE OUT TX NEW
             df['Ayear'] = pd.to_numeric(df['Ayear'], errors= 'coerce')
             df['ELL'] = df['Ayear'].apply(Eligible)
+            
             #RECONSTRUCTING RETURN VISIT DATES
             df['Ryear'] = pd.to_numeric(df['Ryear'], errors= 'coerce')
             dfa = df[df['Ryear']==2024].copy()
@@ -290,6 +295,7 @@ if file is not None:
             TOTAL = pd.pivot_table(dfv, index= 'BWEEK', values='A', aggfunc = 'count')
             TOTAL = TOTAL.reset_index()   
             TOTAL = TOTAL.rename(columns={'A':'TOTAL BLEEDS'}) 
+            
             #####FIRST PIVOT FROM BLED, REBLED, AND TOTAL BLEEDS   
             BLEDF['BWEEK'] = pd.to_numeric(BLEDF['BWEEK'], errors='coerce')     
             REBLEDF['BWEEK'] = pd.to_numeric(REBLEDF['BWEEK'], errors='coerce')
@@ -300,6 +306,7 @@ if file is not None:
             dfg = dfg.rename(columns = {'BWEEK': 'WEEK'})
             dfg = dfg.set_index('WEEK')
             weekly = dfg.copy()
+            
             #BLEEDING VS APPOINTMENT
             #..APPT = dfcurr[['A', 'WEEK', 'DUE']].copy()
             #APPT['DUE'] = APPT['DUE'].astype(str)
@@ -346,7 +353,9 @@ if file is not None:
             current_time = time.localtime()
             week = time.strftime("%U", current_time)
             week = int(week) + 1
+            CURRm = pd.to_numeric(CURRm['WEEK'], errors='coerce')
             CURRm = CURRm[CURRm['WEEK'] < week].copy()
+            CURR['DUE'] = CURR['DUE'].astype(str)
             CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
             ram = CURRm.shape[0]
             pivotm = pd.pivot_table(CURRm, index = 'WEEK', values = 'A', aggfunc = 'count')
