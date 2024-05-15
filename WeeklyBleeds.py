@@ -439,8 +439,11 @@ if file is not None:
             bymonth['MONTH'] = bymonth['MONTH'].astype(int)
             bymonth = bymonth.set_index('MONTH')
             bymonth = bymonth.transpose()
+
+            #DISPLAYS
             st.markdown("**PERFORMANCE**, _from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
             st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
+            
             st.write(PERFORMANCE)
             st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
             st.table(bymonth)
@@ -448,15 +451,18 @@ if file is not None:
             cola, colb = st.columns([1,1])
             cola.write('**BLEEDS  DONE PER WEEK**')
             cola.write(weekly)
-            colb.write('OF THOSE ON APPOINTMENT, HOW MANY HAVE BEEN BLED')
-            #colb.write(APPTSUM)
+            colb.write('No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS')
+            colb.write(appt)
+            cole, colf = st.columns([1,1])
+            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
+            st.write(f'Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
+            cole.markdown('**RETURNED, NOT BLED**')
+            cole.write(pivotreturned)
+            colf.markdown('**MISSED, DUE FOR VL'
+            colf.write(pivotmissed)
             st.markdown('**Sample linelist**')
             st.write(linelist.head(10))
-            st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
-            st.write(pivotmissed)
-            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
-            st.write(pivotreturned)
-            st.write(appt)
+            #st.write(appt)
     
 
 if df is not None:
