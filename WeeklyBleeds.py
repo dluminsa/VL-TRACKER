@@ -13,9 +13,10 @@ st.set_page_config(
 )
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 current_time = time.localtime()
+global week
 week = time.strftime("%U", current_time)
 week = int(week) + 1
-global week
+
 
 
 st.markdown(f"******* **REMINDER!! we are currently in week {week}** *****")
