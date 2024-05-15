@@ -334,6 +334,8 @@ if file is not None:
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
             MARCHm = CURRa[CURRa['Rmonth']==3].copy()
             CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
+            st.write(f'current week is {week}')
+            st.stop()
             CURRm = CURRm[CURRm['WEEK'] < week].copy()
             CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
             ram = CURRm.shape[0]
@@ -392,16 +394,6 @@ if file is not None:
             appt = appt.set_index('WEEK.')
             appt = appt.drop(columns = 'WEEK')
             st.write(appt)
-
-        
-
-
-        
-            
-        
-        
-
-
         
             #DETERMINING TX_CURR
             #MODIFY HERE TO INCLUDE 2025 LATER
