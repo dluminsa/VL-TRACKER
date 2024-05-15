@@ -458,7 +458,7 @@ if file is not None:
             st.write(f'Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
             cole.markdown('**RETURNED, NOT BLED**')
             cole.write(pivotreturned)
-            colf.markdown('**MISSED, DUE FOR VL'
+            colf.markdown('**MISSED, DUE FOR VL**')
             colf.write(pivotmissed)
             st.markdown('**Sample linelist**')
             st.write(linelist.head(10))
