@@ -264,6 +264,7 @@ if file is not None:
             #..dfcurr = pd.concat([CURRa, CURRb])
             #..dfcurr['ELL'] = dfcurr['ELL'].astype(str)
             #..dfcurr = dfcurr[dfcurr['ELL'] == 'ELLIGIBLE'].copy()
+            
             #COMPUTING WEEKLY BLEEDS
             #CHOOSE BLEEDS DONE IN THE QUARTER
             df[['Vday', 'Vyear','Vmonth']] = df[['Vday', 'Vyear', 'Vmonth']].apply(pd.to_numeric, errors='coerce')
@@ -343,11 +344,9 @@ if file is not None:
             pivotrbm = pivotrbm.set_index('WEEK')
             pivotmissed = pd.concat([pivotrbm, pivotm])
             pivotmissed = pivotmissed.rename(columns= {'A': 'RETURNED NOT BLED'})
-            pivotmissed['WEEK'] =  pd.to_numeric(pivotmissed['WEEK'], errors='coerce')
+            #pivotmissed['WEEK'] =  pd.to_numeric(pivotmissed['WEEK'], errors='coerce')
             MISSED = pd.concat([MARCHm, CURRm])
             rm = MISSED.shape[0]
-            st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
-            st.write(pivotmissed)
 
             #RETURNED BUT NOT BLED
             CURRb = CURRb[CURRb['ELL'] == 'ELLIGIBLE'].copy()
@@ -371,8 +370,8 @@ if file is not None:
             pivotreturned = pivotreturned.set_index('WEEK.')
             RETURNED = pd.concat([MARCH, CURRr])
             r = RETURNED.shape[0]
-            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
-            st.write(pivotreturned)
+
+            #CLIENTS ON APPT VS ELIGIBLE
             APPONT['Rmonth'] = pd.to_numeric(APPONT['Rmonth'], errors = 'coerce')
             APPONT = APPONT[APPONT['Rmonth'].isin([4,5,6])].copy()
             APPONT['WEEK'] = pd.to_numeric(APPONT['WEEK'], errors = 'coerce')
@@ -390,7 +389,7 @@ if file is not None:
             appt['WEEK.'] = appt.apply(lambda q: this(q['WEEK']),axis = 1)
             appt = appt.set_index('WEEK.')
             appt = appt.drop(columns = 'WEEK')
-            st.write(appt)
+            
         
             #DETERMINING TX_CURR
             #MODIFY HERE TO INCLUDE 2025 LATER
@@ -453,6 +452,11 @@ if file is not None:
             #colb.write(APPTSUM)
             st.markdown('**Sample linelist**')
             st.write(linelist.head(10))
+            st.write(f'This emr shows {rm} cients that have missed appointment are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
+            st.write(pivotmissed)
+            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
+            st.write(pivotreturned)
+            st.write(appt)
     
 
 if df is not None:
