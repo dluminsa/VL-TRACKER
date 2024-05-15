@@ -455,7 +455,7 @@ if file is not None:
             cola.write(weekly)
             colb.write('**No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS**')
             colb.write(appt)
-            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first'**)
+            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first**')
             st.markdown(f'**Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST**')
             cole, colf = st.columns([1,1])
             cole.markdown('**RETURNED, NOT BLED**')
