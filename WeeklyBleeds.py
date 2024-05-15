@@ -443,7 +443,9 @@ if file is not None:
             #DISPLAYS
             st.markdown("**PERFORMANCE**, _from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
             st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
-            
+            weeks = 26+1 - week
+            bleed = int(H/weeks)
+            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} to hit 95%'**)
             st.write(PERFORMANCE)
             st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
             st.table(bymonth)
@@ -451,11 +453,11 @@ if file is not None:
             cola, colb = st.columns([1,1])
             cola.write('**BLEEDS  DONE PER WEEK**')
             cola.write(weekly)
-            colb.write('No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS')
+            colb.write('**No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS**')
             colb.write(appt)
+            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first'**)
+            st.markdown(f'**Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST**')
             cole, colf = st.columns([1,1])
-            st.write(f'This emr shows {r} that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first')
-            st.write(f'Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST')
             cole.markdown('**RETURNED, NOT BLED**')
             cole.write(pivotreturned)
             colf.markdown('**MISSED, DUE FOR VL**')
