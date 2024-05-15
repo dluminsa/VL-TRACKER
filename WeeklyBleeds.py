@@ -94,6 +94,14 @@ if file is not None:
             df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
             df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
 
+            df['AS'] = df['AS'].str.replace('*', '/')
+            df['RD'] = df['RD'].str.replace('*', '/')
+            df['VD'] = df['VD'].str.replace('*', '/')
+            #df['LD'] = df['LD'].str.replace('*', '/')
+            df['RD1'] = df['RD1'].str.replace('*', '/')
+            df['VD1'] = df['VD1'].str.replace('*', '/')
+
+
             #SORTING THE VIRAL LOAD YEARS
             df[['Vyear', 'Vmonth', 'Vday']] =df[['Vyear', 'Vmonth', 'Vday']].apply(pd.to_numeric, errors = 'coerce') 
             df['Vyear'] = df['Vyear'].fillna(2022)
@@ -500,8 +508,6 @@ if df is not None:
         if df is not None:
             dft = RETURNED.copy()
             dft = dft[[ 'A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE']]
-            dft['RD'] = dft['RD'].replace('*', '/')
-            dft['RD1'] = dft['RD1'].replace('*', '/')
             dft = dft.rename(columns = {'RD': 'RETURN DATE', 'RD1': 'RETURN DATE1','A': 'ART-NO.', 'DUE': 'VL STATUS'})
             dft[['RD1month', 'RD1day']] = dft[['RD1month', 'RD1day']].apply(pd.to_numeric, errors = 'coerce')
             dft = dft.sort_values(by = ['RD1month', 'RD1day'])
