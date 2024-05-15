@@ -350,10 +350,10 @@ if file is not None:
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
             MARCHm = CURRa[CURRa['Rmonth']==3].copy()
             CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
+            CURRm = pd.to_numeric(CURRm['WEEK'], errors='coerce')
             current_time = time.localtime()
             week = time.strftime("%U", current_time)
             week = int(week) + 1
-            CURRm = pd.to_numeric(CURRm['WEEK'], errors='coerce')
             CURRm = CURRm[CURRm['WEEK'] < week].copy()
             CURR['DUE'] = CURR['DUE'].astype(str)
             CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
