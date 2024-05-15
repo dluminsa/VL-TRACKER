@@ -343,14 +343,14 @@ if file is not None:
             pivotrbm = pivotrbm.reset_index()
             pivotrbm = pivotrbm.set_index('WEEK')
             pivotmissed = pd.concat([pivotrbm, pivotm])
-            pivotmissed = pivotmissed.rename(columns= {'A': 'RETURNED NOT BLED'})
+            pivotmissed = pivotmissed.rename(columns= {'A': 'MISSED, DUE FOR VL'})
             #pivotmissed['WEEK'] =  pd.to_numeric(pivotmissed['WEEK'], errors='coerce')
             MISSED = pd.concat([MARCHm, CURRm])
             rm = MISSED.shape[0]
 
             #RETURNED BUT NOT BLED
             CURRb = CURRb[CURRb['ELL'] == 'ELLIGIBLE'].copy()
-            CURRb = CURRb[['A', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE', 'WEEK']]
+            CURRb = CURRb[['A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE', 'WEEK']]
             CURRb['RD1month'] = pd.to_numeric(CURRb['RD1month'], errors = 'coerce')
             MARCH = CURRb[CURRb['RD1month']==3].copy()
             CURRr =  CURRb[CURRb['RD1month'].isin([4,5,6])].copy()
@@ -441,11 +441,11 @@ if file is not None:
             bymonth = bymonth.transpose()
 
             #DISPLAYS
-            st.markdown("**PERFORMANCE**, _from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
             st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
             weeks = 26+1 - week
             bleed = int(H/weeks)
-            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} to hit 95%**')
+            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} weeks if you are to hit 95%**')
+            st.markdown("**_THIS TX_CURR**, is from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
             st.write(PERFORMANCE)
             st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
             st.table(bymonth)
@@ -455,7 +455,7 @@ if file is not None:
             cola.write(weekly)
             colb.write('**No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS**')
             colb.write(appt)
-            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, download this list and audit it first**')
+            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, scroll down to download this list and audit it first**')
             st.markdown(f'**Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST**')
             cole, colf = st.columns([1,1])
             cole.markdown('**RETURNED, NOT BLED**')
@@ -492,7 +492,40 @@ if df is not None:
 
     if __name__ == "__main__":
         main()
-        
+
+if df is not None:
+    def download_retuned(df):
+        st.write(f"<h6>DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED</h6>", unsafe_allow_html=True)
+
+        if df is not None:
+            dft = RETURNED.copy()
+            dft = dft[[ 'A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE']]
+            dft['RD'] = dft['RD'].replace('*', '/')
+            dft['RD1'] = dft['RD1'].replace('*', '/')
+            dft = dft.rename(columns = {'RD': 'RETURN DATE', 'RD1': 'RETURN DATE1','A': 'ART-NO.', 'DUE': 'VL STATUS'})
+            dft[['RD1month', 'RD1day']] = dft[['RD1month', 'RD1day']].apply(pd.to_numeric, errors = 'coerce')
+            dft = dft.sort_values(by = ['RD1month', 'RD1day'])
+            
+            csv_data = dft.to_csv(index=False)
+
+                    # Create a download button for each facility
+
+            st.download_button(key ='XXX'
+                        label=" DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED",
+                        data=csv_data,
+                        file_name=f"RETURNED_NOT_BLED.csv",
+                        mime="text/csv"
+                    )
+
+
+    def main():
+        # Call the download functions
+        download_returned(df)
+
+
+    if __name__ == "__main__":
+        main()
+
 if df is not None:
         ran = random.random()
         rand = round(ran,2)
