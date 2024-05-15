@@ -13,7 +13,6 @@ st.set_page_config(
 )
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 current_time = time.localtime()
-global week
 week = time.strftime("%U", current_time)
 week = int(week) + 1
 
@@ -334,8 +333,9 @@ if file is not None:
             CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
             MARCHm = CURRa[CURRa['Rmonth']==3].copy()
             CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
-            st.write(f'current week is {week}')
-            st.stop()
+            current_time = time.localtime()
+            week = time.strftime("%U", current_time)
+            week = int(week) + 1
             CURRm = CURRm[CURRm['WEEK'] < week].copy()
             CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
             ram = CURRm.shape[0]
