@@ -510,7 +510,7 @@ if df is not None:
 
                     # Create a download button for each facility
 
-            st.download_button(key ='XXX'
+            st.download_button(key ='XXX',
                         label=" DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED",
                         data=csv_data,
                         file_name=f"RETURNED_NOT_BLED.csv",
