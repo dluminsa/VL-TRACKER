@@ -508,7 +508,8 @@ if df is not None:
         if df is not None:
             dft = RETURNED.copy()
             dft = dft[[ 'A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE']]
-            dft = dft.rename(columns = {'RD': 'RETURN DATE', 'RD1': 'RETURN DATE1','A': 'ART-NO.', 'DUE': 'VL STATUS'})
+            dft['VD'] = dft['VD'].replace('NaT', '')
+            dft = dft.rename(columns = {'RD': 'RETURN DATE', 'RD1': 'RETURN DATE1','A': 'ART-NO.', 'DUE': 'VL STATUS', 'VD': 'VIRAL LOAD DATE'})
             dft[['RD1month', 'RD1day']] = dft[['RD1month', 'RD1day']].apply(pd.to_numeric, errors = 'coerce')
             dft = dft.sort_values(by = ['RD1month', 'RD1day'])
             
