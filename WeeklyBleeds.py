@@ -613,31 +613,10 @@ if df is not None:
     #SUBMISSION
 cre =  st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
 
-if credentials:
-    # Parse the credentials string
-    credentials_dict = {}
-    for line in credentials.split("\n"):
-        if line.strip() == "":
-            continue
-        key, value = line.split("=")
-        key = key.strip()
-        value = value.strip().replace('"', '').replace("\\n", "\n")  # Replace '\n' with newline character
-        credentials_dict[key] = value
-
-    # Create credentials object from the dictionary
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials_dict)
-
-    # Authorize Google Sheets API
-    client = gspread.authorize(creds)
-    st.write("Successfully authenticated with Google Sheets API.")
-    
-    # Now you can use the 'client' object to interact with Google Sheets
-    # For example:
-    # sheet = client.open("YourGoogleSheetName").sheet1
-    # st.write(sheet.get_all_records())
-    
-else:
-    st.error("Failed to load Google Application Credentials from Streamlit secrets.")
+try:
+    cre = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
+except KeyError:
+    st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
 
 
 
