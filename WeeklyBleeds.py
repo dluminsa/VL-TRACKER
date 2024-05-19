@@ -7,7 +7,7 @@ import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
-#from pathlib import Path
+from pathlib import Path
 from google.oauth2.service_account import Credentials
 
 st.set_page_config(
@@ -315,6 +315,17 @@ if file is not None:
             dfy['BWEEK'] = pd.to_numeric(dfy['BWEEK'], errors='coerce')
             dfg = pd.merge(dfy, TOTAL, on = 'BWEEK', how='outer')
             dfg = dfg.rename(columns = {'BWEEK': 'WEEK'})
+            efg = dfg.copy()
+            current_time = time.localtime()
+            week = time.strftime("%U", current_time)
+            week = int(week) + 1
+            w = week-1
+            we = efg[efg['WEEK']==w].copy()
+            test = we.shape[0]
+            if test==0:
+                we = 0
+            else:
+                we = int(we.iloc[0,1])
             dfg = dfg.set_index('WEEK')
             weekly = dfg.copy()
            
@@ -328,7 +339,6 @@ if file is not None:
             APPONT = CURR.copy()
             
             #NEW CODE..................
-
             #MISSED APPOINTMENT BUT DUE FOR VL
             CURRa = CURRa[CURRa['ELL'] == 'ELLIGIBLE'].copy()
             CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
@@ -397,6 +407,13 @@ if file is not None:
             appt = pd.merge(pivoappt, pivoapptd, on = 'WEEK', how='outer')
             appt['WEEK'] = pd.to_numeric(appt['WEEK'], errors = 'coerce')
             appt['WEEK.'] = appt.apply(lambda q: this(q['WEEK']),axis = 1)
+            next = week+1
+            ee = appt[appt['WEEK'] == next]
+            tes = ee.shape[0]
+            if tes==0:
+                el = 0
+            else:
+               el = int(ee.iloc[0,2])
             appt = appt.set_index('WEEK.')
             appt = appt.drop(columns = 'WEEK')
             
@@ -443,6 +460,8 @@ if file is not None:
             linelist = linelist.rename(columns = {'A': 'ART-NO', 'RD': 'RETURN DATE', 'VD': 'VIRAL LOAD DATE', 'AS':'ART START'})
             linelist[['Ryear', 'Rmonth', 'Rday']] = linelist[['Ryear', 'Rmonth', 'Rday']].apply(pd.to_numeric, errors='coerce')
             linelist = linelist.sort_values(by = ['Ryear', 'Rmonth', 'Rday'])
+            #
+            #DUE FOR VL PER MONTH
             bymonth = pd.pivot_table(linelist, index='Rmonth', values= 'ART-NO', aggfunc='count')
             bymonth = bymonth.reset_index()
             bymonth = bymonth.rename(columns={'ART-NO': 'DUE PER MONTH', 'Rmonth':'MONTH'})
@@ -473,7 +492,7 @@ if file is not None:
             colf.markdown('**MISSED, DUE FOR VL**')
             colf.write(pivotmissed)
             st.markdown('**Sample linelist**')
-            st.write(linelist.head(10))
+            st.write(linelist.head(5))
             #st.write(appt)
     
 
@@ -525,13 +544,9 @@ if df is not None:
                         file_name=f"RETURNED_NOT_BLED.csv",
                         mime="text/csv"
                     )
-
-
     def main():
         # Call the download functions
         download_returned(df)
-
-
     if __name__ == "__main__":
         main()
 
@@ -543,7 +558,6 @@ if df is not None:
     #if st.button('DOWNLOAD CURRENT LINELIST'):
         wb = Workbook()
         ws = wb.active
-
         # Convert DataFrame to Excel
         for r_idx, row in enumerate(linelist.iterrows(), start=1):
             for c_idx, value in enumerate(row[1], start=1):
@@ -596,7 +610,67 @@ if df is not None:
             file_contents = f.read()
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #SUBMISSION
+cre = "vl-tracking-4ecf6d6b9884.json"
+scope = ['https://spreadsheets.google.com/feeds',
+         'https://www.googleapis.com/auth/drive']
+
+creds = ServiceAccountCredentials.from_json_keyfile_name(cre, scope)
+client = gspread.authorize(creds)
+
+# Open the Google Sheet by its title
+#sheet = client.open("VL").sheet1
+sheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8/edit#gid=0")
+ws = sheet.get_worksheet(0)
+if df is not None:
+    if 'ent' not in st.session_state:
+        st.session_state.ent = ''
+
+    # Create two equal columns
+    cola, colb = st.columns([1, 1])
+
+    # Text input in the first column
+    st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
+                                        value=st.session_state.ent, 
+                                        placeholder="e.g Mateete HCIII")
+
+    # Button in the second column
+    submit = colb.button('Submit')      
+    A=Facility = st.session_state.ent  
+    B=WEEK = week-1
+    c=TX_CURR = a
+    D=NO_WITH_VL = E
+    e=VL_COV = G
+    f=BALANCE_TO_95 =H
+    g=TOTAL_DUE_FOR_VL = d
+    h=No_OF_BLEEDS_IN_THE_WEEK = we
+    i=ON_APPT_NEXT_WEEK_DUE = el
+    j=ADJUSTED_WEEKLY_TARGET = bleed
+    k=No_RETURNED_NOT_BLED = r
+    l=MISSED_APPT_BUT_DUE = rm
+
+    if submit:
+        ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
+        #st.write(f'You entered {st.session_state.ent}')
+        def submission():
+            return pd.DataFrame({'Facility': [Facility],
+                                    'WEEK':[B],
+                                    'TX_CURR':[a],
+                                    'NO_WITH_VL':[E],
+                                    'VL_COV': [G],
+                                    'BALANCE_TO_95':[H],
+                                    'TOTAL_DUE_FOR_VL': [d],
+                                    'No_OF_BLEEDS_IN_THE_WEEK' : [we],
+                                    'ON_APPT_NEXT_WEEK_DUE': [el],
+                                    'ADJUSTED_WEEKLY_TARGET' : [bleed],
+                                    'No_RETURNED_NOT_BLED' : [r],
+                                    'MISSED_APPT_BUT_DUE' : [rm]
+                                })
         
+        submitted = submission()
+        #submitted = submitted.set_index('FACILITY')
+        st.success('Success, submission complete, take a look at what has been submitted')
+        st.table(submitted)
 
 
 
