@@ -613,10 +613,10 @@ if df is not None:
     #SUBMISSION
 #cre =  st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
 
-# try:
-#     cre = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
-# except KeyError:
-#     st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
+try:
+    cre = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
+except KeyError:
+    st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
 
 
 
