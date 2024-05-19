@@ -4,3 +4,4 @@ numpy
 streamlit
 gspread
 google-auth
+st-gsheets-connection
