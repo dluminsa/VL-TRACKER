@@ -616,16 +616,10 @@ if df is not None:
             file_contents = f.read()
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    #SUBMISSION
-#cre =  st.secrets["GOOGLE_"]
+             
+                        #SUBMISSION
 
- try:
-     cre = st.secrets["connections.gsheets"]
- except KeyError:
-     st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
-
-
-
+ cre = st.secrets["connections.gsheets"]
  scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
