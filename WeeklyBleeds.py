@@ -1,7 +1,6 @@
 import streamlit as st 
 import pandas as pd
 import os
-a
 import gspread
 import random
 import numpy as np
@@ -416,6 +415,8 @@ if file is not None:
             else:
                 try:
                   el = int(ee.iloc[0,2])
+                except:
+                    el = 0
             appt = appt.set_index('WEEK.')
             appt = appt.drop(columns = 'WEEK')
             
