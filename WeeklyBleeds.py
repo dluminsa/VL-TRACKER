@@ -1,14 +1,15 @@
 import streamlit as st 
 import pandas as pd
 import os
-import gspread
+#import gspread
 import random
 import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
-from google.oauth2.service_account import Credentials
+#from google.oauth2.service_account import Credentials
+from streamlit_gsheets import GsheetsConnection
 
 st.set_page_config(
     page_title = 'VL TRACKER'
@@ -618,6 +619,10 @@ if df is not None:
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
                         #SUBMISSION
+conn = st.connection('gsheets', type=GsheetsConnection)
+
+data = conn.read(worksheet='VL', usecols = list(range(12)), ttl=5)
+st.write(data)
 
 # cre = st.secrets["connections.gsheets"]
 # scope = ['https://spreadsheets.google.com/feeds',
