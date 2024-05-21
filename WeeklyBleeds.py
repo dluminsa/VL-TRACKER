@@ -619,8 +619,8 @@ if df is not None:
              
                         #SUBMISSION
 
- cre = st.secrets["connections.gsheets"]
- scope = ['https://spreadsheets.google.com/feeds',
+cre = st.secrets["connections.gsheets"]
+scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
 creds = ServiceAccountCredentials.from_json_keyfile_name(cre, scope)
