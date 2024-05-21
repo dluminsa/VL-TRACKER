@@ -9,7 +9,7 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
 #from google.oauth2.service_account import Credentials
-from streamlit_gsheets import GsheetsConnection
+from streamlit_gsheets import GSheetsConnection
 
 st.set_page_config(
     page_title = 'VL TRACKER'
