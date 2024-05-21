@@ -619,7 +619,7 @@ if df is not None:
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
                         #SUBMISSION
-conn = st.connection('gsheets', type=GsheetsConnection)
+conn = st.connection('gsheets', type=GSheetsConnection)
 
 data = conn.read(worksheet='VL', usecols = list(range(12)), ttl=5)
 st.write(data)
