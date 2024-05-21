@@ -5,4 +5,4 @@ streamlit
 gspread
 google-auth
 st-gsheets-connection
-streamlit-gsheets
+git+https://github.com/streamlit/gsheets-connection
