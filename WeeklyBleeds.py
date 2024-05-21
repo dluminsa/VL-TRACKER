@@ -325,7 +325,10 @@ if file is not None:
             if test==0:
                 we = 0
             else:
-                we = int(we.iloc[0,1])
+                try:
+                  we = int(we.iloc[0,1])
+                except:
+                    we = 0
             dfg = dfg.set_index('WEEK')
             weekly = dfg.copy()
            
