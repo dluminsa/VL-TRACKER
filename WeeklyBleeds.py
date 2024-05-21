@@ -617,12 +617,12 @@ if df is not None:
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     #SUBMISSION
-#cre =  st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
+#cre =  st.secrets["GOOGLE_"]
 
-# try:
-#     cre = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
-# except KeyError:
-#     st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
+ try:
+     cre = st.secrets["connections.gsheets"]
+ except KeyError:
+     st.error("Secret 'GOOGLE_APPLICATION_CREDENTIALS' not found.")
 
 
 
