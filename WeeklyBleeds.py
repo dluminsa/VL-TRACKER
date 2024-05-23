@@ -1,14 +1,14 @@
 import streamlit as st 
 import pandas as pd
 import os
-#import gspread
+import gspread
 import random
 import numpy as np
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
-#from google.oauth2.service_account import Credentials
+from google.oauth2.service_account import Credentials
 from streamlit_gsheets import GSheetsConnection
 
 st.set_page_config(
@@ -619,6 +619,7 @@ if df is not None:
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
 #                         #SUBMISSION
+
 credentials = {
     "type": st.secrets["connections.gsheets"]["type"],
     "project_id": st.secrets["connections.gsheets"]["project_id"],
@@ -631,6 +632,7 @@ credentials = {
     "auth_provider_x509_cert_url": st.secrets["connections.gsheets"]["auth_provider_x509_cert_url"],
     "client_x509_cert_url": st.secrets["connections.gsheets"]["client_x509_cert_url"]
 }
+
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials)
 client = gspread.authorize(credentials)
 
