@@ -640,10 +640,10 @@ scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/au
 creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
 
 #credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds)
-client = gspread.authorize(creds)
-
+gc = gspread.authorize(creds)
+sheet = gc.open_by_url('https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8')
 # Now you can use the `client` to interact with your Google Sheets
-sheet = client.open("VL").sheet1
+#sheet = client.open("VL").sheet1
 data = sheet.get_all_records()
 st.write(data)
 
