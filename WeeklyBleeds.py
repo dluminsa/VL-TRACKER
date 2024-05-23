@@ -639,8 +639,8 @@ dict = {
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
 
-#credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials)
-client = gspread.authorize(credentials)
+#credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds)
+client = gspread.authorize(creds)
 
 # Now you can use the `client` to interact with your Google Sheets
 sheet = client.open("VL").sheet1
