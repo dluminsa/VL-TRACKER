@@ -636,7 +636,7 @@ dict = {
         'auth_provider_x509_cert_url' : "https://www.googleapis.com/oauth2/v1/certs",
         'client_x509_cert_url' : "https://www.googleapis.com/robot/v1/metadata/x509/tracker%40vl-tracker-423614.iam.gserviceaccount.com",
         }
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
 
 #credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials)
