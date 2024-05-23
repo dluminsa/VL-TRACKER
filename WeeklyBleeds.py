@@ -9,6 +9,8 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
 from google.oauth2.service_account import Credentials
+from oauth2client.service_account import ServiceAccountCredentials
+import configparser
 from streamlit_gsheets import GSheetsConnection
 
 st.set_page_config(
