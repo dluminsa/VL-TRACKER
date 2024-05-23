@@ -624,7 +624,7 @@ if df is not None:
 
 dict = {
         'spreadsheet' : "https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8"
-        'worksheet' : "<worksheet-gid-or-folder-id>"  # worksheet GID is used when using Public Spreadsheet URL, when usign service_account it will be picked as folder_id
+        'worksheet' : "<worksheet-gid-or-folder-id>"  
         'type' : "service_account"  # leave empty when using Public Spreadsheet URL, when using service_account -> type = "service_account"
         'project_id' : "vl-tracker-423614"
         'private_key_id' : "751fa3295fc1597ab3a4cf5efca1fd33902844f6"
