@@ -621,17 +621,30 @@ if df is not None:
 #                         #SUBMISSION
 
 credentials = {
-    "type": st.secrets["connections.gsheets"]["type"],
-    "project_id": st.secrets["connections.gsheets"]["project_id"],
-    "private_key_id": st.secrets["connections.gsheets"]["private_key_id"],
-    "private_key": st.secrets["connections.gsheets"]["private_key"],
-    "client_email": st.secrets["connections.gsheets"]["client_email"],
-    "client_id": st.secrets["connections.gsheets"]["client_id"],
-    "auth_uri": st.secrets["connections.gsheets"]["auth_uri"],
-    "token_uri": st.secrets["connections.gsheets"]["token_uri"],
-    "auth_provider_x509_cert_url": st.secrets["connections.gsheets"]["auth_provider_x509_cert_url"],
-    "client_x509_cert_url": st.secrets["connections.gsheets"]["client_x509_cert_url"]
+    "type": st.secrets["connections"]["type"],
+    "project_id": st.secrets["connections"]["project_id"],
+    "private_key_id": st.secrets["connections"]["private_key_id"],
+    "private_key": st.secrets["connections"]["private_key"],
+    "client_email": st.secrets["connections"]["client_email"],
+    "client_id": st.secrets["connections"]["client_id"],
+    "auth_uri": st.secrets["connections"]["auth_uri"],
+    "token_uri": st.secrets["connections"]["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["connections"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["connections"]["client_x509_cert_url"]
 }
+
+# credentials = {
+#     "type": st.secrets["connections.gsheets"]["type"],
+#     "project_id": st.secrets["connections.gsheets"]["project_id"],
+#     "private_key_id": st.secrets["connections.gsheets"]["private_key_id"],
+#     "private_key": st.secrets["connections.gsheets"]["private_key"],
+#     "client_email": st.secrets["connections.gsheets"]["client_email"],
+#     "client_id": st.secrets["connections.gsheets"]["client_id"],
+#     "auth_uri": st.secrets["connections.gsheets"]["auth_uri"],
+#     "token_uri": st.secrets["connections.gsheets"]["token_uri"],
+#     "auth_provider_x509_cert_url": st.secrets["connections.gsheets"]["auth_provider_x509_cert_url"],
+#     "client_x509_cert_url": st.secrets["connections.gsheets"]["client_x509_cert_url"]
+# }
 
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials)
 client = gspread.authorize(credentials)
