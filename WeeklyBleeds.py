@@ -619,6 +619,28 @@ if df is not None:
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
 #                         #SUBMISSION
+credentials = {
+    "type": st.secrets["connections.gsheets"]["type"],
+    "project_id": st.secrets["connections.gsheets"]["project_id"],
+    "private_key_id": st.secrets["connections.gsheets"]["private_key_id"],
+    "private_key": st.secrets["connections.gsheets"]["private_key"],
+    "client_email": st.secrets["connections.gsheets"]["client_email"],
+    "client_id": st.secrets["connections.gsheets"]["client_id"],
+    "auth_uri": st.secrets["connections.gsheets"]["auth_uri"],
+    "token_uri": st.secrets["connections.gsheets"]["token_uri"],
+    "auth_provider_x509_cert_url": st.secrets["connections.gsheets"]["auth_provider_x509_cert_url"],
+    "client_x509_cert_url": st.secrets["connections.gsheets"]["client_x509_cert_url"]
+}
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(credentials)
+client = gspread.authorize(credentials)
+
+# Now you can use the `client` to interact with your Google Sheets
+sheet = client.open("VL").sheet1
+data = sheet.get_all_records()
+st.write(data)
+
+
+
 # conn = st.connection('gsheets', type=GSheetsConnection)
 
 # data = conn.read(worksheet='VL', usecols = list(range(12)), ttl=5)
