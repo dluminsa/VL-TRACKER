@@ -664,7 +664,7 @@ if df is not None:
                                     'No. RETURNED BUT NOT BLED' : [r],
                                     'MISSED APPT BUT DUE FOR VL' : [rm]
                                 })
-        st.write(updated)
+     st.write(updated)
      # updated = pd.concat([existing, updated], ignore_index =True)
      # conn.update(worksheet = 'VL', data = updated)
      # st.success('Your data has been submitted')
