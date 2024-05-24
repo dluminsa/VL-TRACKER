@@ -642,7 +642,7 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
 #credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds)
 gc = gspread.authorize(creds)
 sheet = gc.open_by_url('https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8')
-data = sheet.get_all_records()
+ws = sheet.get_worksheet(0)
 
 if df is not None:
     if 'ent' not in st.session_state:
