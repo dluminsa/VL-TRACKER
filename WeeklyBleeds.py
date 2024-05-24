@@ -622,7 +622,7 @@ conn = st.connection('gsheets', type=GSheetsConnection)
 exist = conn.read(worksheet ='VL', usecols = list(range(12)), ttl=5)
 existing = exist.dropna(how='all')
 
- if df is not None:
+if df is not None:
      if 'ent' not in st.session_state:
          st.session_state.ent = ''
 
@@ -650,7 +650,7 @@ existing = exist.dropna(how='all')
      No_RETURNED_NOT_BLED = r
      MISSED_APPT_BUT_DUE = rm
 
-    if submit:
+     if submit:
           updated = pd.DataFrame({'FACILITY': [Facility],
                                     'WEEK':[B],
                                     'TX_CURR':[a],
@@ -664,9 +664,9 @@ existing = exist.dropna(how='all')
                                     'No. RETURNED BUT NOT BLED' : [r],
                                     'MISSED APPT BUT DUE FOR VL' : [rm]
                                 })
-          updated = pd.concat([existing, updated], ignore_index =True)
-        conn.update(worksheet = 'VL', data = updated
-          st.success('Your data has been submitted')
+     updated = pd.concat([existing, updated], ignore_index =True)
+     conn.update(worksheet = 'VL', data = updated
+     st.success('Your data has been submitted')
        
 
 
