@@ -618,79 +618,79 @@ if df is not None:
         
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
-#                         #SUBMISSION
+                        #SUBMISSION
 
-# dict = {
-#         'spreadsheet' : "https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8",
-#         'worksheet' : "<worksheet-gid-or-folder-id>",  
-#         'type' : "service_account",  # leave empty when using Public Spreadsheet URL, when using service_account -> type = "service_account"
-#         'project_id' : "vl-tracker-423614",
-#         'private_key_id' : "751fa3295fc1597ab3a4cf5efca1fd33902844f6",
-#         'private_key' : "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC5QomlwB4O+k6+\nTbVff+r8OU6/393NZPOFStCkxERAzUQG9+ScxwKfYrdkGdb0Y0SW+nFxZuFcwGQe\npOuVwE+rp4KQdvRrSmR/xx6ebgYrt6dpoaJXbIPQujbo1pFFIsbEDXF4u/IPI6Eh\ne59er+qhXNtWEyVV623nmKqRi1oL4g9lt9WdLJHbi4pjUciQ2PxDcpg8Irniu8KD\nBDcEyjsXXZwtj9SuuMyYzoRK/cM/LU0bge9OSkmOetmOQhSW+GzGYk2ytsWTx+oB\nr8U8TuhEpUmcPTMOEsyw40rFw5ETHRHrZHBHEQScSthu1eWsDloK6ZDP8mhJ0b3o\nF5DZTQTlAgMBAAECggEADV9WFWVgS2dPfZvuhTcepI1UF8mxFl/yAQjVCyj8npXX\n0iNHeKFCg/PpoMY0YSh03WtfUBbORSDrs9eRMW/JKxmOCon/m2qqWvEp+WMf5bzI\nZDmjK37Se/j5DjEGGZCzUBhX/Lr088P4Cp/vBslux64uyeWGECU3O3H7u+zsYhzp\nbbXeVFeOOQ0FGcUAUlMqpIMaaMdcMDCi/hDZxpZTZ255xAarvW2UTpEuB/N4b9fq\nZUTul+M1IZFZje9xxDvvUyllt+KHq7DOnd+xB5m+3gJ53P0RqBbHF3KGFISqSJUg\n3FWHzKLxKf4lysNYCFdpg1Xac8UZxdYI4GsVU17KkQKBgQDrtwaSUSvr9RRBR03Q\nNW2K/mZFlCMeRhKkzktHVBQQ9Yu4OOWBDA+aqasOJ4R5Qbr36R4Ee8LjCDy+YlVR\nUZMsHtQarrloWBaz5YQ90JMJkUPLxNuTG9e5EPdcR2Zfe+liRDYbObMzgB9iGAp6\nfP9/7STEexjOCQZTly7Pk1ReEQKBgQDJM/NOAmyyMBYqk67Solkqo4RLDOIRHO3s\ncelGYNzNyGin5DVgc3WD4DQHeAjNMx/EF8wQ++AQXtRFcqCdf1xf1Wb2cvasYRwv\nvLOsAWUImq0l5VQyONsK6vqLwuSjfJ4hep0GEMIZl8WS1f7s8sadd0nLi2sncxVO\n4b5h7Gz1lQKBgQDWdz/ubxaEaQfV4TemgoY52gBZvFA7okwiUWTi8FgVmiRXKMWA\npeWotklh5oi8/xZLrHpYX/bRNNR38OZpx8wdb6tS37jofIWjhufMinLOWLKTu3iB\nH+smgo5eEsTNieOuOhv0p4oqCKAFU5RtIEAkODOk5c+K32E3Oy4nRYiU0QKBgQCK\nRdCMqO/oWVGyewHnMblTq0JsjXMDTb1ZBEPLoR+9sF/0Gcpw+YgmVDuNcnmiA+Nt\n0OjmNyMaPQFmpMsq0e860R7Med96QdasG+PibqbvjdU2uO7vANHQJAKBcDPPAwJt\ngaVOGNA75Gjca4Khdor2hpdJcgv29YkMR+mdxGxxLQKBgQDbqeTq1gNInrWU1xOx\nIv/vHykPJwiblayAibLwX0akzwgVvPomED9IlVx+FyPhZTVAGloyV2BkJGWzDbVS\n8NZH/CO+TfPshiM5O2For1sqQFVZM84/HuzK2C87Sxghz8GS0mP9jK8wI4Iav/K5\nj9ZwGGy3eIxRb0CGDa3L4so4Kg==\n-----END PRIVATE KEY-----\n",
-#         'client_email' : "tracker@vl-tracker-423614.iam.gserviceaccount.com",
-#         'client_id' : "116283674046529529799",
-#         'auth_uri' : "https://accounts.google.com/o/oauth2/auth",
-#         'token_uri' : "https://oauth2.googleapis.com/token",
-#         'auth_provider_x509_cert_url' : "https://www.googleapis.com/oauth2/v1/certs",
-#         'client_x509_cert_url' : "https://www.googleapis.com/robot/v1/metadata/x509/tracker%40vl-tracker-423614.iam.gserviceaccount.com",
-#         }
-# scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-# creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
+dict = {
+        'spreadsheet' : "https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8",
+        'worksheet' : "<worksheet-gid-or-folder-id>",  
+        'type' : "service_account",  # leave empty when using Public Spreadsheet URL, when using service_account -> type = "service_account"
+        'project_id' : "vl-tracker-423614",
+        'private_key_id' : "751fa3295fc1597ab3a4cf5efca1fd33902844f6",
+        'private_key' : "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC5QomlwB4O+k6+\nTbVff+r8OU6/393NZPOFStCkxERAzUQG9+ScxwKfYrdkGdb0Y0SW+nFxZuFcwGQe\npOuVwE+rp4KQdvRrSmR/xx6ebgYrt6dpoaJXbIPQujbo1pFFIsbEDXF4u/IPI6Eh\ne59er+qhXNtWEyVV623nmKqRi1oL4g9lt9WdLJHbi4pjUciQ2PxDcpg8Irniu8KD\nBDcEyjsXXZwtj9SuuMyYzoRK/cM/LU0bge9OSkmOetmOQhSW+GzGYk2ytsWTx+oB\nr8U8TuhEpUmcPTMOEsyw40rFw5ETHRHrZHBHEQScSthu1eWsDloK6ZDP8mhJ0b3o\nF5DZTQTlAgMBAAECggEADV9WFWVgS2dPfZvuhTcepI1UF8mxFl/yAQjVCyj8npXX\n0iNHeKFCg/PpoMY0YSh03WtfUBbORSDrs9eRMW/JKxmOCon/m2qqWvEp+WMf5bzI\nZDmjK37Se/j5DjEGGZCzUBhX/Lr088P4Cp/vBslux64uyeWGECU3O3H7u+zsYhzp\nbbXeVFeOOQ0FGcUAUlMqpIMaaMdcMDCi/hDZxpZTZ255xAarvW2UTpEuB/N4b9fq\nZUTul+M1IZFZje9xxDvvUyllt+KHq7DOnd+xB5m+3gJ53P0RqBbHF3KGFISqSJUg\n3FWHzKLxKf4lysNYCFdpg1Xac8UZxdYI4GsVU17KkQKBgQDrtwaSUSvr9RRBR03Q\nNW2K/mZFlCMeRhKkzktHVBQQ9Yu4OOWBDA+aqasOJ4R5Qbr36R4Ee8LjCDy+YlVR\nUZMsHtQarrloWBaz5YQ90JMJkUPLxNuTG9e5EPdcR2Zfe+liRDYbObMzgB9iGAp6\nfP9/7STEexjOCQZTly7Pk1ReEQKBgQDJM/NOAmyyMBYqk67Solkqo4RLDOIRHO3s\ncelGYNzNyGin5DVgc3WD4DQHeAjNMx/EF8wQ++AQXtRFcqCdf1xf1Wb2cvasYRwv\nvLOsAWUImq0l5VQyONsK6vqLwuSjfJ4hep0GEMIZl8WS1f7s8sadd0nLi2sncxVO\n4b5h7Gz1lQKBgQDWdz/ubxaEaQfV4TemgoY52gBZvFA7okwiUWTi8FgVmiRXKMWA\npeWotklh5oi8/xZLrHpYX/bRNNR38OZpx8wdb6tS37jofIWjhufMinLOWLKTu3iB\nH+smgo5eEsTNieOuOhv0p4oqCKAFU5RtIEAkODOk5c+K32E3Oy4nRYiU0QKBgQCK\nRdCMqO/oWVGyewHnMblTq0JsjXMDTb1ZBEPLoR+9sF/0Gcpw+YgmVDuNcnmiA+Nt\n0OjmNyMaPQFmpMsq0e860R7Med96QdasG+PibqbvjdU2uO7vANHQJAKBcDPPAwJt\ngaVOGNA75Gjca4Khdor2hpdJcgv29YkMR+mdxGxxLQKBgQDbqeTq1gNInrWU1xOx\nIv/vHykPJwiblayAibLwX0akzwgVvPomED9IlVx+FyPhZTVAGloyV2BkJGWzDbVS\n8NZH/CO+TfPshiM5O2For1sqQFVZM84/HuzK2C87Sxghz8GS0mP9jK8wI4Iav/K5\nj9ZwGGy3eIxRb0CGDa3L4so4Kg==\n-----END PRIVATE KEY-----\n",
+        'client_email' : "tracker@vl-tracker-423614.iam.gserviceaccount.com",
+        'client_id' : "116283674046529529799",
+        'auth_uri' : "https://accounts.google.com/o/oauth2/auth",
+        'token_uri' : "https://oauth2.googleapis.com/token",
+        'auth_provider_x509_cert_url' : "https://www.googleapis.com/oauth2/v1/certs",
+        'client_x509_cert_url' : "https://www.googleapis.com/robot/v1/metadata/x509/tracker%40vl-tracker-423614.iam.gserviceaccount.com",
+        }
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_dict(dict, scope)
 
-# #credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds)
-# gc = gspread.authorize(creds)
-# sheet = gc.open_by_url('https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8')
-# ws = sheet.get_worksheet(0)
+#credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds)
+gc = gspread.authorize(creds)
+sheet = gc.open_by_url('https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8')
+ws = sheet.get_worksheet(0)
 
-# if df is not None:
-#     if 'ent' not in st.session_state:
-#         st.session_state.ent = ''
+if df is not None:
+    if 'ent' not in st.session_state:
+        st.session_state.ent = ''
 
-#     # Create two equal columns
-#     cola, colb = st.columns([1, 1])
+    # Create two equal columns
+    cola, colb = st.columns([1, 1])
 
-#     # Text input in the first column
-#     st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
-#                                         value=st.session_state.ent, 
-#                                         placeholder="e.g Mateete HCIII")
+    # Text input in the first column
+    st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
+                                        value=st.session_state.ent, 
+                                        placeholder="e.g Mateete HCIII")
 
-#     # Button in the second column
-#     submit = colb.button('Submit')      
-#     A=Facility = st.session_state.ent  
-#     B=WEEK = week-1
-#     c=TX_CURR = a
-#     D=NO_WITH_VL = E
-#     e=VL_COV = G
-#     f=BALANCE_TO_95 =H
-#     g=TOTAL_DUE_FOR_VL = d
-#     h=No_OF_BLEEDS_IN_THE_WEEK = we
-#     i=ON_APPT_NEXT_WEEK_DUE = el
-#     j=ADJUSTED_WEEKLY_TARGET = bleed
-#     k=No_RETURNED_NOT_BLED = r
-#     l=MISSED_APPT_BUT_DUE = rm
+    # Button in the second column
+    submit = colb.button('Submit')      
+    A=Facility = st.session_state.ent  
+    B=WEEK = week-1
+    c=TX_CURR = a
+    D=NO_WITH_VL = E
+    e=VL_COV = G
+    f=BALANCE_TO_95 =H
+    g=TOTAL_DUE_FOR_VL = d
+    h=No_OF_BLEEDS_IN_THE_WEEK = we
+    i=ON_APPT_NEXT_WEEK_DUE = el
+    j=ADJUSTED_WEEKLY_TARGET = bleed
+    k=No_RETURNED_NOT_BLED = r
+    l=MISSED_APPT_BUT_DUE = rm
 
-#     if submit:
-#         ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
-#         #st.write(f'You entered {st.session_state.ent}')
-#         def submission():
-#             return pd.DataFrame({'Facility': [Facility],
-#                                     'WEEK':[B],
-#                                     'TX_CURR':[a],
-#                                     'NO_WITH_VL':[E],
-#                                     'VL_COV': [G],
-#                                     'BALANCE_TO_95':[H],
-#                                     'TOTAL_DUE_FOR_VL': [d],
-#                                     'No_OF_BLEEDS_IN_THE_WEEK' : [we],
-#                                     'ON_APPT_NEXT_WEEK_DUE': [el],
-#                                     'ADJUSTED_WEEKLY_TARGET' : [bleed],
-#                                     'No_RETURNED_NOT_BLED' : [r],
-#                                     'MISSED_APPT_BUT_DUE' : [rm]
-#                                 })
+    if submit:
+        ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
+        #st.write(f'You entered {st.session_state.ent}')
+        def submission():
+            return pd.DataFrame({'Facility': [Facility],
+                                    'WEEK':[B],
+                                    'TX_CURR':[a],
+                                    'NO_WITH_VL':[E],
+                                    'VL_COV': [G],
+                                    'BALANCE_TO_95':[H],
+                                    'TOTAL_DUE_FOR_VL': [d],
+                                    'No_OF_BLEEDS_IN_THE_WEEK' : [we],
+                                    'ON_APPT_NEXT_WEEK_DUE': [el],
+                                    'ADJUSTED_WEEKLY_TARGET' : [bleed],
+                                    'No_RETURNED_NOT_BLED' : [r],
+                                    'MISSED_APPT_BUT_DUE' : [rm]
+                                })
         
-#         submitted = submission()
-#         #submitted = submitted.set_index('FACILITY')
-#         st.success('Success, submission complete, take a look at what has been submitted')
-#         st.table(submitted)
+        submitted = submission()
+        #submitted = submitted.set_index('FACILITY')
+        st.success('Success, submission complete, take a look at what has been submitted')
+        st.table(submitted)
 
 
 
