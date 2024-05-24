@@ -670,28 +670,28 @@ if df is not None:
     k=No_RETURNED_NOT_BLED = r
     l=MISSED_APPT_BUT_DUE = rm
 
-    if submit:
-        ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
-        #st.write(f'You entered {st.session_state.ent}')
-        def submission():
-            return pd.DataFrame({'Facility': [Facility],
-                                    'WEEK':[B],
-                                    'TX_CURR':[a],
-                                    'NO_WITH_VL':[E],
-                                    'VL_COV': [G],
-                                    'BALANCE_TO_95':[H],
-                                    'TOTAL_DUE_FOR_VL': [d],
-                                    'No_OF_BLEEDS_IN_THE_WEEK' : [we],
-                                    'ON_APPT_NEXT_WEEK_DUE': [el],
-                                    'ADJUSTED_WEEKLY_TARGET' : [bleed],
-                                    'No_RETURNED_NOT_BLED' : [r],
-                                    'MISSED_APPT_BUT_DUE' : [rm]
-                                })
+    # if submit:
+    #     ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
+    #     #st.write(f'You entered {st.session_state.ent}')
+    #     def submission():
+    #         return pd.DataFrame({'Facility': [Facility],
+    #                                 'WEEK':[B],
+    #                                 'TX_CURR':[a],
+    #                                 'NO_WITH_VL':[E],
+    #                                 'VL_COV': [G],
+    #                                 'BALANCE_TO_95':[H],
+    #                                 'TOTAL_DUE_FOR_VL': [d],
+    #                                 'No_OF_BLEEDS_IN_THE_WEEK' : [we],
+    #                                 'ON_APPT_NEXT_WEEK_DUE': [el],
+    #                                 'ADJUSTED_WEEKLY_TARGET' : [bleed],
+    #                                 'No_RETURNED_NOT_BLED' : [r],
+    #                                 'MISSED_APPT_BUT_DUE' : [rm]
+    #                             })
         
-        submitted = submission()
-        #submitted = submitted.set_index('FACILITY')
-        st.success('Success, submission complete, take a look at what has been submitted')
-        st.table(submitted)
+    #     submitted = submission()
+    #     #submitted = submitted.set_index('FACILITY')
+    #     st.success('Success, submission complete, take a look at what has been submitted')
+    #     st.table(submitted)
 
 
 
