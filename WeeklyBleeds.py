@@ -621,55 +621,53 @@ if df is not None:
 conn = st.connection('gsheets', type=GSheetsConnection)
 exist = conn.read(worksheet ='VL', usecols = list(range(12)), ttl=5)
 existing = exist.dropna(how='all')
-st.dataframe(existing)
 
-#  if df is not None:
-#      if 'ent' not in st.session_state:
-#          st.session_state.ent = ''
+ if df is not None:
+     if 'ent' not in st.session_state:
+         st.session_state.ent = ''
 
-# #     # Create two equal columns
-#      cola, colb = st.columns([1, 1])
+#     # Create two equal columns
+     cola, colb = st.columns([1, 1])
 
-# #     # Text input in the first column
-#      st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
-#                                          value=st.session_state.ent, 
-#                                          placeholder="e.g Mateete HCIII")
+#     # Text input in the first column
+     st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
+                                         value=st.session_state.ent, 
+                                         placeholder="e.g Mateete HCIII")
 
-# #     # Button in the second column
-#      submit = colb.button('Submit') 
+#     # Button in the second column
+     submit = colb.button('Submit') 
   
-#      Facility = st.session_state.ent  
-#      WEEK = week-1
-#      TX_CURR = a
-#      NO_WITH_VL = E
-#      VL_COV = G
-#      BALANCE_TO_95 =H
-#      TOTAL_DUE_FOR_VL = d
-#      No_OF_BLEEDS_IN_THE_WEEK = we
-#      ON_APPT_NEXT_WEEK_DUE = el
-#      ADJUSTED_WEEKLY_TARGET = bleed
-#      No_RETURNED_NOT_BLED = r
-#      MISSED_APPT_BUT_DUE = rm
+     Facility = st.session_state.ent  
+     WEEK = week-1
+     TX_CURR = a
+     NO_WITH_VL = E
+     VL_COV = G
+     BALANCE_TO_95 =H
+     TOTAL_DUE_FOR_VL = d
+     No_OF_BLEEDS_IN_THE_WEEK = we
+     ON_APPT_NEXT_WEEK_DUE = el
+     ADJUSTED_WEEKLY_TARGET = bleed
+     No_RETURNED_NOT_BLED = r
+     MISSED_APPT_BUT_DUE = rm
 
-#     if submit:
+    if submit:
+          updated = pd.DataFrame({'FACILITY': [Facility],
+                                    'WEEK':[B],
+                                    'TX_CURR':[a],
+                                    'NO_WITH_VL':[E],
+                                    'VL COV': [G],
+                                    'BALANCE_TO 95':[H],
+                                    'TOTAL UNMET IN THIS EMR EXTRACT': [d],
+                                    'No. OF BLEEDS IN THE WEEK' : [we],
+                                    'No.ON APPT NEXT WEEK THAT ARE DUE FOR VL': [el],
+                                    'ADJUSTED WEEKLY TARGET' : [bleed],
+                                    'No. RETURNED BUT NOT BLED' : [r],
+                                    'MISSED APPT BUT DUE FOR VL' : [rm]
+                                })
+          updated = pd.concat([existing, updated], ignore_index =True)
+        conn.update(worksheet = 'VL', data = updated
+          st.success('Your data has been submitted')
        
-#             updated = pd.DataFrame({'FACILITY': [Facility],
-#                                     'WEEK':[B],
-#                                     'TX_CURR':[a],
-#                                     'NO_WITH_VL':[E],
-#                                     'VL COV': [G],
-#                                     'BALANCE_TO 95':[H],
-#                                     'TOTAL UNMET IN THIS EMR EXTRACT': [d],
-#                                     'No. OF BLEEDS IN THE WEEK' : [we],
-#                                     'No.ON APPT NEXT WEEK THAT ARE DUE FOR VL': [el],
-#                                     'ADJUSTED WEEKLY TARGET' : [bleed],
-#                                     'No. RETURNED BUT NOT BLED' : [r],
-#                                     'MISSED APPT BUT DUE FOR VL' : [rm]
-#                                 })
-          #updated = pd.concat([exissting, updated], ignore_index =True)
-#         conn.update(worksheet = 'VL', data = updated
-          #st.success('Your data has been submitted')
-#        
 
 
 
