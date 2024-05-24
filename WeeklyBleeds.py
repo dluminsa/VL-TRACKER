@@ -652,7 +652,7 @@ if df is not None:
 
      if submit:
           updated = pd.DataFrame({'FACILITY': [Facility],
-                                    'WEEK':[B],
+                                    'WEEK':[WEEK],
                                     'TX_CURR':[a],
                                     'NO_WITH_VL':[E],
                                     'VL COV': [G],
