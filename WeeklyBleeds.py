@@ -69,19 +69,19 @@ if file is not None:
             #CONVERTING DATES TO STRINGS
             df[['AS', 'RD', 'VD','VD1','RD1']] = df[['AS', 'RD', 'VD', 'VD1','RD1']].astype(str)
 
-            df['AS'] = df['AS'].str.replace('/', '*')
-            df['RD'] = df['RD'].str.replace('/', '*')
-            df['VD'] = df['VD'].str.replace('/', '*')
-            #df['LD'] = df['LD'].str.replace('/', '*')
-            df['RD1'] = df['RD1'].str.replace('/', '*')
-            df['VD1'] = df['VD1'].str.replace('/', '*')
+            df['AS'] = df['AS'].str.replace('/', '*', regex=True)
+            df['RD'] = df['RD'].str.replace('/', '*', regex=True)
+            df['VD'] = df['VD'].str.replace('/', '*',regex=True)
+            #df['LD'] = df['LD'].str.replace('/', '*',regex=True)
+            df['RD1'] = df['RD1'].str.replace('/', '*',regex=True)
+            df['VD1'] = df['VD1'].str.replace('/', '*',regex=True)
 
-            df['AS'] = df['AS'].str.replace('-', '*')
-            df['RD'] = df['RD'].str.replace('-', '*')
-            df['VD'] = df['VD'].str.replace('-', '*')
-            #df['LD'] = df['LD'].str.replace('-', '*')
-            df['RD1'] = df['RD1'].str.replace('-', '*')
-            df['VD1'] = df['VD1'].str.replace('-', '*')
+            df['AS'] = df['AS'].str.replace('-', '*',regex=True)
+            df['RD'] = df['RD'].str.replace('-', '*',regex=True)
+            df['VD'] = df['VD'].str.replace('-', '*',regex=True)
+            #df['LD'] = df['LD'].str.replace('-', '*',regex=True)
+            df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
+            df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
 
             df['AS'] = df['AS'].str.replace('00:00:00', '')
             df['RD'] = df['RD'].str.replace('00:00:00', '')
@@ -97,12 +97,12 @@ if file is not None:
             df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
             df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
 
-            df['AS'] = df['AS'].str.replace('*', '/')
-            df['RD'] = df['RD'].str.replace('*', '/')
-            df['VD'] = df['VD'].str.replace('*', '/')
-            #df['LD'] = df['LD'].str.replace('*', '/')
-            df['RD1'] = df['RD1'].str.replace('*', '/')
-            df['VD1'] = df['VD1'].str.replace('*', '/')
+            df['AS'] = df['AS'].str.replace('*', '/',regex=True)
+            df['RD'] = df['RD'].str.replace('*', '/',regex=True)
+            df['VD'] = df['VD'].str.replace('*', '/',regex=True)
+            #df['LD'] = df['LD'].str.replace('*', '/',regex=True)
+            df['RD1'] = df['RD1'].str.replace('*', '/',regex=True)
+            df['VD1'] = df['VD1'].str.replace('*', '/',regex=True)
 
 
             #SORTING THE VIRAL LOAD YEARS
