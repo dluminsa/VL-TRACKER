@@ -618,7 +618,7 @@ if df is not None:
         st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
                         #SUBMISSION
- conn = st.connection('gsheets', type=GSheetsConnection)
+conn = st.connection('gsheets', type=GSheetsConnection)
 exist = conn.read(worksheet ='VL', usecols = list(range(12)), ttl=5)
 existing = existing.dropna(how='all')
 st.dataframe(existing)
