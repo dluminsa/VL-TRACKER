@@ -651,7 +651,7 @@ if df is not None:
      MISSED_APPT_BUT_DUE = rm
 
      if submit:
-          updated = pd.DataFrame({'FACILITY': [Facility],
+          details = pd.DataFrame({'FACILITY': [Facility],
                                     'WEEK':[WEEK],
                                     'TX_CURR':[a],
                                     'No. WITH VL':[E],
@@ -664,11 +664,11 @@ if df is not None:
                                     'No. RETURNED BUT NOT BLED' : [r],
                                     'MISSED APPT BUT DUE FOR VL' : [rm]
                                 })
-          st.write(updated)
-          updated = pd.concat([existing, updated], ignore_index =True)
+          #st.write(updated)
+          updated = pd.concat([existing, details], ignore_index =True)
           conn.update(worksheet = 'VL', data = updated)
-          st.success('Your data has been submitted')
-       
+          st.success('Your data has been submitted, view it below:')
+          st.table(details)
 
 
 
