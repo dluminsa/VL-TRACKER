@@ -11,8 +11,7 @@ from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
 
 st.set_page_config(
-    page_title = 'VL TRACKER',
-    layout = 'wide'
+    page_title = 'VL TRACKER'
 )
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 current_time = time.localtime()
