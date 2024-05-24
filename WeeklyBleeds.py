@@ -620,7 +620,7 @@ if df is not None:
                         #SUBMISSION
 conn = st.connection('gsheets', type=GSheetsConnection)
 exist = conn.read(worksheet ='VL', usecols = list(range(12)), ttl=5)
-#existing = existing.dropna(how='all')
+existing = exist.dropna(how='all')
 st.dataframe(existing)
 
 #  if df is not None:
