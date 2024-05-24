@@ -643,32 +643,32 @@ gc = gspread.authorize(creds)
 sheet = gc.open_by_url('https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8')
 ws = sheet.get_worksheet(0)
 
-if df is not None:
-    if 'ent' not in st.session_state:
-        st.session_state.ent = ''
+# if df is not None:
+#     if 'ent' not in st.session_state:
+#         st.session_state.ent = ''
 
-    # Create two equal columns
-    cola, colb = st.columns([1, 1])
+#     # Create two equal columns
+#     cola, colb = st.columns([1, 1])
 
-    # Text input in the first column
-    st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
-                                        value=st.session_state.ent, 
-                                        placeholder="e.g Mateete HCIII")
+#     # Text input in the first column
+#     st.session_state.ent = cola.text_input('Enter name of the facility here and press Enter', 
+#                                         value=st.session_state.ent, 
+#                                         placeholder="e.g Mateete HCIII")
 
-    # Button in the second column
-    submit = colb.button('Submit')      
-    A=Facility = st.session_state.ent  
-    B=WEEK = week-1
-    c=TX_CURR = a
-    D=NO_WITH_VL = E
-    e=VL_COV = G
-    f=BALANCE_TO_95 =H
-    g=TOTAL_DUE_FOR_VL = d
-    h=No_OF_BLEEDS_IN_THE_WEEK = we
-    i=ON_APPT_NEXT_WEEK_DUE = el
-    j=ADJUSTED_WEEKLY_TARGET = bleed
-    k=No_RETURNED_NOT_BLED = r
-    l=MISSED_APPT_BUT_DUE = rm
+#     # Button in the second column
+#     submit = colb.button('Submit')      
+#     A=Facility = st.session_state.ent  
+#     B=WEEK = week-1
+#     c=TX_CURR = a
+#     D=NO_WITH_VL = E
+#     e=VL_COV = G
+#     f=BALANCE_TO_95 =H
+#     g=TOTAL_DUE_FOR_VL = d
+#     h=No_OF_BLEEDS_IN_THE_WEEK = we
+#     i=ON_APPT_NEXT_WEEK_DUE = el
+#     j=ADJUSTED_WEEKLY_TARGET = bleed
+#     k=No_RETURNED_NOT_BLED = r
+#     l=MISSED_APPT_BUT_DUE = rm
 
     # if submit:
     #     ws.append_row([A,B,c,D,e,f,g,h,i,j,k,l])
