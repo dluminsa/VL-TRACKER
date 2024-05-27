@@ -47,7 +47,7 @@ KYOTERA ={'Kabira HC III GOVT':1171,
 
 RAKAI = {'Buyamba HC III':892,
          'Byakabanda HC III':181,'Kacheera HC III':478,'Kibaale HC II GOVT':547,'Kibanda HC III':292,'Kimuli HC III':567,'Kifamba HC III':326,
-         'Kyalulangira HC III':365,'Lwamaggwa Ngo HC II':980,'Lwanda HC III':750,'Rakai Hospital':3075,'Rakai Kiziba HC II GOVT':387}
+         'Kyalulangira HC III':365,'Lwamaggwa Gvt HC III':980,'Lwanda HC III':750,'Rakai Hospital':3075,'Rakai Kiziba HC II GOVT':387}
 
 GOMBA= {'Buyanja  HC II (Gomba)': 110,'Gomba Kanoni HC III GOVT': 1289,'Kifampa HC III': 860,'Kisozi HC III GOVT':390,
         'Kyai HC III': 364,'Maddu HC IV': 1999,'Mamba HC II':304,'Mpenja HC III': 405,'Ngomanene HC II': 99}
