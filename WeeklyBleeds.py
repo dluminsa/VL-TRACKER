@@ -103,9 +103,21 @@ if file is not None:
             #df['LD'] = df['LD'].str.replace('00:00:00', '', regex=True)
             df['RD1'] = df['RD1'].str.replace('00:00:00', '', regex=True)
             df['VD1'] = df['VD1'].str.replace('00:00:00', '',regex=True)
-
+            
             df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
-            df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
+            try:
+                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
+            except:
+                df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
+                df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
+                df['RD'] =  df['RD'].astype(str)
+                df['RD'] = df['RD'].str.replace('-', '*',regex=True)
+                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
+            # df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
+            # 
+            # df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
+            # df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
+            # df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')   
             df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
             #df[['Lyear', 'Lmonth', 'Lday']] = df['LD'].str.split('*', expand = True)
             df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
