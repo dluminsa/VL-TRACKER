@@ -103,8 +103,14 @@ if file is not None:
             #df['LD'] = df['LD'].str.replace('00:00:00', '', regex=True)
             df['RD1'] = df['RD1'].str.replace('00:00:00', '', regex=True)
             df['VD1'] = df['VD1'].str.replace('00:00:00', '',regex=True)
-            
-            df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
+            try:
+                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
+            except:
+                df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
+                df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
+                df['AS'] =  df['AS'].astype(str)
+                df['AS'] = df['AS'].str.replace('-', '*',regex=True)
+                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
             try:
                 df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
             except:
