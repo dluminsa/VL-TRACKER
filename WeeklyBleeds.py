@@ -32,7 +32,7 @@ col2.markdown('Rename the **RETURN VISIT DATE_1** column to **RD1**')
 col3.markdown('Rename the **HIV VIRAL LOAD DATE** column to **VD**')
 col3.markdown('Rename the **HIV VIRAL LOAD DATE_1** column to **VD1**')
 
-file = st.file_uploader(':file_folder: Upload a file', label='Upload your EMR extract here')
+file = st.file_uploader("Upload your EMR  extract", label='Upload your EMR extract here')
 
 ext = None
 if file is not None:
