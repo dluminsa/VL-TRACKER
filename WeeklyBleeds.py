@@ -68,18 +68,19 @@ if file is not None:
             df = df.copy()
             
             #CONVERTING DATES TO STRINGS
-            df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
-            df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
-            df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
-            df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
-            df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
+            #  df['RD1'] =  df['RD1'].astype(str)
+            # df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
+            # df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
+            # df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
+            # df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
+            # df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
            
             
-            df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
-            df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
-            df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
-            df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
-            df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
+            # df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
+            # df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
+            # df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
+            # df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
+            # df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
             df[['AS', 'RD', 'VD','VD1','RD1']] = df[['AS', 'RD', 'VD', 'VD1','RD1']].astype(str)
 
             df['AS'] = df['AS'].str.replace('/', '*', regex=True)
