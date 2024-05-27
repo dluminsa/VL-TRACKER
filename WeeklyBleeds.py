@@ -67,6 +67,11 @@ if file is not None:
             #st.write(df.shape[0])
             df = df.copy()
             #CONVERTING DATES TO STRINGS
+            df['AS'] = pd.to_datetime(df['AS'], origin='1900-01-01', unit='D')
+            df['VD'] = pd.to_datetime(df['VD'], origin='1900-01-01', unit='D')
+            df['RD'] = pd.to_datetime(df['RD'], origin='1900-01-01', unit='D')
+            df['RD1'] = pd.to_datetime(df['RD1'], origin='1900-01-01', unit='D')
+            df['VD1'] = pd.to_datetime(df['VD1'], origin='1900-01-01', unit='D')
             df[['AS', 'RD', 'VD','VD1','RD1']] = df[['AS', 'RD', 'VD', 'VD1','RD1']].astype(str)
 
             df['AS'] = df['AS'].str.replace('/', '*', regex=True)
