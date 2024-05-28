@@ -134,7 +134,7 @@ if file is not None:
                 df['RD1'] =  df['RD1'].astype(str)
                 df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
                 df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
-             except:
+            except:
                 df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
             try:
                 df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
