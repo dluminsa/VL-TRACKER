@@ -67,20 +67,6 @@ if file is not None:
             #st.write(df.shape[0])
             df = df.copy()
             
-            #CONVERTING DATES TO STRINGS
-            #  df['RD1'] =  df['RD1'].astype(str)
-            # df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
-            # df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
-            # df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
-            # df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
-            # df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
-           
-            
-            # df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
-            # df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
-            # df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
-            # df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
-            # df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
             df[['AS', 'RD', 'VD','VD1','RD1']] = df[['AS', 'RD', 'VD', 'VD1','RD1']].astype(str)
 
             df['AS'] = df['AS'].str.replace('/', '*', regex=True)
@@ -106,43 +92,63 @@ if file is not None:
             try:
                 df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
             except:
+                pass
+            try:
                 df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
                 df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
                 df['AS'] =  df['AS'].astype(str)
                 df['AS'] = df['AS'].str.replace('-', '*',regex=True)
                 df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
+            except:
+                pass
             try:
                 df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
             except:
+                pass
+            try:
                 df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
                 df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
                 df['RD'] =  df['RD'].astype(str)
                 df['RD'] = df['RD'].str.replace('-', '*',regex=True)
                 df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
+            except:
+                pass
             try:
                 df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
             except:
+                pass
+            try:
                 df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
                 df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
                 df['VD'] =  df['VD'].astype(str)
                 df['VD'] = df['VD'].str.replace('-', '*',regex=True)
                 df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
+            except:
+                pass
             try:
                 df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
             except:
+                pass
+            try:
                 df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
                 df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
                 df['RD1'] =  df['RD1'].astype(str)
                 df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
-                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)   
+                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
+            except:
+                pass
             try:
                df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
             except:
+                pass
+            try:
                 df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
                 df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
                 df['VD1'] =  df['VD1'].astype(str)
                 df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
                 df[['VD1year', 'VD1month', 'VD1day']] = df['RD1'].str.split('*', expand = True)
+            except:
+                pass
            
             #BRINGING BACK THE / IN DATES
             df['AS'] = df['AS'].str.replace('*', '/',regex=True)
@@ -551,31 +557,31 @@ if file is not None:
             #st.write(appt)
     
 
-if df is not None:
-    def download_weekly(df):
-        st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
+# if df is not None:
+#     def download_weekly(df):
+#         st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
 
-        if df is not None:
-            dft = weekly.copy()
-            csv_data = dft.to_csv(index=True)
+#         if df is not None:
+#             dft = weekly.copy()
+#             csv_data = dft.to_csv(index=True)
 
-                    # Create a download button for each facility
+#                     # Create a download button for each facility
 
-            st.download_button(
-                        label=" DOWNLOAD WEEKLY BLEEDS",
-                        data=csv_data,
-                        file_name=f"WEEKLY_BLEEDS.csv",
-                        mime="text/csv"
-                    )
-
-
-    def main():
-        # Call the download functions
-        download_weekly(df)
+#             st.download_button(
+#                         label=" DOWNLOAD WEEKLY BLEEDS",
+#                         data=csv_data,
+#                         file_name=f"WEEKLY_BLEEDS.csv",
+#                         mime="text/csv"
+#                     )
 
 
-    if __name__ == "__main__":
-        main()
+#     def main():
+#         # Call the download functions
+#         download_weekly(df)
+
+
+#     if __name__ == "__main__":
+#         main()
 
 if df is not None:
     def download_returned(df):
@@ -606,6 +612,7 @@ if df is not None:
         main()
 
 if df is not None:
+        st.write(f"<h6>DOWNLOAD NEW VL LINELIST</h6>", unsafe_allow_html=True)
         ran = random.random()
         rand = round(ran,2)
         #st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
