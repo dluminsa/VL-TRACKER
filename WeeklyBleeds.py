@@ -707,7 +707,7 @@ if df is not None:
      MISSED_APPT_BUT_DUE = rm
 
      if submit:
-          if facility is None:
+          if facility is not None:
               st.warning("You didn't enter the facility name!!")
               st.stop()
           else:        
