@@ -127,15 +127,14 @@ if file is not None:
                 df['VD'] =  df['VD'].astype(str)
                 df['VD'] = df['VD'].str.replace('-', '*',regex=True)
                 df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
+            try:
+                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
             except:
                 df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
                 df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
                 df['RD1'] =  df['RD1'].astype(str)
                 df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
-                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
-            try:
-                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
-               
+                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)   
             except:
                 df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
                 df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
