@@ -686,7 +686,7 @@ if df is not None:
      cola, colb = st.columns([1, 1])
 
 #     # Text input in the first column
-     st.session_state.ent = cola.text_input('Enter name of the facility here and press the submit button', 
+     st.session_state.ent = cola.text_input('**Enter name of the facility here and press the submit button**', 
                                          value=st.session_state.ent, 
                                          placeholder="e.g Mateete HCIII")
 
@@ -708,7 +708,7 @@ if df is not None:
 
      if submit:
           if Facility == '':
-              st.warning("NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!")
+              st.warning("**NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!**")
               st.stop()
           else:        
               details = pd.DataFrame({'FACILITY': [Facility],
