@@ -708,7 +708,7 @@ if df is not None:
 
      if submit:
           if Facility == '':
-              st.warning("You didn't enter the facility name!!")
+              st.warning("NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!")
               st.stop()
           else:        
               details = pd.DataFrame({'FACILITY': [Facility],
