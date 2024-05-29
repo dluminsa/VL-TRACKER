@@ -104,55 +104,53 @@ if file is not None:
             df['RD1'] = df['RD1'].str.replace('00:00:00', '', regex=True)
             df['VD1'] = df['VD1'].str.replace('00:00:00', '',regex=True)
             try:
+                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
+            except:
                 df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
                 df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
                 df['AS'] =  df['AS'].astype(str)
                 df['AS'] = df['AS'].str.replace('-', '*',regex=True)
                 df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
-            except:
-                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
-          
             try:
+                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
+            except:
                 df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
                 df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
                 df['RD'] =  df['RD'].astype(str)
                 df['RD'] = df['RD'].str.replace('-', '*',regex=True)
                 df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
-            except:
-                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
             try:
+                df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
+            except:
                 df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
                 df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
                 df['VD'] =  df['VD'].astype(str)
                 df['VD'] = df['VD'].str.replace('-', '*',regex=True)
                 df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
             except:
-                df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
-            try:
                 df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
                 df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
                 df['RD1'] =  df['RD1'].astype(str)
                 df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
                 df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
-            except:
-                #df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
-                try:
-                   df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
-                except:
-                   df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
-                   df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
-                   df['RD1'] =  df['RD1'].astype(str)
-                   df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
-                   df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
             try:
+                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
+               
+            except:
+                df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
+                df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
+                df['RD1'] =  df['RD1'].astype(str)
+                df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
+                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
+            try:
+               df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
+            except:
                 df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
                 df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
                 df['VD1'] =  df['VD1'].astype(str)
                 df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
                 df[['VD1year', 'VD1month', 'VD1day']] = df['RD1'].str.split('*', expand = True)
-            except:
-               df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
-            
+           
             #BRINGING BACK THE / IN DATES
             df['AS'] = df['AS'].str.replace('*', '/',regex=True)
             df['RD'] = df['RD'].str.replace('*', '/',regex=True)
