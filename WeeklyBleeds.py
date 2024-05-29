@@ -146,7 +146,7 @@ if file is not None:
                 df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
                 df['VD1'] =  df['VD1'].astype(str)
                 df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
-                df[['VD1year', 'VD1month', 'VD1day']] = df['RD1'].str.split('*', expand = True)
+                df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
             except:
                 pass
            
