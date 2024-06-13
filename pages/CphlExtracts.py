@@ -138,6 +138,8 @@ if file and district is not None:
                 df = df[df['facility'].isin(columns)].copy()
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
+                st.write(df['dCOL'])
+                st.stop()
                 df['dCOL'] = df['dCOL'].str.replace('-', '*')
                 df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
                 df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
