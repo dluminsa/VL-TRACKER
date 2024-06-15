@@ -138,22 +138,29 @@ if file and district is not None:
                 df = df[df['facility'].isin(columns)].copy()
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
-                st.write(df['facility'])
+                
                 
                 df['dCOL'] = df['dCOL'].str.replace('/', '*')
                 df['dCOL'] = df['dCOL'].str.replace('-', '*')
                 #df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                st.write(df['facility'])
+                
                 
                 df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
                 st.write(df['Dmonth'])
                 df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                st.write(df['Dday'])
+                 
+                df['Dyear'] = df['Dyear'].fillna(2022)
+                a = df[df['Dyear']>31].copy()
+                b = df[df['Dyear']<32].copy()
+                b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
+                b = b.rename(columns={'Dday1': 'Dday'})
+                df = pd.concat([a,b])
+                st.write(df['Ryear'])
+                st.stop()
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
                 st.write(df['Dmonth'])
                 df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-                st.write(df['facility'])
-                st.stop()
+
                 def Viremia (x):
                     if 0<= x <= 200:
                         return 'Suppressed'
@@ -167,8 +174,7 @@ if file and district is not None:
                         return 'HLV'
                     else:
                         return None
-                st.write(df.head(5))
-                st.stop()
+                
                 df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
                 df['SUP']= df['result_numeric'].apply(Viremia)
                 facilities = df['facility'].unique()
