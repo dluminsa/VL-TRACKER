@@ -139,7 +139,7 @@ if file and district is not None:
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
                 st.write(df['facility'])
-                st.stop()
+                
                 df['dCOL'] = df['dCOL'].str.replace('/', '*')
                 df['dCOL'] = df['dCOL'].str.replace('-', '*')
                 #df['dCOL'] = df['dCOL'].str.replace('/', '*')
@@ -147,6 +147,8 @@ if file and district is not None:
                 df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
                 df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+                st.write(df['facility'])
+                st.stop()
                 def Viremia (x):
                     if 0<= x <= 200:
                         return 'Suppressed'
