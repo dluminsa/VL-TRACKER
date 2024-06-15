@@ -136,6 +136,7 @@ if file and district is not None:
             else:
                 columns = fac['facility'].unique().tolist()
                 df = df[df['facility'].isin(columns)].copy()
+                st.write(df)
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
                 #st.write(df['dCOL'])
