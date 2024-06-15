@@ -146,7 +146,7 @@ if file and district is not None:
                 
                 
                 df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
-                st.write(df['Dmonth'])
+                
                 df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                  
                 df['Dyear'] = df['Dyear'].fillna(2022)
@@ -155,10 +155,8 @@ if file and district is not None:
                 b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
                 b = b.rename(columns={'Dday1': 'Dday'})
                 df = pd.concat([a,b])
-                st.write(df['Dyear'])
-                st.stop()
+            
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
-                st.write(df['Dmonth'])
                 df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                 def Viremia (x):
