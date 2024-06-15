@@ -181,11 +181,13 @@ if file and district is not None:
                 for facility in facilities:
                     dfs = df[df['facility']==facility]
                     dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+                    dfs['ART-NUMERIC'] =  pd.to_numeric(dfs['ART-NUMERIC'], errors='coerce') 
                     dfs = dfs.drop_duplicates(subset='ART-NUMERIC', keep='first')
                     dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
                     name = f'{facility}'
                     dfa.append(dfs)
                 dy = pd.concat(dfa) 
+            
                 dfnodups = dy.copy()  
                 pivot = pd.pivot_table(dy, index='facility', values='ART-NUMERIC', aggfunc='count')
                 dta = pivot.reset_index()
@@ -206,7 +208,7 @@ if file and district is not None:
                 dfb = pd.merge(dfa,dtb, on = 'facility', how = 'left')
                 dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
             
-                file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
+                #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
                 dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
                 dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q1CURR'])
                 dfc['VL COV'] = dfc['VL COV'].astype(int)
@@ -341,7 +343,7 @@ if file and district is not None:
                         st.download_button(
                             label=f"Download CSV for {facility} without duplicates",
                             data=csv_data,
-                            file_name=f"{facility}_data_with_duplicates.csv",
+                            file_name=f"{facility}_data_without_duplicates.csv",
                             mime="text/csv"
                         )
 
@@ -363,7 +365,7 @@ if file and district is not None:
                         st.download_button(
                             label=f"Download CSV for {facility} with duplicates",
                             data=csv_data,
-                            file_name=f"{facility}_data_without_duplicates.csv",
+                            file_name=f"{facility}_data_with_duplicates.csv",
                             mime="text/csv"
                         )
 
