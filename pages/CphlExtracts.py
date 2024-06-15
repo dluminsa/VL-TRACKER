@@ -155,7 +155,7 @@ if file and district is not None:
                 b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
                 b = b.rename(columns={'Dday1': 'Dday'})
                 df = pd.concat([a,b])
-                st.write(df['Ryear'])
+                st.write(df['Dyear'])
                 st.stop()
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
                 st.write(df['Dmonth'])
