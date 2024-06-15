@@ -164,7 +164,7 @@ if file and district is not None:
                 df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
                 df['SUP']= df['result_numeric'].apply(Viremia)
                 facilities = df['facility'].unique()
-                st.write(facilities)
+                st.write(df.head(5)
                 st.stop()
                 dfdups = df.copy()
                 dfa = []
