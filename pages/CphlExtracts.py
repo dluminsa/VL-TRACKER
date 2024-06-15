@@ -138,8 +138,8 @@ if file and district is not None:
                 df = df[df['facility'].isin(columns)].copy()
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
-                #st.write(df['dCOL'])
-                #st.stop()
+                st.write(df['dCOL'])
+                st.stop()
                 df['dCOL'] = df['dCOL'].str.replace('/', '*')
                 df['dCOL'] = df['dCOL'].str.replace('-', '*')
                 df['dCOL'] = df['dCOL'].str.replace('/', '*')
@@ -165,8 +165,6 @@ if file and district is not None:
                 df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
                 df['SUP']= df['result_numeric'].apply(Viremia)
                 facilities = df['facility'].unique()
-                st.write(df.head(5))
-                st.stop()
                 dfdups = df.copy()
                 dfa = []
                 for facility in facilities:
