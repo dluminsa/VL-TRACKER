@@ -136,7 +136,6 @@ if file and district is not None:
             else:
                 columns = fac['facility'].unique().tolist()
                 df = df[df['facility'].isin(columns)].copy()
-                st.write(df)
                 df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                 df['dCOL'] = df['date_collected'].astype(str)
                 #st.write(df['dCOL'])
@@ -161,7 +160,8 @@ if file and district is not None:
                         return 'HLV'
                     else:
                         return None
-
+                st.write(df.head(5))
+                st.stop()
                 df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
                 df['SUP']= df['result_numeric'].apply(Viremia)
                 facilities = df['facility'].unique()
