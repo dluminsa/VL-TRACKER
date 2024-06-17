@@ -52,7 +52,7 @@ RAKAI = {'Buyamba HC III':892,
 GOMBA= {'Buyanja  HC II (Gomba)': 110,'Gomba Kanoni HC III GOVT': 1289,'Kifampa HC III': 860,'Kisozi HC III GOVT':390,
         'Kyai HC III': 364,'Maddu HC IV': 1999,'Mamba HC II':304,'Mpenja HC III': 405,'Ngomanene HC II': 99}
 
-WAKISO= { 'Bulondo HC III':308,'Busawamanze HC III':299,'Buwambo HC IV':1017,'Bweyogerere Hassan Turabi. HC III':966,
+WAKISO= { 'Bulondo HC III':308,'Busawamanze HC III':299,'Buwambo HC IV':1017,
         'COMMUNITY HEALTH PLAN UGANDA':615,'Ggwatiro Nursing Home HC III':343,'Gombe (Wakiso) HC II':15,
          'Kabubbu HC II':673,'Kasangati HC IV':3052,'Kawanda HC III':981,'Kira HC III':1457,'Kiziba HC III':480,'Mende HC III':248,
          'Nabutiti HC III':199,'Nabweru HC III':1603,'Namayumba HC IV':1963,'Namulonge HC III':471,'Nansana HC II':118,
