@@ -93,6 +93,9 @@ if file and district is not None:
     if df is not None and district is not None:
         df['facility'] =  df['facility'].str.replace('/', '-')
         df['facility'] =  df['facility'].str.replace('Kinoni Welfare Medical Centre CLINIC', 'KINONI')
+        df['facility'] =  df['facility'].str.replace('Mukwano Medical Centre CLINIC', 'Lukaya HC III')
+        df['facility'] =  df['facility'].str.replace('St. Francis Maternity Home HC II', 'Lukaya HC III')
+        df['facility'] =  df['facility'].str.replace('Teguzibirwa Dom Clinic', 'Lukaya HC III')
         if district  == 'BUKOMANSIMBI':
             fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q1CURR'])
         elif district  == 'SEMBABULE':
