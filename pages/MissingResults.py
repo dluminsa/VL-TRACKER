@@ -19,7 +19,7 @@ cola.markdown('**You need two extracts; *a CPHL extract and an emr extract* for 
 colb.markdown('**In the emr extract:**')
 colb.markdown('Rename the **HIV Clinic NO.** column to **A**')
 colb.markdown('Rename the **VIral load results** column to **RE**')
-colb.markdown('Rename the **Viral load Obs date** column to **VOB**')
+colb.markdown('Rename the **HIV VIRAL LOAD DATE** column to **VD**')
 cola.markdown('Rename the **RETURN VISIT DATE** column to **RD**')
  
 col1,col2 = st.columns([1,1])
