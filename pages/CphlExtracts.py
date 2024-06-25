@@ -67,8 +67,14 @@ LWENGO = {'Katovu HC III':454, 'Kiwangala HC IV': 1595,
          'Kyazanga HC IV': 1962,'Kyetume HC III': 532, 'Lwengo HC IV': 1444, 'KINONI':2257,'Nanywa HC III':483,
          }
 
+ENTEBBE = {'Bussi HC III': 219, 'Bweyogerere HC III': 966, 'Kajjansi HC III':1928, 'Kasanje HC III': 826, 'Kigungu HC III':611, 'Kirinya H-C II':47, 'Kitala HC II':175,
+           'Kyengera HC III':578, 'Lufuka Valley HC III': 219, 'Mildmay Uganda HOSPITAL':14535, 'Mutundwe HC II':45,'Mutungo HC II':45, 'Nakawuka HC III':1092, 'Nalugala HC II':68,
+           'Ndejje HC IV':1922, 'Nsangi HC III':2572, 'Seguku HC II':91, 'TASO Entebbe CLINIC' :6341, 'Wagagai HC IV': 531,'ZINGA HC II':246 
+}
+
+
 districts = ['BUKOMANSIMBI', 'BUTAMBALA', 'GOMBA','KALANGALA','KALUNGU', 'KYOTERA', 
-             'LYANTONDE','LWENGO','MASAKA CITY', 'MASAKA DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO']
+             'LYANTONDE','LWENGO','MASAKA CITY', 'MASAKA DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO HUB', 'ENTEBBE HUB']
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 district = st.selectbox('Select a district:', districts)
@@ -122,8 +128,10 @@ if file and district is not None:
             fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q1CURR'])
         elif district  == 'LWENGO':
             fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q1CURR'])
-        elif district == 'WAKISO':
+        elif district == 'WAKISO HUB':
             fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q1CURR'])
+        elif district == 'ENTEBBE HUB':
+            fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q1CURR'])
         else:
             print('NO DISTRICT CHOSEN')
 
