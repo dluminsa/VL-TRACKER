@@ -1,6 +1,6 @@
 openpyxl
 pandas
-numpy
+
 streamlit
 gspread
 google-auth
