@@ -77,7 +77,7 @@ districts = ['BUKOMANSIMBI', 'BUTAMBALA', 'GOMBA','KALANGALA','KALUNGU', 'KYOTER
              'LYANTONDE','LWENGO','MASAKA CITY', 'MASAKA DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO HUB', 'ENTEBBE HUB']
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
-district = st.selectbox('Select a district:', districts)
+district = st.selectbox('Select a district:', districts, index=None)
 
 file = st.file_uploader('Upload your CPHL extract here')
 
