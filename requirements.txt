@@ -1,7 +1,7 @@
 openpyxl
-pandas
-
-streamlit
+streamlit==1.10.0
+pandas==1.5.3
+numpy==1.24.1
 gspread
 google-auth
 oauth2client
