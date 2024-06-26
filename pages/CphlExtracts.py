@@ -166,8 +166,9 @@ if file and district is not None:
                 b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
                 b = b.rename(columns={'Dday1': 'Dday'})
                 df = pd.concat([a,b])
-            
+                df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
+                
                 df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                 def Viremia (x):
