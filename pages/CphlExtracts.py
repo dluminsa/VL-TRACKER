@@ -170,7 +170,7 @@ if file and district is not None:
                 df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>6)))].copy()
                 dfa = df[((df['Dyear']<2023) | ((df['Dyear']==2023) & (df['Dmonth']<7)))].copy()
                 dfa = dfa[dfa['facility']=='Mildmay Uganda HOSPITAL'].copy()
-                st.write(dfa)
+                st.write(df)
                 st.stop()
                 df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
