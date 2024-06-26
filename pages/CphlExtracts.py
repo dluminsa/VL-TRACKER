@@ -220,9 +220,6 @@ if file and district is not None:
                 dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
             
                 #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
-                st.write(dfc.columns)
-                st.write(dfc.head(5))
-                st.stop()
                 dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
                 dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q1CURR'])
                 dfc['VL COV'] = dfc['VL COV'].astype(int)
