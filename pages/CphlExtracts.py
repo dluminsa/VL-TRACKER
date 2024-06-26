@@ -94,9 +94,6 @@ if file and district is not None:
         df = pd.read_csv(file)
     else:
         st.write('This may not be a CPHL extract, it must be in CSV form.')
-    st.write(df.shape[0])
-    st.stop()
-
     # Display DataFrame
     if df is not None and district is not None:
         df['facility'] =  df['facility'].str.replace('/', '-')
