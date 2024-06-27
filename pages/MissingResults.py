@@ -146,6 +146,7 @@ if cphl is not None and emr is not None:
                     #st.write(dfc.columns)
                     #st.stop()
                     dfc = dfc['Ryear'].astype(int)
+                    st.write(dfc['Ryear'])
                     e = dfc[dfc['Ryear']>31].copy()     
                     f = dfc[dfc['Ryear']<32].copy()
                     f = f.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
