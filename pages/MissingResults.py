@@ -137,6 +137,11 @@ if cphl is not None and emr is not None:
 
                     dfc['RETURN DATE'] = pd.to_datetime(dfc['RETURN DATE'], format='%d/%m/%Y', errors='coerce')
                     dfc['VL DATE'] = pd.to_datetime(dfc['VL DATE'], format='%d/%m/%Y', errors='coerce')
+
+                    dfc['RETURN DATE'] = dfc['RETURN DATE'].astype(str)
+                    dfc['VL DATE'] = dfc['VL DATE'].astype(str)
+                    dfc['RETURN DATE'] = dfc['RETURN DATE'].str.replace('00:00:00', '')
+                    dfc['VL DATE'] = dfc['VL DATE'].str.replace('00:00:00', '')
          
                     dfc[['VOyear', 'VOmonth', 'VOday']] =dfc[['VOyear', 'VOmonth', 'VOday']].apply(pd.to_numeric, errors = 'coerce')
                     dfc[['Ryear', 'Rmonth', 'Rday']] =dfc[['Ryear', 'Rmonth', 'Rday']].apply(pd.to_numeric, errors = 'coerce')
