@@ -150,8 +150,8 @@ if cphl is not None and emr is not None:
                     e = dfc[dfc['Ryear']>31].copy()     
                     f = dfc[dfc['Ryear']<32].copy()
                     #st.stop()
-                    f = f.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
-                    f = f.rename(columns={'Rday1': 'Rday'})
+                    f = f.rename(columns={'Ryear': 'Rday2', 'Rday': 'Ryear'})
+                    f = f.rename(columns={'Rday2': 'Rday'})
                     dfc = pd.concat([e,f])
                     #st.write(dfc.head(5))
                     #st.write(dfc.columns)
@@ -159,8 +159,8 @@ if cphl is not None and emr is not None:
                     #st.stop()
                     a = dfc[dfc['VOyear']>31].copy()
                     b = dfc[dfc['VOyear']<32].copy()
-                    b = b.rename(columns={'VOyear': 'VOday1', 'VOday': 'VOyear'})
-                    b = b.rename(columns={'VOday1': 'VOday'})
+                    b = b.rename(columns={'VOyear': 'VOday2', 'VOday': 'VOyear'})
+                    b = b.rename(columns={'VOday2': 'VOday'})
                     dfc = pd.concat([a,b])
                     def NEW (x, y):
                         if x ==2024:
