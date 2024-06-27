@@ -126,8 +126,23 @@ if cphl is not None and emr is not None:
                     dfc['RD'] = dfc['RD'].str.replace('00:00:00', '')
                     dfc['VD'] = dfc['VD'].str.replace('00:00:00', '')
 
+                    df['Rday1'] = df['Rday'].astype(str).str.split('.').str[0]
+                    df['Rmonth1'] = df['Rmonth'].astype(str).str.split('.').str[0]
+                    df['Ryear1'] = df['Ryear'].astype(str).str.split('.').str[0]
+
+                    df['Vday1'] = df['VOday'].astype(str).str.split('.').str[0]
+                    df['Vmonth1'] = df['VOmonth'].astype(str).str.split('.').str[0]
+                    df['Vyear1'] = df['VOyear'].astype(str).str.split('.').str[0]
+                 
+                    df['RETURN DATE'] = df['Rday1'] + '/' + df['Rmonth1'] + '/' + df['Ryear1']
+                    df['VL DATE'] = df['Vday1'] + '/' + df['Vmonth1'] + '/' + df['Vyear1']
+
+                    df['RETURN DATE'] = pd.to_datetime(df['RETURN DATE'], format='%d/%m/%Y', errors='coerce')
+                    df['VL DATE'] = pd.to_datetime(df['VL DATE'], format='%d/%m/%Y', errors='coerce')
+         
                     dfc[['VOyear', 'VOmonth', 'VOday']] =dfc[['VOyear', 'VOmonth', 'VOday']].apply(pd.to_numeric, errors = 'coerce')
                     dfc[['Ryear', 'Rmonth', 'Rday']] =dfc[['Ryear', 'Rmonth', 'Rday']].apply(pd.to_numeric, errors = 'coerce')
+                   
                     dfc['Ryear'] = dfc['Ryear'].fillna(2022)
                     dfc['VOyear'] = dfc['VOyear'].fillna(2022)
                     e = dfc[dfc['Ryear']>31].copy()     
@@ -168,10 +183,10 @@ if cphl is not None and emr is not None:
                             return 'DIFFERENT'
                     dft[['result_numeric','RE']] = dft[['result_numeric','RE']].apply(pd.to_numeric, errors='coerce')
                     dft['COMPARE'] = dft.apply( lambda row: comp(row['RE'], row['result_numeric']), axis=1)
-                    dft = dft.rename(columns = {'RD': 'RETURN-DATE', 'RE':'EMR-RESULTS', 'A':'ART-NO', 'VD':'VL DATE'})
+                    dft = dft.rename(columns = {'RD': 'RETURN-DATE', 'RE':'EMR-RESULTS', 'A':'ART-NO', 'VD':'VL-DATE'})
                     dft['date_collected'] =  dft['date_collected'].astype(str)
                     dft['date_collected'] =  dft['date_collected'].str.replace('*', '-')
-                    dft = dft[['ART-NO', 'RETURN-DATE','EMR-RESULTS', 'VL DATE','art_number','result_numeric','date_collected', 'COMPARE']]
+                    dft = dft[['ART-NO', 'RETURN DATE','EMR-RESULTS', 'VL DATE','art_number','result_numeric','date_collected', 'COMPARE']]
                     
     #if df is not None and df2 is not None: 
     a = dft.shape[0]
