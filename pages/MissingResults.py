@@ -143,8 +143,8 @@ if cphl is not None and emr is not None:
                    
                     dfc['Ryear'] = dfc['Ryear'].fillna(2022)
                     dfc['VOyear'] = dfc['VOyear'].fillna(2022)
-                    st.write(dfc.columns)
-                    st.stop()
+                    #st.write(dfc.columns)
+                    #st.stop()
                     dfc = dfc['Ryear'].astype(int)
                     e = dfc[dfc['Ryear']>31].copy()     
                     f = dfc[dfc['Ryear']<32].copy()
