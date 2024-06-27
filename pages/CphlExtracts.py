@@ -67,11 +67,12 @@ LWENGO = {'Katovu HC III':454, 'Kiwangala HC IV': 1595,
          'Kyazanga HC IV': 1962,'Kyetume HC III': 532, 'Lwengo HC IV': 1444, 'KINONI':2257,'Nanywa HC III':483,
          }
 
-ENTEBBE = {'Bussi HC III': 219, 'Bweyogerere HC III': 966, 'BUNAMWAYA H/C II':32,'JCRC (Wakiso)':13247,'Kasenge H-C II':'62, 'Kajjansi HC III':1928, 'Kasanje HC III': 826, 'Kigungu HC III':611, 'Kirinya H-C II':47, 'Kitala HC II':175,
+ENTEBBE = {'Bussi HC III': 219, 'Bweyogerere HC III': 966, 'BUNAMWAYA H/C II':32,'JCRC (Wakiso)':13247,'Kasenge H-C II':'62, 'Kajjansi HC III':1928, 'Kasanje HC III': 826,
+'Kigungu HC III':611, 'Kirinya H-C II':47, 
            'Kyengera HC III':578, 'Lufuka Valley HC III': 219, 'Mildmay Uganda HOSPITAL':14535, 'Mutundwe HC II':45,'Mutungo HC II':45, 'Nakawuka HC III':1092, 'Nalugala HC II':68,
            'Ndejje HC IV':1922, 'Nsangi HC III':2572, 'Seguku HC II':91, 'TASO Entebbe CLINIC' :6341, 'Wagagai HC IV': 531,'ZINGA HC II':246,'Kasoozo H-C III':30,'Katabi H-C III':85,
            'Kimwanyi H-C III':23, 'Kireka H-C II':52, 'KYENGEZA H-C II': 10, 'LUBBE H-C II':9, 'MAGANJO  H-C II':28, 'MAGOGGO H-C II': 16, 'Matugga H-C III':62,
-           'Migadde H-C II':11, 'Namugongo Fund For Special Children': 589, 'NSAGGU H-C II':29, 'Nurture Africa H-C III':2369
+           'Migadde H-C II':11, 'Namugongo Fund For Special Children': 589, 'NSAGGU H-C II':29, 'Nurture Africa H-C III':2369, 'Kitala HC II':175
 }
 
 
