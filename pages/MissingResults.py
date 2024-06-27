@@ -152,7 +152,7 @@ if cphl is not None and emr is not None:
                     #st.stop()
                     f = f.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
                     f = f.rename(columns={'Rday1': 'Rday'})
-                    dfc = pd.concat([e,f], axis=1)
+                    dfc = pd.concat([e,f])
                     st.write(dfc.head(5))
                     st.write(dfc.columns)
                     st.write( dfc['VOyear'])
