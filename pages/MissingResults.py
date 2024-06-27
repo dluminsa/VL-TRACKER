@@ -18,7 +18,7 @@ cola,colb = st.columns([1,2])
 cola.markdown('**You need two extracts; *a CPHL extract and an emr extract* for this facility**')
 colb.markdown('**In the emr extract:**')
 colb.markdown('Rename the **HIV Clinic NO.** column to **A**')
-colb.markdown('Rename the **VIral load results** column to **RE**')
+#colb.markdown('Rename the **VIral load results** column to **RE**')
 colb.markdown('Rename the **HIV VIRAL LOAD DATE** column to **VD**')
 cola.markdown('Rename the **RETURN VISIT DATE** column to **RD**')
  
@@ -61,7 +61,7 @@ if cphl is not None and emr is not None:
                     st.stop()
                 #print( 'REACH OUT TO YOUR TEAM LEAD FOR THE RIGHT EXTRACT')
             #print('kindly check the table above to see how to rename the columns')
-            emrcolumns= ['A', 'RE', 'RD','VD']
+            emrcolumns= ['A', 'RD','VD']
             colemr = dfc.columns.to_list()
             for column in emrcolumns:
                 if column not in colemr:
@@ -181,24 +181,18 @@ if cphl is not None and emr is not None:
                     dfe = dfe[((dfe['Rmonth']>3) | ((dfe['Rmonth']==3) & (dfe['Rday']>3)))].copy()
                     dfc = pd.concat([dfd,dfe])
                     dfj = dfc[dfc['RESULTS']== 'OLD']
-                    dfj = dfj[['ART','A', 'RE', 'RD', 'VD','VL DATE', 'RETURN DATE']]
+                    dfj = dfj[['ART','A', 'RD', 'VD','VL DATE', 'RETURN DATE']]
                     dfj['ART'] = pd.to_numeric(dfj['ART'])
                     df[ 'ART-NUMERIC'] = pd.to_numeric(df[ 'ART-NUMERIC'])
                     dfk = dfj[dfj['ART'].isin(df[ 'ART-NUMERIC'])]
                     dfh = df[df['ART-NUMERIC'].isin(dfj[ 'ART'])]
                     dfh = dfh.rename(columns={'ART-NUMERIC':'ART'})
                     dft = pd.merge(dfk, dfh, on = 'ART', how= 'left')
-                    def comp(a,b):
-                        if a == b:
-                            return 'SAME'
-                        else:
-                            return 'DIFFERENT'
-                    dft[['result_numeric','RE']] = dft[['result_numeric','RE']].apply(pd.to_numeric, errors='coerce')
-                    dft['COMPARE'] = dft.apply( lambda row: comp(row['RE'], row['result_numeric']), axis=1)
-                    dft = dft.rename(columns = {'RE':'EMR-RESULTS','A':'ART-NO'})
+                 
+                    dft = dft.rename(columns = {'A':'ART-NO'})
                     dft['date_collected'] =  dft['date_collected'].astype(str)
                     dft['date_collected'] =  dft['date_collected'].str.replace('*', '-')
-                    dft = dft[['ART-NO', 'RETURN DATE','EMR-RESULTS', 'VL DATE','art_number','result_numeric','date_collected', 'COMPARE']]
+                    dft = dft[['ART-NO', 'RETURN DATE', 'VL DATE','art_number','result_numeric','date_collected']]
                     
     #if df is not None and df2 is not None: 
     a = dft.shape[0]
@@ -217,7 +211,7 @@ if cphl is not None and emr is not None:
                 ws.cell(row=r_idx, column=c_idx, value=value)
     ws.insert_rows(0,2)
 
-    blue = PatternFill(fill_type = 'solid', start_color = 'C8CDCD')
+    blue = PatternFill(fill_type = 'solid', start_color = 'F6F8F7')
         # ws.column_dimensions['H'].width = 14
 
     for num in range (1, ws.max_row+1):
