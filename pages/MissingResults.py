@@ -118,27 +118,25 @@ if cphl is not None and emr is not None:
                     C[['Ryear', 'Rmonth', 'Rday']] = C['RT'].str.split('-', expand = True)
                     dfc = pd.concat([A,B,C])
 
-
-
                     dfc['RD'] = dfc['RD'].astype(str)
                     dfc['VD'] = dfc['VD'].astype(str)
     
                     dfc['RD'] = dfc['RD'].str.replace('00:00:00', '')
                     dfc['VD'] = dfc['VD'].str.replace('00:00:00', '')
 
-                    df['Rday1'] = df['Rday'].astype(str).str.split('.').str[0]
-                    df['Rmonth1'] = df['Rmonth'].astype(str).str.split('.').str[0]
-                    df['Ryear1'] = df['Ryear'].astype(str).str.split('.').str[0]
+                    dfc['Rday1'] = dfc['Rday'].astype(str).str.split('.').str[0]
+                    dfc['Rmonth1'] = dfc['Rmonth'].astype(str).str.split('.').str[0]
+                    dfc['Ryear1'] = dfc['Ryear'].astype(str).str.split('.').str[0]
 
-                    df['Vday1'] = df['VOday'].astype(str).str.split('.').str[0]
-                    df['Vmonth1'] = df['VOmonth'].astype(str).str.split('.').str[0]
-                    df['Vyear1'] = df['VOyear'].astype(str).str.split('.').str[0]
+                    dfc['Vday1'] = dfc['VOday'].astype(str).str.split('.').str[0]
+                    dfc['Vmonth1'] = dfc['VOmonth'].astype(str).str.split('.').str[0]
+                    dfc['Vyear1'] = dfc['VOyear'].astype(str).str.split('.').str[0]
                  
-                    df['RETURN DATE'] = df['Rday1'] + '/' + df['Rmonth1'] + '/' + df['Ryear1']
-                    df['VL DATE'] = df['Vday1'] + '/' + df['Vmonth1'] + '/' + df['Vyear1']
+                    dfc['RETURN DATE'] = dfc['Rday1'] + '/' + dfc['Rmonth1'] + '/' + dfc['Ryear1']
+                    dfc['VL DATE'] = dfc['Vday1'] + '/' + dfc['Vmonth1'] + '/' + dfc['Vyear1']
 
-                    df['RETURN DATE'] = pd.to_datetime(df['RETURN DATE'], format='%d/%m/%Y', errors='coerce')
-                    df['VL DATE'] = pd.to_datetime(df['VL DATE'], format='%d/%m/%Y', errors='coerce')
+                    dfc['RETURN DATE'] = pd.to_datetime(dfc['RETURN DATE'], format='%d/%m/%Y', errors='coerce')
+                    dfc['VL DATE'] = pd.to_datetime(dfc['VL DATE'], format='%d/%m/%Y', errors='coerce')
          
                     dfc[['VOyear', 'VOmonth', 'VOday']] =dfc[['VOyear', 'VOmonth', 'VOday']].apply(pd.to_numeric, errors = 'coerce')
                     dfc[['Ryear', 'Rmonth', 'Rday']] =dfc[['Ryear', 'Rmonth', 'Rday']].apply(pd.to_numeric, errors = 'coerce')
