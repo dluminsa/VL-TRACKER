@@ -77,7 +77,7 @@ if cphl is not None and emr is not None:
                     dfc = dfc.dropna(subset=['ART'])
                     dfc['VOD'] = dfc['VD']
                     dfc['RT'] = dfc['RD']
-                    y = pd.DataFrame({'RT':['1-1-1',1,'1/1/1'],'VOD':['1-1-1',1,'1/1/1'] })  
+                    y = pd.DataFrame({'RT':['1-1-50',1,'1/1/50'],'VOD':['1-1-50',1,'1/1/50'] })  
                     dfc = pd.concat([dfc,y])
                    
                   
