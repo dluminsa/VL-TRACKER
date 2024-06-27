@@ -180,6 +180,7 @@ if cphl is not None and emr is not None:
                     dfe = dfc[dfc['Ryear']==2024].copy()
                     dfe = dfe[((dfe['Rmonth']>3) | ((dfe['Rmonth']==3) & (dfe['Rday']>3)))].copy()
                     dfc = pd.concat([dfd,dfe])
+                 
                     dfj = dfc[dfc['RESULTS']== 'OLD']
                     dfj = dfj[['ART','A', 'RD', 'VD','VL DATE', 'RETURN DATE']]
                     dfj['ART'] = pd.to_numeric(dfj['ART'])
@@ -192,7 +193,7 @@ if cphl is not None and emr is not None:
                     dft = dft.rename(columns = {'A':'ART-NO'})
                     dft['date_collected'] =  dft['date_collected'].astype(str)
                     dft['date_collected'] =  dft['date_collected'].str.replace('*', '-')
-                    dft = dft[['ART-NO', 'RETURN DATE', 'VL DATE','art_number','result_numeric','date_collected']]
+                    dft = dft[['ART-NO', 'RETURN DATE', 'VL DATE','art_number','date_collected','result_numeric']]
                     
     #if df is not None and df2 is not None: 
     a = dft.shape[0]
@@ -229,9 +230,9 @@ if cphl is not None and emr is not None:
     ws['B2'] = 'RETUR VISIT DATE'
     ws['C2'] = 'EMR VL DATE' 
     ws['D2'] = 'ART NO'
-    ws['E2']  = 'CPHL RESULTS'
-    ws['F2'] = 'CPHL DATE'
- 
+    ws['E2'] = 'CPHL DATE'
+    ws['F2']  = 'CPHL RESULTS'
+
 
     letters = ['B', 'C', 'D','E','F']
     for letter in letters:
