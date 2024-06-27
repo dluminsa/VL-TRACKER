@@ -176,7 +176,7 @@ if cphl is not None and emr is not None:
                     dfe = dfe[((dfe['Rmonth']>3) | ((dfe['Rmonth']==3) & (dfe['Rday']>3)))].copy()
                     dfc = pd.concat([dfd,dfe])
                     dfj = dfc[dfc['RESULTS']== 'OLD']
-                    dfj = dfj[['ART','A', 'RE', 'RD', 'VD']]
+                    dfj = dfj[['ART','A', 'RE', 'RD', 'VD','VL DATE', 'RETURN DATE']]
                     dfj['ART'] = pd.to_numeric(dfj['ART'])
                     df[ 'ART-NUMERIC'] = pd.to_numeric(df[ 'ART-NUMERIC'])
                     dfk = dfj[dfj['ART'].isin(df[ 'ART-NUMERIC'])]
@@ -192,7 +192,7 @@ if cphl is not None and emr is not None:
                     dft['COMPARE'] = dft.apply( lambda row: comp(row['RE'], row['result_numeric']), axis=1)
                     st.write(dft.columns)
                     st.stop()
-                    dft = dft.rename(columns = {'RD': 'RETURN-DATE', 'RE':'EMR-RESULTS', 'A':'ART-NO', 'VD':'VL-DATE'})
+                    dft = dft.rename(columns = {'RE':'EMR-RESULTS','A':'ART-NO'})
                     dft['date_collected'] =  dft['date_collected'].astype(str)
                     dft['date_collected'] =  dft['date_collected'].str.replace('*', '-')
                     dft = dft[['ART-NO', 'RETURN DATE','EMR-RESULTS', 'VL DATE','art_number','result_numeric','date_collected', 'COMPARE']]
