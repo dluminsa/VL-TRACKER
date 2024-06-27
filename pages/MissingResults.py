@@ -147,7 +147,7 @@ if cphl is not None and emr is not None:
                     f = dfc[dfc['Ryear']<32].copy()
                     f = f.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
                     f = f.rename(columns={'Rday1': 'Rday'})
-                    dfc = pd.concat([e,f])
+                    dfc = pd.concat([e,f], axis=1)
                     a = dfc[dfc['VOyear']>31].copy()
                     b = dfc[dfc['VOyear']<32].copy()
                     b = b.rename(columns={'VOyear': 'VOday1', 'VOday': 'VOyear'})
