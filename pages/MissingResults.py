@@ -76,8 +76,6 @@ if cphl is not None and emr is not None:
                     dfc['ART'] = dfc['A'].replace('[^0-9]','', regex = True)
                     dfc = dfc.dropna(subset=['ART'])
                     dfc['VOD'] = dfc['VD']
-                    st.write(dfc.columns)
-                    st.stop()
                     dfc['RT'] = dfc['RD']
                     y = pd.DataFrame({'RT':['1-1-1',1,'1/1/1'],'VOD':['1-1-1',1,'1/1/1'] })  
                     dfc = pd.concat([dfc,y])
