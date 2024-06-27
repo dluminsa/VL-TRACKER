@@ -152,7 +152,7 @@ if cphl is not None and emr is not None:
                     #st.stop()
                     e = dfc[dfc['Ryear']>31].copy()     
                     f = dfc[dfc['Ryear']<32].copy()
-                    st.stop()
+                    #st.stop()
                     f = f.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
                     f = f.rename(columns={'Rday1': 'Rday'})
                     dfc = pd.concat([e,f], axis=1)
