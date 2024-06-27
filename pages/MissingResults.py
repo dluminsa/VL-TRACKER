@@ -227,12 +227,11 @@ if cphl is not None and emr is not None:
     ws['F1'] = 'CPHL DETAILS'
     ws['A2'] = 'ART-NO'
     ws['B2'] = 'RETUR VISIT DATE'
-    ws['C2'] = 'EMR VL RESULTS'
-    ws['D2'] = 'EMR VL DATE' 
-    ws['E2'] = 'ART NO'
-    ws['F2']  = 'CPHL RESULTS'
-    ws['G2'] = 'CPHL DATE'
-    ws['H2'] = 'COMPARE'
+    ws['C2'] = 'EMR VL DATE' 
+    ws['D2'] = 'ART NO'
+    ws['E2']  = 'CPHL RESULTS'
+    ws['F2'] = 'CPHL DATE'
+ 
 
     letters = ['B', 'C', 'D','F','G','H']
     for letter in letters:
