@@ -215,7 +215,7 @@ if cphl is not None and emr is not None:
         # ws.column_dimensions['H'].width = 14
 
     for num in range (1, ws.max_row+1):
-         for letter in ['E', 'F', 'G', 'H']:
+         for letter in ['D','E', 'F']:
               ws[f'{letter}{num}'].font = Font(b= True, i = True)
               ws[f'{letter}{num}'].font = Font(b= True, i = True)
               ws[f'{letter}{num}'].fill = blue
@@ -233,7 +233,7 @@ if cphl is not None and emr is not None:
     ws['F2'] = 'CPHL DATE'
  
 
-    letters = ['B', 'C', 'D','F','G','H']
+    letters = ['B', 'C', 'D','E','F']
     for letter in letters:
           ws.column_dimensions[letter].width =15
 
