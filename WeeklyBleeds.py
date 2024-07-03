@@ -9,7 +9,8 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
 from streamlit_gsheets import GSheetsConnection
-
+st.write('BEING UPDATED')
+st.stop()
 st.set_page_config(
     page_title = 'VL TRACKER',
     page_icon =":bar_chart"
