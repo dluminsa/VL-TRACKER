@@ -11,7 +11,8 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 # from openpyxl.styles import *
 #import numpy as np
 cola, colb = st.columns([1,1])
-
+st.write('BEING UPDATED')
+st.stop()
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 st.markdown('**Follow these simple instructions before you proceed:**')
 cola,colb = st.columns([1,2])
