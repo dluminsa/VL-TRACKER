@@ -61,7 +61,7 @@ WAKISO= { 'Bulondo HC III':308,'Busawamanze HC III':299,'Buwambo HC IV':1017,
 
 KALANGALA= {'Bubeke HC III': 611,'Bufumira HC III': 405,'Bukasa HC IV': 1029, 'Bwendero HC III':1007,'Jaana HC II':13,
            'Kachanga Island HC II':219,'Kalangala HC IV':1443, 'Kasekulo HC II': 6,'Lujjabwa Island HC II': 345,'Lulamba HC III': 647,
-           'Mazinga HC III': 524,'Mugoye HC III': 1131,'Mulabana HC II': 16,'Ssese Islands African Aids Project (SIAA)':20}  
+           'Mazinga HC III': 524,'Mugoye HC III': 1131,'Mulabana HC II': 16,'Ssese Islands African Aids Project (SIAA':20}  
 
 LWENGO = {'Katovu HC III':454, 'Kiwangala HC IV': 1595, 
          'Kyazanga HC IV': 1962,'Kyetume HC III': 532, 'Lwengo HC IV': 1444, 'KINONI':2257,'Nanywa HC III':483,
