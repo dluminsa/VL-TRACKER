@@ -82,7 +82,7 @@ districts = ['BUKOMANSIMBI', 'BUTAMBALA','ENTEBBE HUB', 'GOMBA','KALANGALA','KAL
 #st.stop()
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
-district = st.selectbox('Select a district:', districts, index=None)
+
 
 file = st.file_uploader('Upload your CPHL extract here')
 
@@ -94,18 +94,61 @@ if file is not None:
     ext = os.path.splitext(fileN)[1]
 
 df = None
-if file and district is not None:
+if file is not None: 
     if ext == '.csv':  # Compare with '.csv'
         df = pd.read_csv(file)
     else:
         st.write('This may not be a CPHL extract, it must be in CSV form.')
     # Display DataFrame
-    if df is not None and district is not None:
+    if df is not None:# and district is not None:
         df['facility'] =  df['facility'].str.replace('/', '-')
         df['facility'] =  df['facility'].str.replace('Kinoni Welfare Medical Centre CLINIC', 'KINONI')
         df['facility'] =  df['facility'].str.replace('Mukwano Medical Centre CLINIC', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('St. Francis Maternity Home HC II', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('Teguzibirwa Dom Clinic', 'Lukaya HC III')
+        
+        dist = df['facility'].unique()
+
+        if 'Ssembabule HC IV' in dist:
+            st.write('**This extract is for BUKOMANSIMBI, SEMBABULE AND KALUNGU**')
+            st.write('WHICH OF THE THREE DO YOU WANT TO ANALYSE?')
+            district = st.radio('**CHOOSE ONE DISTRICT**', options=['BUKOMANSIMBI', 'KALUNGU', 'SEMBABULE'], index=None, horizontal=True)
+        elif 'Bulo HC III'in dist:
+            st.write('**This extract is for BUTAMBALA**')
+            district = 'BUTAMBALA'
+        elif 'Kifampa HC III' in dist:
+            st.write('**This extract is for GOMBA**')
+            district = 'GOMBA'
+        elif 'Bubeke HC III' in dist:
+            st.write('**This extract is for KALANGALA**')
+            district = 'KALANGALA'
+        elif 'Kakuuto HC IV' in dist:
+            st.write('**This extract is for BOTH KYOTERA AND RAKAI**')
+            st.write('WHICH OF THE TWO DO YOU WANT TO ANALYSE?')
+            district = st.radio('**CHOOSE ONE DISTRICT**', options=['KYOTERA', 'RAKAI'], index=None, horizontal=True)
+        elif 'Katovu HC III' in dist:
+            st.write('**This extract is for LWENGO**')
+            district = 'LWENGO'
+        elif 'Kabatema HC II' in dist:
+            st.write('**This extract is for LYANTONDE**')
+            district = 'LYANTONDE'
+        elif 'Kiyumba HC IV' in dist:
+            st.write('**This extract is for BOTH MASAKA CITY AND MASAKA DISTRICT**')
+            st.write('WHICH OF THE TWO DO YOU WANT TO ANALYSE?')
+            district = st.radio('**CHOOSE ONE DISTRICT**', options=['MASAKA_CITY', 'MASAKA_DISTRICT'], index=None, horizontal=True)        
+        elif 'Buwama HC III' in dist:
+            st.write('**This extract is for MPIGI**')
+            district = 'MPIGI'
+        elif 'Bulondo HC III' in dist:
+            st.write('**This extract is for WAKISO HUB**')
+            district = 'WAKISO HUB'
+        elif 'Bussi HC III' in dist:
+            st.write('**This extract is for ENTEBBE HUB**')
+            district = 'ENTEBBE HUB'
+        else:
+            st.write("**I can't determine the origin of this extract, kindly choose a district from below**")
+            district = st.selectbox('Select a district:', districts, index=None)
+
         if district  == 'BUKOMANSIMBI':
             fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q2CURR'])
         elif district  == 'SEMBABULE':
@@ -137,124 +180,125 @@ if file and district is not None:
         elif district == 'ENTEBBE HUB':
             fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q2CURR'])
         else:
-            print('NO DISTRICT CHOSEN')
-
-        coldist = fac['facility'].unique().tolist()
-        colextr = df['facility'].unique().tolist()
-        emrcolumns= ['A', 'RE', 'VOB']
+            st.write('NO DISTRICT CHOSEN')
+            #print('NO DISTRICT CHOSEN')
+        if district:
+            coldist = fac['facility'].unique().tolist()
+            colextr = df['facility'].unique().tolist()
+            emrcolumns= ['A', 'RE', 'VOB']
         
-        for column in coldist:
-            if column not in colextr:
-                st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
-                st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
-                st.stop()
-            else:
-                columns = fac['facility'].unique().tolist()
-                df = df[df['facility'].isin(columns)].copy()
-                df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
-                df['dCOL'] = df['date_collected'].astype(str)
-                
-                
-                df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                df['dCOL'] = df['dCOL'].str.replace('-', '*')
-                #df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                
-                
-                df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
-                
-                df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                 
-                df['Dyear'] = df['Dyear'].fillna(2022)
-                a = df[df['Dyear']>31].copy()
-                b = df[df['Dyear']<32].copy()
-                b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
-                b = b.rename(columns={'Dday1': 'Dday'})
-                df = pd.concat([a,b])
-                df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
-                df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+            for column in coldist:
+                if column not in colextr:
+                    st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
+                    st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
+                    st.stop()
+                else:
+                    columns = fac['facility'].unique().tolist()
+                    df = df[df['facility'].isin(columns)].copy()
+                    df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
+                    df['dCOL'] = df['date_collected'].astype(str)
+                    
+                    
+                    df['dCOL'] = df['dCOL'].str.replace('/', '*')
+                    df['dCOL'] = df['dCOL'].str.replace('-', '*')
+                    #df['dCOL'] = df['dCOL'].str.replace('/', '*')
+                    
+                    
+                    df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
+                    
+                    df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
+                    
+                    df['Dyear'] = df['Dyear'].fillna(2022)
+                    a = df[df['Dyear']>31].copy()
+                    b = df[df['Dyear']<32].copy()
+                    b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
+                    b = b.rename(columns={'Dday1': 'Dday'})
+                    df = pd.concat([a,b])
+                    df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
+                    df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
+                    df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
-                def Viremia (x):
-                    if 0<= x <= 200:
-                        return 'Suppressed'
-                    elif 201 <= x <= 399:
-                        return 'LLV'
-                    elif x == 400:
-                        return 'suppressed'
-                    elif 401 <= x <= 999:
-                        return 'LLV'
-                    elif x >= 1000:
-                        return 'HLV'
-                    else:
-                        return None
+                    def Viremia (x):
+                        if 0<= x <= 200:
+                            return 'Suppressed'
+                        elif 201 <= x <= 399:
+                            return 'LLV'
+                        elif x == 400:
+                            return 'suppressed'
+                        elif 401 <= x <= 999:
+                            return 'LLV'
+                        elif x >= 1000:
+                            return 'HLV'
+                        else:
+                            return None
+                    
+                    df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
+                    df['SUP']= df['result_numeric'].apply(Viremia)
+                    facilities = df['facility'].unique()
+                    dfdups = df.copy()
+                    dfa = []
+                    for facility in facilities:
+                        dfs = df[df['facility']==facility]
+                        dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+                        dfs['ART-NUMERIC'] =  pd.to_numeric(dfs['ART-NUMERIC'], errors='coerce') 
+                        dfs = dfs.drop_duplicates(subset='ART-NUMERIC', keep='first')
+                        dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
+                        name = f'{facility}'
+                        dfa.append(dfs)
+                    dy = pd.concat(dfa) 
                 
-                df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
-                df['SUP']= df['result_numeric'].apply(Viremia)
-                facilities = df['facility'].unique()
-                dfdups = df.copy()
-                dfa = []
-                for facility in facilities:
-                    dfs = df[df['facility']==facility]
-                    dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-                    dfs['ART-NUMERIC'] =  pd.to_numeric(dfs['ART-NUMERIC'], errors='coerce') 
-                    dfs = dfs.drop_duplicates(subset='ART-NUMERIC', keep='first')
-                    dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
-                    name = f'{facility}'
-                    dfa.append(dfs)
-                dy = pd.concat(dfa) 
-            
-                dfnodups = dy.copy()  
-                pivot = pd.pivot_table(dy, index='facility', values='ART-NUMERIC', aggfunc='count')
-                dta = pivot.reset_index()
-                dta = dta.rename(columns={'ART-NUMERIC':'BLEEDS'}) 
-                dy['SUP'] = dy['SUP'].astype(str)
-                NS = dy[(dy['SUP']== 'HLV') | (dy['SUP']=='LLV')].copy()
-                NS[['Dyear', 'Dmonth']] = NS[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors= 'coerce')
-                NS = NS[((NS['Dyear']==2024)| ((NS['Dyear']==2023) & (NS['Dmonth']>9)))]
-                HLV = NS[(NS['SUP']== 'HLV')].copy()
-                LLV = NS[(NS['SUP']== 'LLV')].copy()
-                pivo = pd.pivot_table(HLV, index='facility', values='ART-NUMERIC', aggfunc='count')
-                dtb = pivo.reset_index()
-                dtb = dtb.rename(columns={'ART-NUMERIC':'HLVs'})
-                piv = pd.pivot_table(LLV, index='facility', values='ART-NUMERIC', aggfunc='count')
-                dtc = piv.reset_index()
-                dtc = dtc.rename(columns={'ART-NUMERIC':'LLVs'})
-                dfa = pd.merge(fac,dta, on = 'facility', how = 'left')
-                dfb = pd.merge(dfa,dtb, on = 'facility', how = 'left')
-                dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
-            
-                #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
-                dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
-                dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
-                dfc['VL COV'] = dfc['VL COV'].astype(int)
-                dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
-                dfc['BALANCE'] = dfc['BALANCE'].astype(int)
-                def achieve (v):
-                    if v < 0:
-                        return 0
-                    else:
-                        return v
-                dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                dfc = dfc[['facility', 'Q2CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
+                    dfnodups = dy.copy()  
+                    pivot = pd.pivot_table(dy, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    dta = pivot.reset_index()
+                    dta = dta.rename(columns={'ART-NUMERIC':'BLEEDS'}) 
+                    dy['SUP'] = dy['SUP'].astype(str)
+                    NS = dy[(dy['SUP']== 'HLV') | (dy['SUP']=='LLV')].copy()
+                    NS[['Dyear', 'Dmonth']] = NS[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors= 'coerce')
+                    NS = NS[((NS['Dyear']==2024)| ((NS['Dyear']==2023) & (NS['Dmonth']>9)))]
+                    HLV = NS[(NS['SUP']== 'HLV')].copy()
+                    LLV = NS[(NS['SUP']== 'LLV')].copy()
+                    pivo = pd.pivot_table(HLV, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    dtb = pivo.reset_index()
+                    dtb = dtb.rename(columns={'ART-NUMERIC':'HLVs'})
+                    piv = pd.pivot_table(LLV, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    dtc = piv.reset_index()
+                    dtc = dtc.rename(columns={'ART-NUMERIC':'LLVs'})
+                    dfa = pd.merge(fac,dta, on = 'facility', how = 'left')
+                    dfb = pd.merge(dfa,dtb, on = 'facility', how = 'left')
+                    dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
+                
+                    #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
+                    dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
+                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
+                    dfc['VL COV'] = dfc['VL COV'].astype(int)
+                    dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
+                    dfc['BALANCE'] = dfc['BALANCE'].astype(int)
+                    def achieve (v):
+                        if v < 0:
+                            return 0
+                        else:
+                            return v
+                    dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
+                    dfc = dfc[['facility', 'Q2CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
 
-                r = dfc['Q2CURR'].sum()
-                t = dfc['BLEEDS'].sum()
-                y = dfc['BALANCE TO 95%'].sum()
-                u = dfc['HLVs'].sum()
-                i = dfc['LLVs'].sum()
-                o = int((t*100)/r)
+                    r = dfc['Q2CURR'].sum()
+                    t = dfc['BLEEDS'].sum()
+                    y = dfc['BALANCE TO 95%'].sum()
+                    u = dfc['HLVs'].sum()
+                    i = dfc['LLVs'].sum()
+                    o = int((t*100)/r)
 
-                dfc.loc[len(dfc), 'facility'] = 'TOTAL'
-                dfc.loc[len(dfc)-1, 'Q2CURR'] = r
-                dfc.loc[len(dfc)-1, 'BLEEDS'] = t
-                dfc.loc[len(dfc)-1, 'VL COV'] = o
-                dfc.loc[len(dfc)-1, 'BALANCE TO 95%'] = y
-                dfc.loc[len(dfc)-1, 'HLVs'] = u
-                dfc.loc[len(dfc)-1, 'LLVs'] = i
-    if df is not None:           
+                    dfc.loc[len(dfc), 'facility'] = 'TOTAL'
+                    dfc.loc[len(dfc)-1, 'Q2CURR'] = r
+                    dfc.loc[len(dfc)-1, 'BLEEDS'] = t
+                    dfc.loc[len(dfc)-1, 'VL COV'] = o
+                    dfc.loc[len(dfc)-1, 'BALANCE TO 95%'] = y
+                    dfc.loc[len(dfc)-1, 'HLVs'] = u
+                    dfc.loc[len(dfc)-1, 'LLVs'] = i
+    if df is not None and district is not None:           
         dfe = dfc.set_index('facility')            
         st.write(dfe.head(2))     
-    if df is not None:        
+    if df is not None and district is not None:       
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
@@ -391,11 +435,4 @@ if file and district is not None:
 
         if __name__ == "__main__":
             main()
-
-
-
-
-
-
-
 
