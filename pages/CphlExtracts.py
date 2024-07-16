@@ -11,68 +11,68 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 # from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 
 
-SEMBABULE = {'Ssembabule HC IV':2232,'Kyabi HC III':511,'Ntuusi HC IV':1006, 'Lwemiyaga HC III':959,
-            'Makoole HC II':245,'Mateete HC III':2338, 'Lwebitakuli Gvt HC III':567,'Ntete HC II':78,'Sembabule Kabaale HC II':59}
+SEMBABULE = {'Ssembabule HC IV':2321,'Kyabi HC III':536,'Ntuusi HC IV':968, 'Lwemiyaga HC III':1048,
+            'Makoole HC II':252,'Mateete HC III':2367, 'Lwebitakuli Gvt HC III':607,'Ntete HC II':87,'Sembabule Kabaale HC II':77}
 
-BUKOMANSIMBI = {'Butenga HC IV':1434,'Mirambi HC III':327,'Kagoggo HC II': 88,'Kisojjo HC II GOVT':73,'Bigasa HC III':807,
-            'Kitanda HC III':321,"St. Mary'S Maternity Home HC III": 79,'Kingangazzi HC II':205
+BUKOMANSIMBI = {'Butenga HC IV':1477,'Mirambi HC III':330,'Kagoggo HC II': 93,'Kisojjo HC II GOVT':77,'Bigasa HC III':842,
+            'Kitanda HC III':326,"St. Mary'S Maternity Home HC III": 80,'Kingangazzi HC II':204
               }
-KALUNGU = {'Lukaya Health Care Center-Uganda Cares HC II': 3623, 
-           'Bukulula HC IV': 1177, 'Kalungu Kabaale HC II GOVT': 107,'Kalungu HC III': 785,'Kalungu Kasambya HC III GOVT':364,
-           'Kiragga HC III':173,'Kiti HC III':176,'Kyamulibwa Gvt HC III':404,'Lukaya HC III':681,'MRC Kyamulibwa HC II':481}
+KALUNGU = {'Lukaya Health Care Center-Uganda Cares HC II': 3676, 
+           'Bukulula HC IV': 1212, 'Kalungu Kabaale HC II GOVT': 117,'Kalungu HC III': 797,'Kalungu Kasambya HC III GOVT':367,
+           'Kiragga HC III':184,'Kiti HC III':186,'Kyamulibwa Gvt HC III':406,'Lukaya HC III':724,'MRC Kyamulibwa HC II':482}
 
-LYANTONDE ={'Kabatema HC II':117,
-           'Kabayanda HC II':91,'Kaliiro HC III':473,'Kasagama HC III':459,
-           'Kinuuka  HC III':317,'Lyakajura HC II': 384,'Lyantonde Hospital':4129,'Mpumudde HC III':460}
+LYANTONDE ={'Kabatema HC II':118,
+           'Kabayanda HC II':95,'Kaliiro HC III':485,'Kasagama HC III':477,
+           'Kinuuka  HC III':315,'Lyakajura HC II': 415,'Lyantonde Hospital':4190,'Mpumudde HC III':470}
 
 
-MASAKA_CITY ={'Bukoto HC III':451,
-             'Kiyumba HC IV':854,'Masaka Police HC II':400,'Mpugwe HC III':316,'Nyendo HC II':337,'TASO Masaka CLINIC':8170}
+MASAKA_CITY ={'Bukoto HC III':454,
+             'Kiyumba HC IV':888,'Masaka Police HC II':418,'Mpugwe HC III':317,'Nyendo HC II':359,'TASO Masaka CLINIC':8093}
 
-MASAKA_DISTRICT ={'Bukakata HC III':641,'Bukeeri HC III':355,'Masaka Buwunga HC III GOVT':340,'Kamulegu HC III':590,'Kyannamukaaka HC IV':1345}
+MASAKA_DISTRICT ={'Bukakata HC III':619,'Bukeeri HC III':357,'Masaka Buwunga HC III GOVT':341,'Kamulegu HC III':601,'Kyannamukaaka HC IV':1346}
 
-MPIGI ={'Bunjako HC III':502,'Buwama HC III':2115,'Mpigi   HC IV':3107,'Bujuuko HC III':336,
-       'Sekiwunga HC III':332,'Nsamu-Kyali HC III':187,'Butoolo HC III':819,'Buyiga HC II':152,'Kampiringisa HC III':260,
-       'Ggolo HC III':322,'Kituntu HC III':313,'Dona Medical Centre HC III':151,'Nindye HC III':261,'Muduuma HC III':762,
-       'Nabyewanga HC II':134,'Bukasa HC II':59,'Fiduga HC III':22,'Kiringente Epi Centre HC II':78,'St. Elizabeth Kibanga Ihu HC III':35}
+MPIGI ={'Bunjako HC III':517,'Buwama HC III':2162,'Mpigi   HC IV':3124,'Bujuuko HC III':334,
+       'Sekiwunga HC III':346,'Nsamu-Kyali HC III':201,'Butoolo HC III':833,'Buyiga HC II':155,'Kampiringisa HC III':266,
+       'Ggolo HC III':309,'Kituntu HC III':333,'Dona Medical Centre HC III':151,'Nindye HC III':270,'Muduuma HC III':766,
+       'Nabyewanga HC II':135,'Bukasa HC II':54,'Fiduga HC III':24,'Kiringente Epi Centre HC II':77,'St. Elizabeth Kibanga Ihu HC III':37}
 
-BUTAMBALA ={'Bulo HC III': 689,
-           'Butambala Epi Centre HC III GOVT':212,'Gombe HOSPITAL': 3277,'Kitimba HC III': 202,'Kyabadaza HC III':387,'Ngando HC III':404
+BUTAMBALA ={'Bulo HC III': 737,
+           'Butambala Epi Centre HC III GOVT':212,'Gombe HOSPITAL': 3411,'Kitimba HC III': 222,'Kyabadaza HC III':417,'Ngando HC III':417
           }
 
-KYOTERA ={'Kabira HC III GOVT':1171,
-          'Kabuwoko Gvt HC III':237,'Kakuuto HC IV':2669,'Kalisizo Hospital':4029,'Kasasa HC III': 868,'Kasaali HC III': 1220,
-          'Kasensero HC II':1304,'Kayanja HC II Lwankoni GOVT':107,'Kirumba  HC III':310,'Kyebe HC III':676,'Lwankoni HC III':260,
-          'Mutukula HC III':548,'Mitukula HC III':1091,'Nabigasa HC III':860,'Rakai Health Sciences Program CLINIC':2647}
+KYOTERA ={'Kabira HC III GOVT':1220,
+          'Kabuwoko Gvt HC III':231,'Kakuuto HC IV':2672,'Kalisizo Hospital':4108,'Kasasa HC III': 870,'Kasaali HC III': 1232,
+          'Kasensero HC II':1308,'Kayanja HC II Lwankoni GOVT':108,'Kirumba  HC III':326,'Kyebe HC III':707,'Lwankoni HC III':270,
+          'Mutukula HC III':542,'Mitukula HC III':1108,'Nabigasa HC III':872,'Rakai Health Sciences Program CLINIC':2642}
 
-RAKAI = {'Buyamba HC III':892,
-         'Byakabanda HC III':181,'Kacheera HC III':478,'Kibaale HC II GOVT':547,'Kibanda HC III':292,'Kimuli HC III':567,'Kifamba HC III':326,
-         'Kyalulangira HC III':365,'Lwamaggwa Gvt HC III':980,'Lwanda HC III':750,'Rakai Hospital':3075,'Rakai Kiziba HC II GOVT':387}
+RAKAI = {'Buyamba HC III':898,
+         'Byakabanda HC III':183,'Kacheera HC III':476,'Kibaale HC II GOVT':567,'Kibanda HC III':309,'Kimuli HC III':595,'Kifamba HC III':327,
+         'Kyalulangira HC III':369,'Lwamaggwa Gvt HC III':981,'Lwanda HC III':774,'Rakai Hospital':3138,'Rakai Kiziba HC II GOVT':408}
 
-GOMBA= {'Buyanja  HC II (Gomba)': 110,'Gomba Kanoni HC III GOVT': 1289,'Kifampa HC III': 860,'Kisozi HC III GOVT':390,
-        'Kyai HC III': 364,'Maddu HC IV': 1999,'Mamba HC II':304,'Mpenja HC III': 405,'Ngomanene HC II': 99}
+GOMBA= {'Buyanja  HC II (Gomba)': 113,'Gomba Kanoni HC III GOVT': 1295,'Kifampa HC III': 879,'Kisozi HC III GOVT':392,
+        'Kyai HC III': 375,'Maddu HC IV': 2049,'Mamba HC II':317,'Mpenja HC III': 401,'Ngomanene HC II': 121}
 
-WAKISO= { 'Bulondo HC III':308,'Busawamanze HC III':299,'Buwambo HC IV':1017,
-        'COMMUNITY HEALTH PLAN UGANDA':615,'Ggwatiro Nursing Home HC III':343,'Gombe (Wakiso) HC II':15,
-         'Kabubbu HC II':673,'Kasangati HC IV':3052,'Kawanda HC III':981,'Kira HC III':1457,'Kiziba HC III':480,'Mende HC III':248,
-         'Nabutiti HC III':199,'Nabweru HC III':1603,'Namayumba HC IV':1963,'Namulonge HC III':471,'Nansana HC II':118,
-         'Nassolo Wamala HC II':182,'Triam Medical Centre CLINIC-NR':260,'Ttikalu HC III':433,'Wakiso Banda HC II GOVT':38,
-         'Wakiso Epi Centre HC III GOVT':631,'Wakiso HC IV':3652,'Wakiso Kasozi HC III GOVT':233,'Watubba HC III':536,'Kakiri HC III':961}
+WAKISO= { 'Bulondo HC III':317,'Busawamanze HC III':302,'Buwambo HC IV':960,
+        'COMMUNITY HEALTH PLAN UGANDA':665,'Ggwatiro Nursing Home HC III':326,'Gombe (Wakiso) HC II':20,
+         'Kabubbu HC II':682,'Kasangati HC IV':3067,'Kawanda HC III':986,'Kira HC III':1506,'Kiziba HC III':523,'Mende HC III':253,
+         'Nabutiti HC III':209,'Nabweru HC III':1612,'Namayumba HC IV':1974,'Namulonge HC III':473,'Nansana HC II':121,
+         'Nassolo Wamala HC II':209,'Triam Medical Centre CLINIC-NR':243,'Ttikalu HC III':421,'Wakiso Banda HC II GOVT':44,
+         'Wakiso Epi Centre HC III GOVT':602,'Wakiso HC IV':3736,'Wakiso Kasozi HC III GOVT':232,'Watubba HC III':542,'Kakiri HC III':938}
 
 KALANGALA= {'Bubeke HC III': 611,'Bufumira HC III': 405,'Bukasa HC IV': 1029, 'Bwendero HC III':1007,'Jaana HC II':13,
            'Kachanga Island HC II':219,'Kalangala HC IV':1443, 'Kasekulo HC II': 6,'Lujjabwa Island HC II': 345,'Lulamba HC III': 647,
            'Mazinga HC III': 524,'Mugoye HC III': 1131,'Mulabana HC II': 16,'Ssese Islands African Aids Project (SIAA':20}  
 
-LWENGO = {'Katovu HC III':454, 'Kiwangala HC IV': 1595, 
-         'Kyazanga HC IV': 1962,'Kyetume HC III': 532, 'Lwengo HC IV': 1444, 'KINONI':2257,'Nanywa HC III':483,
+LWENGO = {'Katovu HC III':470, 'Kiwangala HC IV': 1623, 
+         'Kyazanga HC IV': 2048,'Kyetume HC III': 535, 'Lwengo HC IV': 1455, 'KINONI':2265,'Nanywa HC III':498,
          }
 
-ENTEBBE = {'Bussi HC III': 219, 'Bweyogerere HC III': 966, 'BUNAMWAYA H-C II':32,'JCRC (Wakiso)':13247,'Kasenge H-C II':62, 'Kajjansi HC III':1928, 'Kasanje HC III': 826,
-'Kigungu HC III':611, 'Kirinya H-C II':47, 
-           'Kyengera HC III':578, 'Lufuka Valley HC III': 219, 'Mildmay Uganda HOSPITAL':14535, 'Mutundwe HC II':45,'Mutungo HC II':45, 'Nakawuka HC III':1092, 'Nalugala HC II':68,
-           'Ndejje HC IV':1922, 'Nsangi HC III':2572, 'Seguku HC II':91, 'TASO Entebbe CLINIC' :6341, 'Wagagai HC IV': 531,'ZINGA HC II':246,'Kasoozo H-C III':30,'Katabi H-C III':85,
-           'Kimwanyi H-C III':23, 'Kireka H-C II':52, 'KYENGEZA H-C II': 10, 'LUBBE H-C II':9, 'MAGANJO  H-C II':28, 'MAGOGGO H-C II': 16, 'Matugga H-C III':62,
-           'Migadde H-C II':11, 'Namugongo Fund For Special Children': 589, 'NSAGGU H-C II':29, 'Nurture Africa H-C III':2369, 'Kitala HC II':175
+ENTEBBE = {'Bussi HC III': 237, 'Bweyogerere HC III': 969, 'BUNAMWAYA H-C II':30,'JCRC (Wakiso)':13376,'Kasenge H-C II':65, 'Kajjansi HC III':1962, 'Kasanje HC III': 823,
+'Kigungu HC III':630, 'Kirinya H-C II':53, 
+           'Kyengera HC III':620, 'Lufuka Valley HC III': 233, 'Mildmay Uganda HOSPITAL':14651, 'Mutundwe HC II':50,'Mutungo HC II':94, 'Nakawuka HC III':1068, 'Nalugala HC II':69,
+           'Ndejje HC IV':2124, 'Nsangi HC III':2713, 'Seguku HC II':96, 'TASO Entebbe CLINIC' :6357, 'Wagagai HC IV': 524,'ZINGA HC II':260,'Kasoozo H-C III':33,'Katabi H-C III':123,
+           'Kimwanyi H-C III':25, 'Kireka H-C II':61, 'KYENGEZA H-C II': 12, 'LUBBE H-C II':13, 'MAGANJO  H-C II':35, 'MAGOGGO H-C II': 18, 'Matugga H-C III':73,
+           'Migadde H-C II':18, 'Namugongo Fund For Special Children': 606, 'NSAGGU H-C II':31, 'Nurture Africa H-C III':2405, 'Kitala HC II':165
 }
 
 
@@ -226,8 +226,6 @@ if file and district is not None:
                 #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
                 dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
                 dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
-                st.write(dfc)
-                st.stop()
                 dfc['VL COV'] = dfc['VL COV'].astype(int)
                 dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
                 dfc['BALANCE'] = dfc['BALANCE'].astype(int)
