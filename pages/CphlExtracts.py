@@ -296,8 +296,9 @@ if file is not None:
                     dfc.loc[len(dfc)-1, 'HLVs'] = u
                     dfc.loc[len(dfc)-1, 'LLVs'] = i
     if df is not None and district is not None:           
-        dfe = dfc.set_index('facility')            
-        st.write(dfe.head(2))     
+        dfe = dfc.set_index('facility')
+        with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
+               st.write(dfe)     
     if df is not None and district is not None:       
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
