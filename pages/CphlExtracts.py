@@ -226,7 +226,7 @@ if file and district is not None:
                 #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
                 dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
                 dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
-                st.write(dfc['VL COV']
+                st.write(dfc['VL COV'])
                 st.stop()
                 dfc['VL COV'] = dfc['VL COV'].astype(int)
                 dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
