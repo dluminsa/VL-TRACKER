@@ -78,8 +78,8 @@ ENTEBBE = {'Bussi HC III': 219, 'Bweyogerere HC III': 966, 'BUNAMWAYA H-C II':32
 
 districts = ['BUKOMANSIMBI', 'BUTAMBALA','ENTEBBE HUB', 'GOMBA','KALANGALA','KALUNGU', 'KYOTERA', 
              'LYANTONDE','LWENGO','MASAKA CITY', 'MASAKA DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO HUB']
-st.write('BEING UPDATED')
-st.stop()
+#st.write('BEING UPDATED')
+#st.stop()
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 district = st.selectbox('Select a district:', districts, index=None)
