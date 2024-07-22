@@ -153,9 +153,9 @@ if file is not None:
             fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q2CURR'])
         elif district  == 'SEMBABULE':
             fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q2CURR'])
-        elif district  == 'MASAKA CITY':
+        elif district  == 'MASAKA_CITY':
             fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q2CURR'])
-        elif district  == 'MASAKA DISTRICT':
+        elif district  == 'MASAKA_DISTRICT':
             fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q2CURR'])
         elif district  == 'KALUNGU':
             fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q2CURR'])
