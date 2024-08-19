@@ -311,7 +311,7 @@ if file is not None:
 
                 ws.insert_rows(0)
                 ws['A1'] = 'FACILITY'
-                ws['B1'] = 'Q2 CURR'
+                ws['B1'] = 'Q3 CURR'
                 ws['C1'] = 'BLEEDS'
                 ws['D1'] = 'VL COV'
                 ws['E1'] = 'BALANCE TO 95%'
