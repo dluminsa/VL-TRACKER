@@ -64,7 +64,7 @@ KALANGALA= {'Bubeke HC III': 611,'Bufumira HC III': 405,'Bukasa HC IV': 1029, 'B
            'Mazinga HC III': 524,'Mugoye HC III': 1131,'Mulabana HC II': 16,'Ssese Islands African Aids Project (SIAA':20}  
 
 LWENGO = {'Katovu HC III':470, 'Kiwangala HC IV': 1623, 
-         'Kyazanga HC IV': 2048,'Kyetume HC III': 535, 'Lwengo HC IV': 1455, 'KINONI':2265,'Nanywa HC III':498,
+         'Kyazanga HC IV': 2048,'Kyetume HC III': 535, 'Lwengo HC IV': 1455, 'Lwengo Kinoni Govt HC III':2265,'Nanywa HC III':498,
          }
 
 ENTEBBE = {'Bussi HC III': 237, 'Bweyogerere HC III': 969, 'BUNAMWAYA H-C II':30,'JCRC (Wakiso)':13376,'Kasenge H-C II':65, 'Kajjansi HC III':1962, 'Kasanje HC III': 823,
@@ -102,7 +102,7 @@ if file is not None:
     # Display DataFrame
     if df is not None:# and district is not None:
         df['facility'] =  df['facility'].str.replace('/', '-')
-        df['facility'] =  df['facility'].str.replace('Kinoni Welfare Medical Centre CLINIC', 'KINONI')
+        #df['facility'] =  df['facility'].str.replace('Kinoni Welfare Medical Centre CLINIC', 'KINONI')
         df['facility'] =  df['facility'].str.replace('Mukwano Medical Centre CLINIC', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('St. Francis Maternity Home HC II', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('Teguzibirwa Dom Clinic', 'Lukaya HC III')
@@ -150,35 +150,35 @@ if file is not None:
             district = st.selectbox('Select a district:', districts, index=None)
 
         if district  == 'BUKOMANSIMBI':
-            fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'SEMBABULE':
-            fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'MASAKA_CITY':
-            fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'MASAKA_DISTRICT':
-            fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'KALUNGU':
-            fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q3CURR'])
         elif district == 'MPIGI':
-            fac = pd.DataFrame(list(MPIGI.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(MPIGI.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'BUTAMBALA':
-            fac = pd.DataFrame(list(BUTAMBALA.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(BUTAMBALA.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'GOMBA':
-            fac = pd.DataFrame(list(GOMBA.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(GOMBA.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'KYOTERA':
-            fac = pd.DataFrame(list(KYOTERA.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(KYOTERA.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'RAKAI':
-            fac = pd.DataFrame(list(RAKAI.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(RAKAI.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'KALANGALA':
-            fac = pd.DataFrame(list(KALANGALA.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(KALANGALA.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'LYANTONDE':
-            fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q3CURR'])
         elif district  == 'LWENGO':
-            fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q3CURR'])
         elif district == 'WAKISO HUB':
-            fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q3CURR'])
         elif district == 'ENTEBBE HUB':
-            fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q2CURR'])
+            fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q3CURR'])
         else:
             st.write('NO DISTRICT CHOSEN')
             #print('NO DISTRICT CHOSEN')
@@ -266,13 +266,13 @@ if file is not None:
                     dfa = pd.merge(fac,dta, on = 'facility', how = 'left')
                     dfb = pd.merge(dfa,dtb, on = 'facility', how = 'left')
                     dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
-                    st.write(dfc)
+                    #st.write(dfc)
                     #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
-                    dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
-                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
+                    dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
+                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q3CURR'])
                     
                     dfc['VL COV'] = dfc['VL COV'].astype(int)
-                    dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
+                    dfc['BALANCE'] = (dfc['Q3CURR']*0.95)-(dfc['BLEEDS'])
                     dfc['BALANCE'] = dfc['BALANCE'].astype(int)
                     def achieve (v):
                         if v < 0:
@@ -280,9 +280,9 @@ if file is not None:
                         else:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                    dfc = dfc[['facility', 'Q2CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
+                    dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
 
-                    r = dfc['Q2CURR'].sum()
+                    r = dfc['Q3CURR'].sum()
                     t = dfc['BLEEDS'].sum()
                     y = dfc['BALANCE TO 95%'].sum()
                     u = dfc['HLVs'].sum()
@@ -290,7 +290,7 @@ if file is not None:
                     o = int((t*100)/r)
 
                     dfc.loc[len(dfc), 'facility'] = 'TOTAL'
-                    dfc.loc[len(dfc)-1, 'Q2CURR'] = r
+                    dfc.loc[len(dfc)-1, 'Q3CURR'] = r
                     dfc.loc[len(dfc)-1, 'BLEEDS'] = t
                     dfc.loc[len(dfc)-1, 'VL COV'] = o
                     dfc.loc[len(dfc)-1, 'BALANCE TO 95%'] = y
