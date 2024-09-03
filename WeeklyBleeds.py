@@ -8,7 +8,7 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 import time
 from pathlib import Path
-from streamlit_gsheets import GSheetsConnection
+#from streamlit_gsheets import GSheetsConnection
 st.write('BEING UPDATED')
 st.stop()
 st.set_page_config(
@@ -707,29 +707,29 @@ if df is not None:
      No_RETURNED_NOT_BLED = r
      MISSED_APPT_BUT_DUE = rm
 
-     if submit:
-          if Facility == '':
-              st.warning("**NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!**")
-              st.stop()
-          else:        
-              details = pd.DataFrame({'FACILITY': [Facility],
-                                        'WEEK':[WEEK],
-                                        'TX_CURR':[a],
-                                        'No. WITH VL':[E],
-                                        'VL COV': [G],
-                                        'BALANCE TO 95':[H],
-                                        'TOTAL UNMET IN THIS EMR EXTRACT': [d],
-                                        'No. OF BLEEDS IN THE WEEK' : [we],
-                                        'No.ON APPT NEXT WEEK THAT ARE DUE FOR VL': [el],
-                                        'ADJUSTED WEEKLY TARGET' : [bleed],
-                                        'No. RETURNED BUT NOT BLED' : [r],
-                                        'MISSED APPT BUT DUE FOR VL' : [rm]
-                                    })
-              #st.write(updated)
-              updated = pd.concat([existing, details], ignore_index =True)
-              conn.update(worksheet = 'VL', data = updated)
-              st.success('Your data has been submitted, view it below:')
-              st.table(details)
+     # if submit:
+     #      if Facility == '':
+     #          st.warning("**NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!**")
+     #          st.stop()
+     #      else:        
+     #          details = pd.DataFrame({'FACILITY': [Facility],
+     #                                    'WEEK':[WEEK],
+     #                                    'TX_CURR':[a],
+     #                                    'No. WITH VL':[E],
+     #                                    'VL COV': [G],
+     #                                    'BALANCE TO 95':[H],
+     #                                    'TOTAL UNMET IN THIS EMR EXTRACT': [d],
+     #                                    'No. OF BLEEDS IN THE WEEK' : [we],
+     #                                    'No.ON APPT NEXT WEEK THAT ARE DUE FOR VL': [el],
+     #                                    'ADJUSTED WEEKLY TARGET' : [bleed],
+     #                                    'No. RETURNED BUT NOT BLED' : [r],
+     #                                    'MISSED APPT BUT DUE FOR VL' : [rm]
+     #                                })
+     #          #st.write(updated)
+     #          updated = pd.concat([existing, details], ignore_index =True)
+     #          conn.update(worksheet = 'VL', data = updated)
+     #          st.success('Your data has been submitted, view it below:')
+     #          st.table(details)
 
 
 
