@@ -72,7 +72,8 @@ ENTEBBE = {'Bussi HC III': 237, 'Bweyogerere HC III': 969, 'BUNAMWAYA H-C II':30
            'Kyengera HC III':620, 'Lufuka Valley HC III': 233, 'Mildmay Uganda HOSPITAL':14651, 'Mutundwe HC II':50,'Mutungo HC II':94, 'Nakawuka HC III':1068, 'Nalugala HC II':69,
            'Ndejje HC IV':2124, 'Nsangi HC III':2713, 'Seguku HC II':96, 'TASO Entebbe CLINIC' :6357, 'Wagagai HC IV': 524,'ZINGA HC II':260,'Kasoozo H-C III':33,'Katabi H-C III':123,
            'Kimwanyi H-C III':25, 'Kireka H-C II':61, 'KYENGEZA H-C II': 12, 'LUBBE H-C II':13, 'MAGANJO  H-C II':35, 'MAGOGGO H-C II': 18, 'Matugga H-C III':73,
-           'Migadde H-C II':18, 'Namugongo Fund For Special Children': 606, 'NSAGGU H-C II':31, 'Nurture Africa H-C III':2405, 'Kitala HC II':165
+           'Migadde H-C II':18, 'Namugongo Fund For Special Children': 606, 'NSAGGU H-C II':31,
+           'Nurture Africa H-C III':2405, 'Kitala HC II':165
 }
 
 
@@ -270,7 +271,7 @@ if file is not None:
                     #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
                     dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
                     dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q3CURR'])
-                    
+                    dfc = dfc.dropna(subset=['VL COV'])
                     dfc['VL COV'] = dfc['VL COV'].astype(int)
                     dfc['BALANCE'] = (dfc['Q3CURR']*0.95)-(dfc['BLEEDS'])
                     dfc['BALANCE'] = dfc['BALANCE'].astype(int)
