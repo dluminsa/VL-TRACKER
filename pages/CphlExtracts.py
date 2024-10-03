@@ -66,7 +66,7 @@ KALANGALA= {'Bubeke HC III': 611,'Bufumira HC III': 405,'Bukasa HC IV': 1029, 'B
 LWENGO = {'Katovu HC III':470, 'Kiwangala HC IV': 1623, 
          'Kyazanga HC IV': 2048,'Kyetume HC III': 535, 'Lwengo HC IV': 1455, 'Lwengo Kinoni Govt HC III':2265,'Nanywa HC III':498,
          }
-
+daddada
 ENTEBBE = {'Bussi HC III': 237, 'Bweyogerere HC III': 969, 'BUNAMWAYA H-C II':30,'JCRC (Wakiso)':13376,'Kasenge H-C II':65, 'Kajjansi HC III':1962, 'Kasanje HC III': 823,
 'Kigungu HC III':630, 'Kirinya H-C II':53, 
            'Kyengera HC III':620, 'Lufuka Valley HC III': 233, 'Mildmay Uganda HOSPITAL':14651, 'Mutundwe HC II':50,'Mutungo HC II':94, 'Nakawuka HC III':1068, 'Nalugala HC II':69,
