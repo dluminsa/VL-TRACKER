@@ -79,8 +79,8 @@ ENTEBBE = {'Bussi HC III': 237, 'Bweyogerere HC III': 969, 'BUNAMWAYA H-C II':30
 
 districts = ['BUKOMANSIMBI', 'BUTAMBALA','ENTEBBE HUB', 'GOMBA','KALANGALA','KALUNGU', 'KYOTERA', 
              'LYANTONDE','LWENGO','MASAKA_CITY', 'MASAKA_DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO HUB']
-st.write('BEING UPDATED')
-st.stop()
+  # st.write('BEING UPDATED')
+  # st.stop()
 
 st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 
