@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import random
-#import numpy as np
+import numpy as np
 from openpyxl import Workbook
 from pathlib import Path
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
