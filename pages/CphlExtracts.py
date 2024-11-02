@@ -251,6 +251,7 @@ if file is not None:
                         dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
                         name = f'{facility}'
                         dfa.append(dfs)
+                    st.write(dfa[0])
                     dy = pd.concat(dfa) 
                 
                     dfnodups = dy.copy()  
