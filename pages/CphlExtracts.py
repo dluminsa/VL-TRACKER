@@ -296,7 +296,7 @@ if file is not None:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
                     dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
-                    dfq = dfc.copy()
+                 
 
                     r = dfq['Q3CURR'].sum()
                     t = dfq['BLEEDS'].sum()
@@ -314,7 +314,7 @@ if file is not None:
                     dfq.loc[len(dfq)-1, 'HLVs'] = u
                     dfq.loc[len(dfq)-1, 'LLVs'] = i
     if df is not None and district is not None:           
-        dfe = dfc.set_index('facility')
+        dfe = dfq.set_index('facility')
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
         st.write(dfe)     
