@@ -202,7 +202,7 @@ if file is not None:
                 # else:
                     facilitys = fac['facility'].unique().tolist()
                     df = df[df['facility'].isin(facilitys)].copy()
-                    df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
+                    df['ART'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
                     
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
@@ -228,6 +228,7 @@ if file is not None:
                     df['Dyear'] = df['Dyear'].replace(24, 2024, regex=False)
                     df = df[df['Dyear']>=2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+                    dfhigh = df.copy()
 
                     def Viremia (x):
                         if 0<= x <= 200:
@@ -254,30 +255,30 @@ if file is not None:
                         if dfs.empty:
                            continue
                         dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-                        dfs['ART-NUMERIC'] =  pd.to_numeric(dfs['ART-NUMERIC'], errors='coerce') 
-                        dfs = dfs.drop_duplicates(subset='ART-NUMERIC', keep='first')
-                        dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
+                        dfs['ART'] =  pd.to_numeric(dfs['ART'], errors='coerce') 
+                        dfs = dfs.drop_duplicates(subset='ART', keep='first')
+                        dfs =dfs[['facility','ART','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
                         name = f'{facility}'
                         dfa.append(dfs)
                     #st.write(dfa[0])
                     dy = pd.concat(dfa) 
                 
                     dfnodups = dy.copy()  
-                    pivot = pd.pivot_table(dy, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    pivot = pd.pivot_table(dy, index='facility', values='ART', aggfunc='count')
                     dta = pivot.reset_index()
-                    dta = dta.rename(columns={'ART-NUMERIC':'BLEEDS'}) 
+                    dta = dta.rename(columns={'ART':'BLEEDS'}) 
                     dy['SUP'] = dy['SUP'].astype(str)
                     NS = dy[(dy['SUP']== 'HLV') | (dy['SUP']=='LLV')].copy()
                     NS[['Dyear', 'Dmonth']] = NS[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors= 'coerce')
                     NS = NS[NS['Dyear']==2024].copy()#| ((NS['Dyear']==2023) & (NS['Dmonth']>9)))]
                     HLV = NS[(NS['SUP']== 'HLV')].copy()
                     LLV = NS[(NS['SUP']== 'LLV')].copy()
-                    pivo = pd.pivot_table(HLV, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    pivo = pd.pivot_table(HLV, index='facility', values='ART', aggfunc='count')
                     dtb = pivo.reset_index()
-                    dtb = dtb.rename(columns={'ART-NUMERIC':'HLVs'})
-                    piv = pd.pivot_table(LLV, index='facility', values='ART-NUMERIC', aggfunc='count')
+                    dtb = dtb.rename(columns={'ART':'HLVs'})
+                    piv = pd.pivot_table(LLV, index='facility', values='ART', aggfunc='count')
                     dtc = piv.reset_index()
-                    dtc = dtc.rename(columns={'ART-NUMERIC':'LLVs'})
+                    dtc = dtc.rename(columns={'ART':'LLVs'})
                     dfa = pd.merge(fac,dta, on = 'facility', how = 'left')
                     dfb = pd.merge(dfa,dtb, on = 'facility', how = 'left')
                     dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
@@ -420,7 +421,7 @@ if df is not None and district is not None:
                 with st.expander(f"Download files for {district} Facilities without duplicates"):
                      for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        dfs = dfs[['facility', 'ART-NUMERIC', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
@@ -430,7 +431,102 @@ if df is not None and district is not None:
                             file_name=f"{facility}_data_without_duplicates.csv",
                             mime="text/csv"
                         )
+if df is not None and district is not None:
+            dfw = dfhigh.copy()
+            dfw['RDO'] = dfw['date_collected'].astype(str)
+            dfw['result_numeric'] = pd.to_numeric(dfw['result_numeric'], errors='coerce')
+            nsups = dfw[dfw['result_numeric']>999].copy()
+            sups = dfw[dfw['result_numeric']<1000].copy()
+            sups[['Dyear', 'Dmonth']] = sups[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
+            
+            sups = sups.sort_values(by = ['Dyear', 'Dmonth'], ascending = True)
+            firsts =[]
+            nsups['facility'] = nsups['facility'].astype(str)
+            sups['facility'] = sups['facility'].astype(str)
+            
+            sups['ART'] = pd.to_numeric(sups['ART'], errors='coerce')
+            nsups['ART'] = pd.to_numeric(nsups['ART'], errors='coerce')
 
+            nsups[['Dyear', 'Dmonth', 'Dday']] = nsups[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
+            nsups = nsups.sort_values(by = ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+
+            dus =[]
+            
+            for facility in facilities:
+                nsups['facility'] = nsups['facility'].astype(str)
+                dfq = nsups[nsups['facility']==facility].copy()
+                dfq['ART'] = pd.to_numeric(dfq['ART'],errors='coerce')
+                dfz = dfq[dfq.duplicated(subset=['ART'], keep='first')]
+                dus.append(dfz)
+            dups = pd.concat(dus)
+            dupsa =[]
+            for facility in facilities:
+                dups['facility'] = dups['facility'].astype(str)
+                dfx = dups[dups['facility']==facility].copy()
+                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
+                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
+                dupsa.append(dfy)
+            dups = pd.concat(dupsa)
+            
+            dups['REBLED'] = np.nan
+            dups['REBLED'] = dups['REBLED'].fillna('RN')
+            
+            notd = []
+            for facility in facilities:
+                nsups['facility'] = nsups['facility'].astype(str)
+                dfx = nsups[nsups['facility']==facility].copy()
+                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
+                dfy = dfx[~dfx.duplicated(subset=['ART'], keep='first')]
+                notd.append(dfy)
+            notdups =pd.concat(notd)
+
+            nodups = []
+            for facility in facilities:
+                sups['facility'] = sups['facility'].astype(str)
+                dfx = sups[sups['facility']==facility].copy()
+                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
+                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
+                nodups.append(dfy)
+            sups = pd.concat(nodups)
+            
+            dfj = []
+            for facility in facilities:
+                sups['facility'] = sups['facility'].astype(str)
+                dfa = sups[sups['facility'] == facility].copy()
+                
+                notdups['facility'] = notdups['facility'].astype(str)
+                dfb = notdups[notdups['facility'] == facility].copy()
+                
+                dfa['ART'] = pd.to_numeric(dfa['ART'],errors='coerce')
+                dfb['ART'] = pd.to_numeric(dfb['ART'],errors='coerce')
+                dfy = pd.merge(dfa, dfb, on = 'ART', how= 'right')
+                dfj.append(dfy)
+            dfa = pd.concat(dfj)
+            fna =dfa[dfa['RDO_x'].isnull()].copy()
+            dn =dfa[~dfa['RDO_x'].isnull()].copy()
+            dn[['Dyear_x', 'Dyear_y']] = dn[['Dyear_x', 'Dyear_y']].apply(pd.to_numeric, errors ='coerce')
+            dn['YEAR'] = dn['Dyear_x']-dn['Dyear_y']
+            dn[['Dmonth_x', 'Dmonth_y']] = dn[['Dmonth_x', 'Dmonth_y']].apply(pd.to_numeric, errors ='coerce')
+            dn['MONTH'] = dn['Dmonth_x']- dn['Dmonth_y']
+            dn['YEAR'] = pd.to_numeric(dn['YEAR'], errors='coerce')
+            dn['MONTH'] = pd.to_numeric(dn['MONTH'], errors='coerce')
+            fnb = dn[dn['YEAR']<0].copy()
+            rsa = dn[dn['YEAR']>0].copy()
+            fnc = dn[((dn['YEAR']==0)& (dn['MONTH'] <0))].copy()
+            rsb = dn[((dn['YEAR']==0)& (dn['MONTH'] >0))].copy()
+            fnd = dn[((dn['YEAR']==0)& (dn['MONTH'] ==0))].copy()
+            fn = pd.concat([fna,fnb, fnc,fnd])
+            rs = pd.concat([rsa,rsb])
+            fn['REBLED'] = np.nan
+            fn['REBLED'] = fn['REBLED'].fillna('FN')
+            rs['REBLED'] = np.nan
+            rs['REBLED'] = rs['REBLED'].fillna('RS')
+            dfa = pd.concat([fn,rs])
+            dfa = dfa.rename(columns= ({'art_number_y':'art_number', 'facility_y': 'facility', 'date_collected_y':'date_collected', 'result_numeric_y':'result_numeric',
+                         'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
+            dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
+            df = pd.concat([dfa, dups])
+            
         def download_without_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
 
@@ -442,7 +538,7 @@ if df is not None and district is not None:
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        dfs = dfs[['facility', 'ART-NUMERIC', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
