@@ -524,13 +524,14 @@ if df is not None and district is not None:
             dfa = dfa.rename(columns= ({'art_number_y':'art_number', 'facility_y': 'facility', 'date_collected_y':'date_collected', 'result_numeric_y':'result_numeric',
                          'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
             dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
-            dft = pd.concat([dfa, dups])
+            dfsupd = pd.concat([dfa, dups])
 if df is not None and district is not None:       
         def download_without_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
 
             if df is not None and district is not None:
-                #dft = dfdups.copy()
+                        fjkk
+                dft = dfsupd.copy()
                 uniques = dft['facility'].unique()
 
                 # Create an expander to contain the download buttons
