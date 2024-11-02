@@ -297,22 +297,22 @@ if file is not None:
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
                     dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
  if district:                
-                    dfq =dfc.copy()
-                    r = dfq['Q3CURR'].sum()
-                    t = dfq['BLEEDS'].sum()
-                    y = dfq['BALANCE TO 95%'].sum()
-                    u = dfq['HLVs'].sum()
-                    i = dfq['LLVs'].sum()
-                    o = int((t*100)/r)
-                    #dfc= dfq.copy()
-                    dfq.loc[len(dfq), 'facility'] = 'TOTAL'
-                    #st.write(dfc)
-                    dfq.loc[len(dfq)-1, 'Q3CURR'] = r
-                    dfq.loc[len(dfq)-1, 'BLEEDS'] = t
-                    dfq.loc[len(dfq)-1, 'VL COV'] = o
-                    dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
-                    dfq.loc[len(dfq)-1, 'HLVs'] = u
-                    dfq.loc[len(dfq)-1, 'LLVs'] = i
+        dfq =dfc.copy()
+        r = dfq['Q3CURR'].sum()
+        t = dfq['BLEEDS'].sum()
+        y = dfq['BALANCE TO 95%'].sum()
+        u = dfq['HLVs'].sum()
+        i = dfq['LLVs'].sum()
+        o = int((t*100)/r)
+        #dfc= dfq.copy()
+        dfq.loc[len(dfq), 'facility'] = 'TOTAL'
+        #st.write(dfc)
+        dfq.loc[len(dfq)-1, 'Q3CURR'] = r
+        dfq.loc[len(dfq)-1, 'BLEEDS'] = t
+        dfq.loc[len(dfq)-1, 'VL COV'] = o
+        dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
+        dfq.loc[len(dfq)-1, 'HLVs'] = u
+        dfq.loc[len(dfq)-1, 'LLVs'] = i
     if df is not None and district is not None:           
         dfe = dfq.set_index('facility')
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
