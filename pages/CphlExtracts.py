@@ -240,8 +240,8 @@ if file is not None:
                     
                     df['result_numeric'] = pd.to_numeric(df['result_numeric'],errors='coerce')
                     df['SUP']= df['result_numeric'].apply(Viremia)
-                    factys = dfd[dfd['DISTRICT']==district].copy()
-                    facilities = factys['facility'].unique()
+                    #factys = dfd[dfd['DISTRICT']==district].copy()
+                    facilities = df['facility'].unique()
                     st.write(facilities)
                     dfdups = df.copy()
                     dfa = []
