@@ -492,7 +492,7 @@ if df is not None and district is not None:
                 dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
                 nodups.append(dfy)
             sups = pd.concat(nodups)
-            ppp = notdups.copy()
+            ppp = sups.copy()
             
             dfj = []
             for facility in facilities:
