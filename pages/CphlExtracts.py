@@ -322,7 +322,7 @@ if df is not None and district is not None:
         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
-        dfe = dfe.drop(columns=['index'])
+        #dfe = dfe.drop(columns=['index'])
         st.write(dfe)     
 if df is not None and district is not None:       
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
