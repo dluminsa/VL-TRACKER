@@ -299,6 +299,7 @@ if file is not None:
                     dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
 if df is not None and district is not None: 
         dfq =dfc.reset_index().copy()
+        dfq = dfq[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
         dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
         #st.write(f'{r}, hello')
