@@ -301,6 +301,7 @@ if district:
         dfq =dfc.copy()
         st.write(dfc) 
         r = dfq['Q3CURR'].sum()
+        st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
         y = dfq['BALANCE TO 95%'].sum()
         u = dfq['HLVs'].sum()
