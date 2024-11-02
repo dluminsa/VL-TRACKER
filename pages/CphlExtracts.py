@@ -492,7 +492,6 @@ if df is not None and district is not None:
                 dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
                 nodups.append(dfy)
             sups = pd.concat(nodups)
-            ppp = sups.copy()
             
             dfj = []
             for facility in facilities:
@@ -507,6 +506,7 @@ if df is not None and district is not None:
                 dfy = pd.merge(dfa, dfb, on = 'ART', how= 'right')
                 dfj.append(dfy)
             dfa = pd.concat(dfj)
+            ppp = dfa.copy()
             fna =dfa[dfa['RDO_x'].isnull()].copy()
             dn =dfa[~dfa['RDO_x'].isnull()].copy()
             dn[['Dyear_x', 'Dyear_y']] = dn[['Dyear_x', 'Dyear_y']].apply(pd.to_numeric, errors ='coerce')
@@ -537,7 +537,7 @@ if df is not None and district is not None:
 
             if df is not None and district is not None:
                 dft = dfsupd.copy()
-                #dft = ppp.copy()
+                dft = ppp.copy()
                 uniques = dft['facility'].unique()
 
                 # Create an expander to contain the download buttons
