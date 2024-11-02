@@ -459,6 +459,7 @@ if df is not None and district is not None:
                 dfz = dfq[dfq.duplicated(subset=['ART'], keep='first')]
                 dus.append(dfz)
             dups = pd.concat(dus)
+            ppp = dups.copy()
             dupsa =[]
             for facility in facilities:
                 dups['facility'] = dups['facility'].astype(str)
