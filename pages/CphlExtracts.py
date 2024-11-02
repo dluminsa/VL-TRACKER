@@ -207,9 +207,6 @@ if file is not None:
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                    st.write('HERED')
-                    st.write(df)
-                    
                     
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
                     
@@ -224,6 +221,9 @@ if file is not None:
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df = df[df['Dyear']==2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
+                    st.write('HEREE')
+                    st.write(df)
+                    
 
                     def Viremia (x):
                         if 0<= x <= 200:
