@@ -1,6 +1,7 @@
 import streamlit as st 
 import pandas as pd
 import os
+sdda
 import random
 #import numpy as np
 from openpyxl import Workbook
@@ -254,7 +255,7 @@ if file is not None:
                         dfs =dfs[['facility','ART-NUMERIC','art_number','date_collected','Dyear', 'Dmonth', 'Dday','result_numeric','SUP']]
                         name = f'{facility}'
                         dfa.append(dfs)
-                    st.write(dfa[0])
+                    #st.write(dfa[0])
                     dy = pd.concat(dfa) 
                 
                     dfnodups = dy.copy()  
