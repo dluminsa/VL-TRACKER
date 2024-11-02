@@ -300,6 +300,7 @@ st.write(dfc)
 if district:                
         dfq =dfc.copy()
         st.write(dfc) 
+        dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
         st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
@@ -310,7 +311,7 @@ if district:
         #dfc= dfq.copy()
         dfq.loc[len(dfq), 'facility'] = 'TOTAL'
         #st.write(dfc)
-        dfq.loc[len(dfq)-1, 'Q3CURR'] = r
+        dfq.loc[len(dfq)-1, 'Q3CURR'] = int(r)
         dfq.loc[len(dfq)-1, 'BLEEDS'] = t
         dfq.loc[len(dfq)-1, 'VL COV'] = o
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
