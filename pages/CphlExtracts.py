@@ -221,13 +221,12 @@ if file is not None:
                     b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
                     b = b.rename(columns={'Dday1': 'Dday'})
                     df = pd.concat([a,b])
-                    df['Dyear'] = df['Dyear'].astype(str)
-                    df['Dyear'] = df['Dyear'].str.replace('24', '2024', regex=False)
-                    st.write(df)
-                    st.write(df)
+                    # df['Dyear'] = df['Dyear'].astype(str)
+                    # df['Dyear'] = df['Dyear'].str.replace('24', '2024', regex=False)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                    df = df[df['Dyear']==2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
+                    df['Dyear'] = df['Dyear'].replace(24, 2024, regex=False)
+                    df = df[df['Dyear']>=2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                     def Viremia (x):
