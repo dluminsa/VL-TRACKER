@@ -219,6 +219,8 @@ if file is not None:
                     b = b.rename(columns={'Dyear': 'Dday1', 'Dday': 'Dyear'})
                     b = b.rename(columns={'Dday1': 'Dday'})
                     df = pd.concat([a,b])
+                    df['Dyear'] = df['Dyear'].astype(str)
+                    df['Dyear'] = df['Dyear'].str.replace('24', '2024', regex=False)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     st.write('GE')
