@@ -475,6 +475,7 @@ if df is not None and district is not None:
             dups['REBLED'] = dups['REBLED'].fillna('RN')
             
             notd = []
+            #NS WHO ARE NOT DUPS
             for facility in facilities:
                 nsups['facility'] = nsups['facility'].astype(str)
                 dfx = nsups[nsups['facility']==facility].copy()
@@ -482,7 +483,6 @@ if df is not None and district is not None:
                 dfy = dfx[~dfx.duplicated(subset=['ART'], keep='first')]
                 notd.append(dfy)
             notdups =pd.concat(notd)
-            ppp = notdups.copy()
 
             nodups = []
             for facility in facilities:
@@ -492,6 +492,7 @@ if df is not None and district is not None:
                 dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
                 nodups.append(dfy)
             sups = pd.concat(nodups)
+            ppp = notdups.copy()
             
             dfj = []
             for facility in facilities:
