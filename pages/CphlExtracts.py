@@ -139,66 +139,68 @@ if file is not None:
         elif 'Kiyumba HC IV' in dist:
             st.write('**This extract is for BOTH MASAKA CITY AND MASAKA DISTRICT**')
             st.write('WHICH OF THE TWO DO YOU WANT TO ANALYSE?')
-            district = st.radio('**CHOOSE ONE DISTRICT**', options=['MASAKA_CITY', 'MASAKA_DISTRICT'], index=None, horizontal=True)        
+            district = st.radio('**CHOOSE ONE DISTRICT**', options=['MASAKA CITY', 'MASAKA DISTRICT'], index=None, horizontal=True)        
         elif 'Buwama HC III' in dist:
             st.write('**This extract is for MPIGI**')
             district = 'MPIGI'
         elif 'Bulondo HC III' in dist:
             st.write('**This extract is for WAKISO HUB**')
-            district = 'WAKISO HUB'
+            district = 'WAKISO'
         elif 'Bussi HC III' in dist:
             st.write('**This extract is for ENTEBBE HUB**')
-            district = 'ENTEBBE HUB'
+            district = 'WAKISO'
         else:
             st.write("**I can't determine the origin of this extract, kindly choose a district from below**")
             district = st.selectbox('Select a district:', districts, index=None)
 
-        if district  == 'BUKOMANSIMBI':
-            fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'SEMBABULE':
-            fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'MASAKA_CITY':
-            fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'MASAKA_DISTRICT':
-            fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'KALUNGU':
-            fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q3CURR'])
-        elif district == 'MPIGI':
-            fac = pd.DataFrame(list(MPIGI.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'BUTAMBALA':
-            fac = pd.DataFrame(list(BUTAMBALA.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'GOMBA':
-            fac = pd.DataFrame(list(GOMBA.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'KYOTERA':
-            fac = pd.DataFrame(list(KYOTERA.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'RAKAI':
-            fac = pd.DataFrame(list(RAKAI.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'KALANGALA':
-            fac = pd.DataFrame(list(KALANGALA.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'LYANTONDE':
-            fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q3CURR'])
-        elif district  == 'LWENGO':
-            fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q3CURR'])
-        elif district == 'WAKISO HUB':
-            fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q3CURR'])
-        elif district == 'ENTEBBE HUB':
-            fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q3CURR'])
-        else:
-            st.write('NO DISTRICT CHOSEN')
-            #print('NO DISTRICT CHOSEN')
+        # if district  == 'BUKOMANSIMBI':
+        #     fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'SEMBABULE':
+        #     fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'MASAKA_CITY':
+        #     fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'MASAKA_DISTRICT':
+        #     fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'KALUNGU':
+        #     fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q3CURR'])
+        # elif district == 'MPIGI':
+        #     fac = pd.DataFrame(list(MPIGI.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'BUTAMBALA':
+        #     fac = pd.DataFrame(list(BUTAMBALA.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'GOMBA':
+        #     fac = pd.DataFrame(list(GOMBA.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'KYOTERA':
+        #     fac = pd.DataFrame(list(KYOTERA.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'RAKAI':
+        #     fac = pd.DataFrame(list(RAKAI.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'KALANGALA':
+        #     fac = pd.DataFrame(list(KALANGALA.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'LYANTONDE':
+        #     fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q3CURR'])
+        # elif district  == 'LWENGO':
+        #     fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q3CURR'])
+        # elif district == 'WAKISO HUB':
+        #     fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q3CURR'])
+        # elif district == 'ENTEBBE HUB':
+        #     fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q3CURR'])
+        # else:
+        #     st.write('NO DISTRICT CHOSEN')
+            #print('NO DISTRICT CHOSEN'
+            
         if district:
-            coldist = fac['facility'].unique().tolist()
-            colextr = df['facility'].unique().tolist()
+            fac = dfd[dfd['DISTRICT']==district].copy()
+            facilities = fac['facility'].unique().tolist()
+            facextr = df['facility'].unique().tolist()
             emrcolumns= ['A', 'RE', 'VOB']
         
-            for column in coldist:
-                if column not in colextr:
+            for facility in facilities:
+                if facility not in facextr:
                     st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
                     st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
                     st.stop()
                 else:
-                    columns = fac['facility'].unique().tolist()
-                    df = df[df['facility'].isin(columns)].copy()
+                    facilitys = fac['facility'].unique().tolist()
+                    df = df[df['facility'].isin(facilitys)].copy()
                     df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
                     
@@ -219,7 +221,7 @@ if file is not None:
                     b = b.rename(columns={'Dday1': 'Dday'})
                     df = pd.concat([a,b])
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                    df = df[((df['Dyear']==2024) | ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
+                    df = df[df['Dyear']==2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                     def Viremia (x):
@@ -258,7 +260,7 @@ if file is not None:
                     dy['SUP'] = dy['SUP'].astype(str)
                     NS = dy[(dy['SUP']== 'HLV') | (dy['SUP']=='LLV')].copy()
                     NS[['Dyear', 'Dmonth']] = NS[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors= 'coerce')
-                    NS = NS[((NS['Dyear']==2024)| ((NS['Dyear']==2023) & (NS['Dmonth']>9)))]
+                    NS = NS[NS['Dyear']==2024].copy()#| ((NS['Dyear']==2023) & (NS['Dmonth']>9)))]
                     HLV = NS[(NS['SUP']== 'HLV')].copy()
                     LLV = NS[(NS['SUP']== 'LLV')].copy()
                     pivo = pd.pivot_table(HLV, index='facility', values='ART-NUMERIC', aggfunc='count')
