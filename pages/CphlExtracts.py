@@ -81,7 +81,7 @@ dfd = pd.read_csv(filea)
 # districts = ['BUKOMANSIMBI', 'BUTAMBALA','ENTEBBE HUB', 'GOMBA','KALANGALA','KALUNGU', 'KYOTERA', 
 #              'LYANTONDE','LWENGO','MASAKA_CITY', 'MASAKA_DISTRICT', 'MPIGI', 'RAKAI', 'SEMBABULE', 'WAKISO HUB']
 
- districts = dfd['DISTRICT'].unique()
+districts = dfd['DISTRICT'].unique()
   # st.write('BEING UPDATED')
   # st.stop()
 
