@@ -458,7 +458,7 @@ if df is not None and district is not None:
                 dfq[['Dyear', 'Dmonth', 'Dday']] = dfq[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                 dfq = dfq.sort_values(by = ['Dyear', 'Dmonth', 'Dday'], ascending=False)
                 dfq['ART'] = pd.to_numeric(dfq['ART'],errors='coerce')
-                dfz = dfq[dfq.duplicated(subset=['ART'], keep='first')]
+                dfz = dfq[dfq.duplicated(subset=['ART'], keep='last')]
                 dus.append(dfz)
             dups = pd.concat(dus)
             ppp = dups.copy()
