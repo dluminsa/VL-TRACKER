@@ -473,6 +473,7 @@ if df is not None and district is not None:
             
             dups['REBLED'] = np.nan
             dups['REBLED'] = dups['REBLED'].fillna('RN')
+            ppp = dups.copy()
             
             notd = []
             #NS WHO ARE NOT DUPS
@@ -537,7 +538,7 @@ if df is not None and district is not None:
 
             if df is not None and district is not None:
                 dft = dfsupd.copy()
-                #dft = ppp.copy()
+                dft = ppp.copy()
                 #dft = dft.rename(columns = {'facility_y': 'facility'})
                 uniques = dft['facility'].unique()
                 # Create an expander to contain the download buttons
