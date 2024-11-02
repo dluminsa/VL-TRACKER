@@ -246,6 +246,8 @@ if file is not None:
                     dfa = []
                     for facility in facilities:
                         dfs = df[df['facility']==facility]
+                        if dfs.empty:
+                           continue
                         dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
                         dfs['ART-NUMERIC'] =  pd.to_numeric(dfs['ART-NUMERIC'], errors='coerce') 
                         dfs = dfs.drop_duplicates(subset='ART-NUMERIC', keep='first')
