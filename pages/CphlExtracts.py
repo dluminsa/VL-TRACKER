@@ -537,7 +537,7 @@ if df is not None and district is not None:
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', REBLED']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
