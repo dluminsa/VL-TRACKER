@@ -301,7 +301,7 @@ if district:
         dfq =dfc.reset_index().copy()
         dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
-        st.write(f'{r}, hello')
+        #st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
         y = dfq['BALANCE TO 95%'].sum()
         u = dfq['HLVs'].sum()
