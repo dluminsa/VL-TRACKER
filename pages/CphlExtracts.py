@@ -527,7 +527,7 @@ if df is not None and district is not None:
                          'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
             dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
             df = pd.concat([dfa, dups])
-            
+if df is not None and district is not None:       
         def download_without_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
 
