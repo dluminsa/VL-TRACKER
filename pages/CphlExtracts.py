@@ -201,14 +201,14 @@ if file is not None:
                 else:
                     facilitys = fac['facility'].unique().tolist()
                     df = df[df['facility'].isin(facilitys)].copy()
-                    st.write('HEREA')
-                    st.write(df)
                     df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
                     
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
+                    st.write('HERED')
+                    st.write(df)
                     
                     
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
