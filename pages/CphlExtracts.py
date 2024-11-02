@@ -304,6 +304,7 @@ if file is not None:
                     i = dfc['LLVs'].sum()
                     o = int((t*100)/r)
     st.write(dfc)
+    if district:
                     dfc.loc[len(dfc), 'facility'] = 'TOTAL'
                     st.write(dfc)
                     dfc.loc[len(dfc)-1, 'Q3CURR'] = r
