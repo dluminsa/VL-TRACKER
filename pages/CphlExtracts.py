@@ -530,7 +530,6 @@ if df is not None and district is not None:
             st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
 
             if df is not None and district is not None:
-                        fjkk
                 dft = dfsupd.copy()
                 uniques = dft['facility'].unique()
 
