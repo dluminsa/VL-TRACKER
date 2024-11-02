@@ -296,9 +296,7 @@ if file is not None:
                         else:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                    dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
-ssds
-                                         
+                    dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
 if district:                
         dfq =dfc.reset_index().copy()
         dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
