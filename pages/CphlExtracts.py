@@ -506,7 +506,7 @@ if df is not None and district is not None:
                 dfy = pd.merge(dfa, dfb, on = 'ART', how= 'right')
                 dfj.append(dfy)
             dfa = pd.concat(dfj)
-            ppp = dfa.copy()
+            
             fna =dfa[dfa['RDO_x'].isnull()].copy()
             dn =dfa[~dfa['RDO_x'].isnull()].copy()
             dn[['Dyear_x', 'Dyear_y']] = dn[['Dyear_x', 'Dyear_y']].apply(pd.to_numeric, errors ='coerce')
@@ -537,8 +537,8 @@ if df is not None and district is not None:
 
             if df is not None and district is not None:
                 dft = dfsupd.copy()
-                dft = ppp.copy()
-                dft = dft.rename(columns = {'facility_y': 'facility'})
+                #dft = ppp.copy()
+                #dft = dft.rename(columns = {'facility_y': 'facility'})
                 uniques = dft['facility'].unique()
                 # Create an expander to contain the download buttons
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
