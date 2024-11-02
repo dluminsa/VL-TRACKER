@@ -412,7 +412,7 @@ if df is not None and district is not None:
         def download_with_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
 
-        if df is not None and district is not None:
+            if df is not None and district is not None:
                 dft = dfnodups.copy()
                 uniques = dft['facility'].unique()
 
