@@ -525,7 +525,6 @@ if df is not None and district is not None:
                          'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
             dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
             dfsupd = pd.concat([dfa, dups])
-st.write(dfsupd)
 if df is not None and district is not None:       
         def download_without_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
@@ -538,7 +537,7 @@ if df is not None and district is not None:
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', REBLED']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
