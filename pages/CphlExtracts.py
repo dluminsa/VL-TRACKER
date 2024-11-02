@@ -303,8 +303,7 @@ if file is not None:
                     u = dfc['HLVs'].sum()
                     i = dfc['LLVs'].sum()
                     o = int((t*100)/r)
-    st.write(dfc)
-    if district:
+                    dfc= dfc.copy()
                     dfc.loc[len(dfc), 'facility'] = 'TOTAL'
                     st.write(dfc)
                     dfc.loc[len(dfc)-1, 'Q3CURR'] = r
@@ -315,6 +314,7 @@ if file is not None:
                     dfc.loc[len(dfc)-1, 'LLVs'] = i
     if df is not None and district is not None:           
         dfe = dfc.set_index('facility')
+
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
         st.write(dfe)     
