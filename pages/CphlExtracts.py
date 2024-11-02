@@ -152,6 +152,7 @@ if file is not None:
         else:
             st.write("**I can't determine the origin of this extract, kindly choose a district from below**")
             district = st.selectbox('Select a district:', districts, index=None)
+         
 
         # if district  == 'BUKOMANSIMBI':
         #     fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q3CURR'])
@@ -207,6 +208,7 @@ if file is not None:
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
+                    st.write(df)
                   
                     
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
