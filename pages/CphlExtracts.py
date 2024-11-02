@@ -467,7 +467,7 @@ if df is not None and district is not None:
                 dups['facility'] = dups['facility'].astype(str)
                 dfx = dups[dups['facility']==facility].copy()
                 dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx.drop_duplicates(subset=['ART'], keep='last')
+                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
                 dupsa.append(dfy)
             dups = pd.concat(dupsa)
             ppp = dups.copy()
