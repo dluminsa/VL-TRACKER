@@ -481,7 +481,7 @@ if df is not None and district is not None:
                 nsups['facility'] = nsups['facility'].astype(str)
                 dfx = nsups[nsups['facility']==facility].copy()
                 dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx[~dfx.duplicated(subset=['ART'])#, keep='first')]
+                dfy = dfx[~dfx.duplicated(subset=['ART'])]#, keep='first')]
                 notd.append(dfy)
             notdups =pd.concat(notd)
             ppp = notdups.copy()
