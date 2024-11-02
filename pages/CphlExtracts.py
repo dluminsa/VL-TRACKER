@@ -305,6 +305,7 @@ if file is not None:
                     o = int((t*100)/r)
                     st.write(dfc)
                     dfc.loc[len(dfc), 'facility'] = 'TOTAL'
+                    st.write(dfc)
                     dfc.loc[len(dfc)-1, 'Q3CURR'] = r
                     dfc.loc[len(dfc)-1, 'BLEEDS'] = t
                     dfc.loc[len(dfc)-1, 'VL COV'] = o
