@@ -194,11 +194,11 @@ if file is not None:
            # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
-                if facility not in facextr:
-                    st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
-                    st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
-                    st.stop()
-                else:
+                # if facility not in facextr:
+                #     st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
+                #     st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
+                #     st.stop()
+                # else:
                     facilitys = fac['facility'].unique().tolist()
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
@@ -223,13 +223,8 @@ if file is not None:
                     df['Dyear'] = df['Dyear'].str.replace('24', '2024', regex=False)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                    st.write('GE')
-                    st.write(df)
                     df = df[df['Dyear']==2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-           
-                    st.write(df)
-                    
 
                     def Viremia (x):
                         if 0<= x <= 200:
