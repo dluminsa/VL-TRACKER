@@ -538,8 +538,7 @@ if df is not None and district is not None:
             if df is not None and district is not None:
                 dft = dfsupd.copy()
                 dft = ppp.copy()
-                st.write(dft)
-                uniques = dft['facility'].unique()
+                uniques = dft['facility_y'].unique()
                 # Create an expander to contain the download buttons
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
                     for facility in uniques:
