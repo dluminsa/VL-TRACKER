@@ -299,7 +299,7 @@ if file is not None:
                     
 st.write(dfc.shape[0])                        
 if district:                
-        dfq =dfc.reset_index.copy()
+        dfq =dfc.reset_index().copy()
         st.write(dfc) 
         dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
