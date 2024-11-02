@@ -303,7 +303,7 @@ if file is not None:
                     u = dfc['HLVs'].sum()
                     i = dfc['LLVs'].sum()
                     o = int((t*100)/r)
-
+                    st.write(dfc)
                     dfc.loc[len(dfc), 'facility'] = 'TOTAL'
                     dfc.loc[len(dfc)-1, 'Q3CURR'] = r
                     dfc.loc[len(dfc)-1, 'BLEEDS'] = t
