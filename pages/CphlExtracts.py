@@ -317,6 +317,7 @@ if district:
         dfq.loc[len(dfq)-1, 'LLVs'] = i
 if df is not None and district is not None:           
         dfe = dfq.set_index('facility')
+        dfe = dfe.sort_values(by = ['Q3CURR'], ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
         st.write(dfe)     
