@@ -208,7 +208,7 @@ if file is not None:
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                    st.write(df)
+                    
                   
                     
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
@@ -223,6 +223,8 @@ if file is not None:
                     df = pd.concat([a,b])
                     df['Dyear'] = df['Dyear'].astype(str)
                     df['Dyear'] = df['Dyear'].str.replace('24', '2024', regex=False)
+                    st.write(df)
+                    st.write(df)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df = df[df['Dyear']==2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
