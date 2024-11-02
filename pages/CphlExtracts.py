@@ -461,15 +461,16 @@ if df is not None and district is not None:
                 dfz = dfq[dfq.duplicated(subset=['ART'], keep='last')]
                 dus.append(dfz)
             dups = pd.concat(dus)
-            ppp = dups.copy()
+           
             dupsa =[]
             for facility in facilities:
                 dups['facility'] = dups['facility'].astype(str)
                 dfx = dups[dups['facility']==facility].copy()
                 dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
+                dfy = dfx.drop_duplicates(subset=['ART'], keep='last')
                 dupsa.append(dfy)
             dups = pd.concat(dupsa)
+            ppp = dups.copy()
             
             dups['REBLED'] = np.nan
             dups['REBLED'] = dups['REBLED'].fillna('RN')
