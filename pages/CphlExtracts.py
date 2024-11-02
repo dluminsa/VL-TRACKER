@@ -1,7 +1,6 @@
 import streamlit as st 
 import pandas as pd
 import os
-sdda
 import random
 #import numpy as np
 from openpyxl import Workbook
