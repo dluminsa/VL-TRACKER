@@ -296,11 +296,9 @@ if file is not None:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
                     dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
-                    
-st.write(dfc.shape[0])                        
+                                         
 if district:                
         dfq =dfc.reset_index().copy()
-        st.write(dfc) 
         dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
         st.write(f'{r}, hello')
@@ -310,19 +308,20 @@ if district:
         i = dfq['LLVs'].sum()
         o = int((t*100)/r)
         # #dfc= dfq.copy()
-        # dfq.loc[len(dfq), 'facility'] = 'TOTAL'
-        # #st.write(dfc)
-        # dfq.loc[len(dfq)-1, 'Q3CURR'] = int(r)
-        # dfq.loc[len(dfq)-1, 'BLEEDS'] = t
-        # dfq.loc[len(dfq)-1, 'VL COV'] = o
-        # dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
-        # dfq.loc[len(dfq)-1, 'HLVs'] = u
-        # dfq.loc[len(dfq)-1, 'LLVs'] = i
+        dfq.loc[len(dfq), 'facility'] = 'TOTAL'
+        #st.write(dfc)
+        dfq.loc[len(dfq)-1, 'Q3CURR'] = int(r)
+        dfq.loc[len(dfq)-1, 'BLEEDS'] = t
+        dfq.loc[len(dfq)-1, 'VL COV'] = o
+        dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
+        dfq.loc[len(dfq)-1, 'HLVs'] = u
+        dfq.loc[len(dfq)-1, 'LLVs'] = i
 if df is not None and district is not None:           
         dfe = dfq.set_index('facility')
         dfe = dfe.sort_values(by = ['Q3CURR'], ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
+        dfe = dfe.drop(columns=['index'])
         st.write(dfe)     
 if df is not None and district is not None:       
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
