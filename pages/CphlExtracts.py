@@ -470,7 +470,6 @@ if df is not None and district is not None:
                 dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
                 dupsa.append(dfy)
             dups = pd.concat(dupsa)
-            ppp = dups.copy()
             
             dups['REBLED'] = np.nan
             dups['REBLED'] = dups['REBLED'].fillna('RN')
@@ -483,6 +482,7 @@ if df is not None and district is not None:
                 dfy = dfx[~dfx.duplicated(subset=['ART'], keep='first')]
                 notd.append(dfy)
             notdups =pd.concat(notd)
+            ppp = notdups.copy()
 
             nodups = []
             for facility in facilities:
