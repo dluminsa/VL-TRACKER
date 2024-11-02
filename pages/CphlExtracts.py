@@ -328,7 +328,7 @@ if df is not None and district is not None:
                 wb = Workbook()
                 ws = wb.active
                 # Convert DataFrame to Excel
-                for r_idx, row in enumerate(dfc.iterrows(), start=1):
+                for r_idx, row in enumerate(dfq.iterrows(), start=1):
                     for c_idx, value in enumerate(row[1], start=1):
                                 ws.cell(row=r_idx, column=c_idx, value=value)
 
