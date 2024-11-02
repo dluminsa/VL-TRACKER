@@ -455,6 +455,8 @@ if df is not None and district is not None:
             for facility in facilities:
                 nsups['facility'] = nsups['facility'].astype(str)
                 dfq = nsups[nsups['facility']==facility].copy()
+                dfq[['Dyear', 'Dmonth', 'Dday']] = dfq[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
+                dfq = dfq.sort_values(by = ['Dyear', 'Dmonth', 'Dday'], ascending=False)
                 dfq['ART'] = pd.to_numeric(dfq['ART'],errors='coerce')
                 dfz = dfq[dfq.duplicated(subset=['ART'], keep='first')]
                 dus.append(dfz)
