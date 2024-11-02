@@ -474,17 +474,21 @@ if df is not None and district is not None:
             dups['REBLED'] = np.nan
             dups['REBLED'] = dups['REBLED'].fillna('RN')
             
-            
             notd = []
             #NS WHO ARE NOT DUPS
             for facility in facilities:
                 nsups['facility'] = nsups['facility'].astype(str)
+                dups['facility'] = dups['facility'].astype(str)
                 dfx = nsups[nsups['facility']==facility].copy()
+                dfm = dups[dups['facility']==facility].copy()
+                        
                 dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx[~dfx.duplicated(subset=['ART'])]#, keep='first')]
+                dfm['ART'] = pd.to_numeric(dfm['ART'],errors='coerce')
+                #dfy = dfx[~dfx.duplicated(subset=['ART'])]#, keep='first')]
+                dfy = dfx[~dfx['ART'].isin(dfm['ART'])]        
                 notd.append(dfy)
             notdups =pd.concat(notd)
-            ppp = notdups.copy()
+            #ppp = notdups.copy()
 
             nodups = []
             for facility in facilities:
@@ -539,8 +543,8 @@ if df is not None and district is not None:
 
             if df is not None and district is not None:
                 dft = dfsupd.copy()
-                dft = ppp.copy()
-                dft = dft.rename(columns = {'facility_y': 'facility'})
+                #dft = ppp.copy()
+                #dft = dft.rename(columns = {'facility_y': 'facility'})
                 uniques = dft['facility'].unique()
                 # Create an expander to contain the download buttons
                 with st.expander(f"Download files for {district} Facilities with duplicates)"):
