@@ -313,12 +313,12 @@ if district:
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
         dfq.loc[len(dfq)-1, 'HLVs'] = u
         dfq.loc[len(dfq)-1, 'LLVs'] = i
-    if df is not None and district is not None:           
+if df is not None and district is not None:           
         dfe = dfq.set_index('facility')
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
         st.write(dfe)     
-    if df is not None and district is not None:       
+if df is not None and district is not None:       
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
@@ -403,17 +403,17 @@ if district:
                 st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
              
             
-    if df is not None and district is not None:
+if df is not None and district is not None:
         def download_with_duplicates(df):
             st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
 
-            if df is not None and district is not None:
+        if df is not None and district is not None:
                 dft = dfnodups.copy()
                 uniques = dft['facility'].unique()
 
                 # Create an expander to contain the download buttons
                 with st.expander(f"Download files for {district} Facilities without duplicates"):
-                    for facility in uniques:
+                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
                         dfs = dfs[['facility', 'ART-NUMERIC', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
                         csv_data = dfs.to_csv(index=False)
