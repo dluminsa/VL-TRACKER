@@ -191,7 +191,7 @@ if file is not None:
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
-            emrcolumns= ['A', 'RE', 'VOB']
+           # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
                 if facility not in facextr:
@@ -203,7 +203,8 @@ if file is not None:
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART-NUMERIC'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
-                    
+                    st.write('HERE')
+                    st.write(df)
                     
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
