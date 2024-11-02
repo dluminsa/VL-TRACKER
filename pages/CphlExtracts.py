@@ -295,9 +295,9 @@ if file is not None:
                         else:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                    dfq = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
-                 
-
+                    dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]
+ if district:                
+                    dfq =dfc.copy()
                     r = dfq['Q3CURR'].sum()
                     t = dfq['BLEEDS'].sum()
                     y = dfq['BALANCE TO 95%'].sum()
