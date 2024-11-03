@@ -536,14 +536,14 @@ if df is not None and district is not None:
                         sheet1.append_row(row1, value_input_option='RAW')          
             st.session_state.submited = True
 # st.success('Your data above has been submitted')
-         except Exception as e:
+        except Exception as e:
                         # Print the error message
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry     
 
 #DOWNLOADS
  
-         if st.session_state.submited:
+        if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
