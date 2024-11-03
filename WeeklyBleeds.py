@@ -47,10 +47,11 @@ st.write(dftx)
 
 
 #######################FILTERS
-clusters = dfrep['CLUSTER'].unique()
-weeks = dftx['SURGE'].unique()
+#
+weeks = dftx['WEEK'].unique()
 
-fac = dfyr['facility'].unique()
+fac = dftx['FACILITY'].unique()
+districts = dftx['DISTRICT'].unique()
 
 #TO USE WHERE WEEKS ARE NOT NEEDED FOR TX
 dfy = []
@@ -60,28 +61,6 @@ for every in fac:
     dfy.append(dff)
 water = pd.concat(dfy)
 
-#TO USE WHERE WEEKS ARE NOT NEEDED FOR 1 YR
-dfy = []
-for every in fac:
-    dff = dfyr[dfyr['FACILITY']== every]
-    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfy.append(dff)
-wateryr = pd.concat(dfy)
-
-#TO USE WHERE WEEKS ARE NOT NEEDED FOR CIRA
-dfy = []
-for every in fac:
-    dff = dfcira[dfcira['FACILITY']== every]
-    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfy.append(dff)
-watercira= pd.concat(dfy)
-
-dfy = []
-for every in fac:
-    dff = dfearly[dfearly['FACILITY']== every]
-    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfy.append(dff)
-waterly = pd.concat(dfy)
 
 #REMOVE DUPLICATES FROM TX SHEET # HOLD THIS IN SESSION LATER
 dfs=[]   
@@ -92,165 +71,43 @@ for each in weeks:
     dfs.append(dfa)
 dftx = pd.concat(dfs)
 
-#REMOVE DUPLICATES FROM YEAR SHEET # HOLD THIS IN SESSION LATER
-dfs=[]   
-for each in weeks:
-    dfyr['SURGE'] = pd.to_numeric(dfyr['SURGE'], errors='coerce')
-    dfa = dfyr[dfyr['SURGE']==each]
-    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfs.append(dfa)    
-dfyr= pd.concat(dfs)
-
-
-#REMOVE DUPLICATES FROM EARLY SHEET # HOLD THIS IN SESSION LATER
-dfs=[]   
-for each in weeks:
-    dfearly['SURGE'] = pd.to_numeric(dfearly['SURGE'], errors='coerce')
-    dfa = dfearly[dfearly['SURGE']==each]
-    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfs.append(dfa)
-dfearly = pd.concat(dfs)
-
-#REMOVE DUPLICATES FROM CIRA SHEET # HOLD THIS IN SESSION LATER
-dfs=[]   
-for each in weeks:
-    dfcira['SURGE'] = pd.to_numeric(dfcira['SURGE'], errors='coerce')
-    dfa = dfcira[dfcira['SURGE']==each]
-    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfs.append(dfa)
-dfcira = pd.concat(dfs)
 
 #FILTERS
 st.sidebar.subheader('**Filter from here**')
-CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+DISTRICT = st.sidebar.multiselect('CHOOSE A DISTRICT', districts, key='a')
 
 #create for the state
-if not CLUSTER:
-    dfyr2 = dfyr.copy()
-    dfcira2 = dfcira.copy()
-    dfearly2 = dfearly.copy()
-    dfrep2 = dfrep.copy()
+if not DISTRICT:
     dftx2 = dftx.copy()
-    water2 = water.copy()
-    wateryr2 = wateryr.copy()
-    waterly2 = waterly.copy()
-    watercira2 = watercira.copy()
-
+    water2 = water.copy() 
 else:
-    dfyr['CLUSTER'] = dfyr['CLUSTER'].astype(str)
-    dfyr2 = dfyr[dfyr['CLUSTER'].isin(CLUSTER)]
-
-    dfcira['CLUSTER'] = dfcira['CLUSTER'].astype(str)
-    dfcira2 = dfcira[dfcira['CLUSTER'].isin(CLUSTER)]
-
-    dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
-    dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
-
-    dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
-    dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
-
-    dftx['CLUSTER'] = dftx['CLUSTER'].astype(str)
-    dftx2 = dftx[dftx['CLUSTER'].isin(CLUSTER)]
+    dftx['DISTRICT'] = dftx['DISTRICT'].astype(str)
+    dftx2 = dftx[dftx['DISTRICT'].isin(DISTRICT)]
     
-    water['CLUSTER'] = water['CLUSTER'].astype(str)
-    water2 = water[water['CLUSTER'].isin(CLUSTER)]
-    wateryr2 = wateryr[wateryr['CLUSTER'].isin(CLUSTER)]
-    waterly2 = waterly[waterly['CLUSTER'].isin(CLUSTER)]
-    watercira2 = watercira[watercira['CLUSTER'].isin(CLUSTER)]
+    water['DISTRICT'] = water['DISTRICT'].astype(str)
+    water2 = water[water['DISTRICT'].isin(DISTRICT)]
 
-district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfrep2['DISTRICT'].unique(), key='b')
-if not district:
-    dfyr3 = dfyr2.copy()
-    dfcira3 = dfcira2.copy()
-    dfearly3 = dfearly2.copy()
-    dfrep3 = dfrep2.copy()
+facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dftx2['FACILITY'].unique(), key='c')
+if not facility:
     dftx3 = dftx2.copy()
     water3 = water2.copy()
-    wateryr3 = wateryr2.copy()
-    waterly3 = waterly2.copy()
-    watercira3 = watercira2.copy()
 else:
-    dfyr2['DISTRICT'] = dfyr2['DISTRICT'].astype(str)
-    dfyr3 = dfyr2[dfyr2['DISTRICT'].isin(district)].copy()
-
-    dfcira2['DISTRICT'] = dfcira2['DISTRICT'].astype(str)
-    dfcira3 = dfcira2[dfcira2['DISTRICT'].isin(district)].copy()
-
-    dfearly2['DISTRICT'] = dfearly2['DISTRICT'].astype(str)
-    dfearly3 = dfearly2[dfearly2['DISTRICT'].isin(district)].copy()
-
-    dfrep2['DISTRICT'] = dfrep2['DISTRICT'].astype(str)
-    dfrep3 = dfrep2[dfrep2['DISTRICT'].isin(district)].copy()
-
-    dftx2['DISTRICT'] = dftx2['DISTRICT'].astype(str)
-    dftx3 = dftx2[dftx2['DISTRICT'].isin(district)].copy()
-    
-    water2['DISTRICT'] = water2['DISTRICT'].astype(str)
-    water3 = water2[water2['DISTRICT'].isin(district)].copy()
-    wateryr3 = wateryr2[wateryr2['DISTRICT'].isin(district)].copy()
-    waterly3 = waterly2[waterly2['DISTRICT'].isin(district)].copy()
-    watercira3 = watercira2[watercira2['DISTRICT'].isin(district)].copy()
-
-facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dfrep3['FACILITY'].unique(), key='c')
-if not facility:
-    dfyr4 = dfyr3.copy()
-    dfcira4 = dfcira3.copy()
-    dfearly4 = dfearly3.copy()
-    dfrep4 = dfrep3.copy()
-    dftx4 = dftx3.copy()
-    water4 = water3.copy()
-    wateryr4 = wateryr3.copy()
-    waterly4 = waterly3.copy()
-    watercira4 = watercira3.copy()
-else:
-    dfyr4 = dfyr3[dfyr3['FACILITY'].isin(facility)].copy()
-    dfcira4 = dfcira3[dfcira3['FACILITY'].isin(facility)].copy()
-    dfearly4 = dfearly3[dfearly3['FACILITY'].isin(facility)].copy()
-    dfrep4 = dfrep3[dfrep3['FACILITY'].isin(facility)].copy()
-    dftx4 = dftx3[dftx3['FACILITY'].isin(facility)].copy()
-    water4 = water3[water3['FACILITY'].isin(facility)].copy()
-    wateryr4 = wateryr3[wateryr3['FACILITY'].isin(facility)].copy()
-    waterly4 = waterly3[waterly3['FACILITY'].isin(facility)].copy()
-    watercira4 = watercira3[watercira3['FACILITY'].isin(facility)].copy()
+    dftx3 = dftx2[dftx2['FACILITY'].isin(facility)].copy()
+    water3 = water2[water2['FACILITY'].isin(facility)].copy()
 
 # Base DataFrame to filter
-dfyr = dfyr4.copy()
-dfcira = dfcira4.copy()
-dfdearly = dfearly4.copy()
-dfrep = dfrep4.copy()
-dftx = dftx4.copy()
-water = water4.copy()
-wateryr = wateryr4.copy()
-waterly = waterly4.copy()
-watercira = watercira4.copy()
-
+dftx = dftx3.copy()
+water = water3.copy()
 # Apply filters based on selected criteria
-if CLUSTER:
-    dfyr = dfyr[dfyr['CLUSTER'].isin(CLUSTER)].copy()
-    water = water[water['CLUSTER'].isin(CLUSTER)].copy()
-    dfearly = dfearly[dfearly['CLUSTER'].isin(CLUSTER)].copy()
-    dfrep = dfrep[dfrep['CLUSTER'].isin(CLUSTER)].copy()
-    dftx = dftx[dftx['CLUSTER'].isin(CLUSTER)].copy()
-    wateryr = wateryr[wateryr['CLUSTER'].isin(CLUSTER)].copy()
-    waterly = waterly[waterly['CLUSTER'].isin(CLUSTER)].copy()
+
 
 if district:
-    dfyr = dfyr[dfyr['DISTRICT'].isin(district)].copy()
     water = water[water['DISTRICT'].isin(district)].copy()
-    dfearly = dfearly[dfearly['DISTRICT'].isin(district)].copy()
-    dfrep = dfrep[dfrep['DISTRICT'].isin(district)].copy()
     dftx = dftx[dftx['DISTRICT'].isin(district)].copy()
-    wateryr = wateryr[wateryr['DISTRICT'].isin(district)].copy()
-    waterly = waterly[waterly['DISTRICT'].isin(district)].copy()
 
 if facility:
-    dfyr = dfyr[dfyr['FACILITY'].isin(facility)].copy()
     water = water[water['FACILITY'].isin(facility)].copy()
-    dfearly = dfearly[dfearly['FACILITY'].isin(facility)].copy()
-    dfrep = dfrep[dfrep['FACILITY'].isin(facility)].copy()
     dftx = dftx[dftx['FACILITY'].isin(facility)].copy()
-    wateryr = wateryr[wateryr['FACILITY'].isin(facility)].copy()
-    waterly = waterly[waterly['FACILITY'].isin(facility)].copy()
     
 check = water.shape[0]
 if check == 0:
