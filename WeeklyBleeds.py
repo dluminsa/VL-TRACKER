@@ -104,8 +104,8 @@ water = water3.copy()
 
 
 if DISTRICT:
-    water = water[water['DISTRICT'].isin(district)].copy()
-    dftx = dftx[dftx['DISTRICT'].isin(district)].copy()
+    water = water[water['DISTRICT'].isin(DISTRICT)].copy()
+    dftx = dftx[dftx['DISTRICT'].isin(DISTRICT)].copy()
 
 if facility:
     water = water[water['FACILITY'].isin(facility)].copy()
