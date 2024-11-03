@@ -46,7 +46,7 @@ dftx = st.session_state.tx.copy()
 #dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
 #dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
-st.write(dftx
+st.write(dftx)
 
 #######################FILTERS
 #
