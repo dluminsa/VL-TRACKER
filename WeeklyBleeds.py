@@ -101,7 +101,7 @@ water = water3.copy()
 # Apply filters based on selected criteria
 
 
-if district:
+if DISTRICT:
     water = water[water['DISTRICT'].isin(district)].copy()
     dftx = dftx[dftx['DISTRICT'].isin(district)].copy()
 
