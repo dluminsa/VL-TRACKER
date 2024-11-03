@@ -4,7 +4,6 @@ import os
 import gspread
 from pathlib import Path
 import random
-dfg
 import plotly.express as px
 import plotly.graph_objects as go
 import traceback
@@ -368,6 +367,6 @@ fig.update_layout(title_text='DONE vs NOT DONE', title_x=0.3)
 
 col1, col2,col3 = st.columns([1,4,1])
 with col2:
-     st.plotly_chart(fig, use_container_width=True
+     st.plotly_chart(fig, use_container_width=True)
 #
 
