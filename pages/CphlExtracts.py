@@ -547,17 +547,17 @@ if df is not None and district is not None:
                 #dft = dft.rename(columns = {'facility_y': 'facility'})
                 uniques = dft['facility'].unique()
                 # Create an expander to contain the download buttons
-                with st.expander(f"Download files for {district} Facilities with duplicates)"):
+                with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        #dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
                         st.download_button(
-                            label=f"Download CSV for {facility} with duplicates",
+                            label=f"Download NS for {facility}",
                             data=csv_data,
-                            file_name=f"{facility}_data_with_duplicates.csv",
+                            file_name=f"{facility}_NS.csv",
                             mime="text/csv"
                         )
 
