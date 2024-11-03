@@ -43,9 +43,8 @@ if 'tx' not in st.session_state:
          st.stop()
 dftx = st.session_state.tx.copy()
 dftx[['DUEFN', 'DUERN']] = dftx[['DUEFN', 'DUERN']].apply(pd.to_numeric, errors='coerce')
-dftx['DUETOTAL']] = dftx['DUEFN'] + dftx['DUERN']
+dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
 st.write(dftx)
-dddfg
 
 #######################FILTERS
 #
