@@ -117,28 +117,10 @@ else:
     pass
 #st.write(water.columns)
 st.divider()
-cola, colb, colc = st.columns(3)
-colb.success('**QUICK SUMMARY**')
-cola, colb, colc,cold = st.columns(4)
-cola.info('**ON APPT**')
-colb.info('**ATTENDED**')
-colc.info('**MISSED**')
-cold.info("**% ATT'DCE**")
-apot = water[['APPT', 'TWO']].copy()
-apot[['APPT', 'TWO']] = apot[['APPT', 'TWO']].apply(pd.to_numeric,errors='coerce')
-onat = int(apot['APPT'].sum())
-onmi = int(apot['TWO'].sum())
-ont = int(onat + onmi)
-perc =round((onat/ont)*100)
-cola.metric(label='a', value =f'{ont}', label_visibility='hidden')
-colb.metric(label='b', value =f'{onat}', label_visibility='hidden')
-colc.metric(label='c', value =f'{onmi}', label_visibility='hidden')
-cold.metric(label='d', value = f'{perc}', label_visibility='hidden')
-wik = week -2 
-st.write(f'**APPOINTMENTS SINCE 3rd SEPT TO WEEK {wik}**')
 
-mostd = water.groupby('DISTRICT')['TWO'].sum()
-mostf = water.groupby('FACILITY')['TWO'].sum()
+
+mostd = water.groupby('DISTRICT')['DUEFN'].sum()
+mostf = water.groupby('FACILITY')['DUEFN'].sum()
 
 ####TOP3
 topdis3 = mostd.nlargest(3)
@@ -163,7 +145,7 @@ mostdis2 = ','.join(topdis2['DISTRICT'].unique())
 
 checkf = water['FACILITY'].nunique()
 checkd = water['DISTRICT'].nunique()
-if facility and not CLUSTER and not district:
+if facility and not district:
     pass
 elif checkf <3:
     pass
