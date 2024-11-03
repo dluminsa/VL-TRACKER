@@ -42,7 +42,7 @@ if 'tx' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftx = st.session_state.tx.copy()
-st.write(dftx.columns)
+#st.write(dftx.columns)
 #dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
 dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
@@ -169,8 +169,8 @@ fact = water['FACILITY'].nunique()
 #QUICK SUMMARY
 #TOTAL NS
 tot = water['TOTAL'].sum()
-#bled = int(water['SUPP'].sum()) + int(water['
-
+bled = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
+notbled = water['
 
 if int(dist) > 1:
     st.divider()
