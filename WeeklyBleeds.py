@@ -44,52 +44,7 @@ if 'tx' not in st.session_state:
 dftx = st.session_state.tx.copy()
 st.write(dftx)
 
-if 'yr' not in st.session_state:     
-     try:
-        #cola,colb= st.columns(2)
-        conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'YEARS', usecols=list(range(33)),ttl=5)
-        tx = exist.dropna(how='all')
-        st.session_state.yr = tx 
-     except:
-         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-         st.stop()
-dfyr = st.session_state.yr.copy()
 
-if 'erl' not in st.session_state:     
-     try:
-        #cola,colb= st.columns(2)
-        conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'THREEO', usecols=list(range(24)),ttl=5)
-        tx = exist.dropna(how='all')
-        st.session_state.erl = tx 
-     except:
-         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-         st.stop()
-dfearly = st.session_state.erl.copy()
-
-if 'cira' not in st.session_state:     
-     try:
-        #cola,colb= st.columns(2)
-        conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'CIRA', usecols=list(range(48)),ttl=5)
-        tx = exist.dropna(how='all')
-        st.session_state.cira = tx 
-     except:
-         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
-         st.stop()
-dfcira = st.session_state.cira.copy()
-
-
-#REPORTING RATES
-@st.cache_data
-def report():
-    df = pd.read_csv('CLUSTERS.csv')
-    df['Q4 CUR'] = pd.to_numeric(df['Q4 CUR'], errors='coerce')
-    df = df[df['Q4 CUR']>0].copy()
-    return df  
-
-dfrep = report()
 dfa = dfrep[['DISTRICT', 'FACILITY']].copy() ## EXPECTED DISTRICTS
 dftx['SURGE'] = pd.to_numeric(dftx['SURGE'], errors='coerce')
 dfb = dftx[dftx['SURGE'] == dd].copy()  #FACILITIES FROM TX SHEET
