@@ -628,7 +628,7 @@ if not st.session_state.dist:
                         durn = duern.shape[0]
                         row1.append(durn)
                         sheet1.append_row(row1, value_input_option='RAW')          
-        st.session_state.dist = True
+            st.session_state.dist = True
 # st.success('Your data above has been submitted')
         except Exception as e:
             # Print the error message
