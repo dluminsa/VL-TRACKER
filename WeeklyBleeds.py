@@ -167,8 +167,7 @@ NOT = int(water['DUERN'].sum()) + int(water['DUEFN'].sum())
      
 BLED = int(BLED)
 NOT = int(NOT)
-st.write(BLED)
-st.write(NOT)
+
 labels = ['BLED', 'DUE']
 values = [BLED, NOT]
 # Specify custom colors
@@ -177,7 +176,7 @@ colors = ['darkblue', 'red']  # Colors for NO_MMD and MMD
 figp = go.Figure(data=[go.Pie(
     labels=labels,
     values=values,
-    hole=0.2,  # Creates a donut chart (0 for a full pie)
+    hole=0.1,  # Creates a donut chart (0 for a full pie)
     textinfo='label+percent',  # Show labels and percentages
     pull=[0.1, 0],  # Slightly pull both slices for emphasis
     marker=dict(colors=colors)
@@ -345,8 +344,8 @@ st.plotly_chart(fig2, use_container_width= True)
 ###############################
 
 html_table = """
-<h4><b><u style="color: maroon;">VL SECTION</u></b></h4>
-"""
+       <h4><b><u style="color: maroon;">VL SECTION</u></b></h4>
+     """
 st.markdown(html_table, unsafe_allow_html=True)
 
 
