@@ -493,6 +493,7 @@ if df is not None and district is not None:
 if df is not None and district is not None:  
     Ccola, colb, colc = st.columns([1,2,1])
     submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
+    st.write(dfq)
     if submit:
         #try:
             facys = dfsupd['facility'].unique()
