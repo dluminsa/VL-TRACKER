@@ -491,10 +491,10 @@ if df is not None and district is not None:
             st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
             st.stop()
 if df is not None and district is not None:  
-    Ccola, colb, colc = st.columns(3)
+    Ccola, colb, colc = st.columns([1,2,1])
     submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
     if submit:
-        try:
+        #try:
             facys = dfsupd['facility'].unique()
             for facility in facys:
                         row1 = []
@@ -535,11 +535,11 @@ if df is not None and district is not None:
                         cov = dfr['VL COV'].sum()
                         sheet1.append_row(row1, value_input_option='RAW')          
             st.session_state.submited = True
-# st.success('Your data above has been submitted')
-        except Exception as e:
-                        # Print the error message
-                        st.write(f"ERROR: {e}")
-                        st.stop()  # Stop the Streamlit app here to let the user manually retry     
+# # st.success('Your data above has been submitted')
+#         except Exception as e:
+#                         # Print the error message
+#                         st.write(f"ERROR: {e}")
+#                         st.stop()  # Stop the Streamlit app here to let the user manually retry     
 
 #DOWNLOADS
  
