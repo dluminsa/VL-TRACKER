@@ -526,7 +526,7 @@ if df is not None and district is not None:
                         durn = duern.shape[0]
                         row1.append(durn)
 
-                        dfe['facility'] = dfe['facility'].astype(str)
+                        dfq['facility'] = dfq['facility'].astype(str)
                         dfr = dfq[dfq['facility']==facility].copy()
                         q3 = dfr['Q3CURR'].sum()
                         row1.append(q3)
