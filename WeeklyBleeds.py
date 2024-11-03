@@ -238,14 +238,14 @@ st.success('**TRENDS IN CLIENTS DUE, REBLED SUPPRESSING AND NOT**')
 
 grouped = dftx.groupby('WEEK').sum(numeric_only=True).reset_index()
 
-melted = grouped.melt(id_vars=['SURGE'], value_vars=['DUETOTAL', 'RN', 'RS'],
+melted = grouped.melt(id_vars=['WEEK'], value_vars=['DUETOTAL', 'RN', 'RS'],
                             var_name='CATEGORIES', value_name='Total')
 
 # melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
 #                             var_name='INTERVAL', value_name='Total')
 
 #melted2 = grouped.melt(id_vars=['SURGE'], value_vars=['RTT', 'TO','DEAD'],
-                            var_name='INTERVAL', value_name='Total')
+       #                     var_name='INTERVAL', value_name='Total')
 melted['WEEK'] = melted['WEEK'].astype(int)
 melted['WEEK'] = melted['WEEK'].astype(str)
 #melted2['SURGE'] = melted2['SURGE'].astype(int)
