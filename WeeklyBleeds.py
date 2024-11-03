@@ -43,7 +43,7 @@ if 'tx' not in st.session_state:
          st.stop()
 dftx = st.session_state.tx.copy()
 st.write(dftx.columns)
-dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
+#dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
 dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
 st.write(dftx)
