@@ -176,7 +176,7 @@ if int(dist)>1:
    colb.write('**TOTAL**')
    colc.write('**BLED**')
    cold.write('**NOT_BLED**')
-   cole.write('**SUPP'SSD**')
+   cole.write("**SUPP'SSD**")
    colf.write(f'**NOT**')
    for distr in distc:
       watera = water[water['DISTRICT']==distr].copy()
@@ -197,7 +197,7 @@ if int(dist)==1:
    colb.write('**TOTAL**')
    colc.write('**BLED**')
    cold.write('**NOT_BLED**')
-   cole.write('**SUPP'SSD**')
+   cole.write("**SUPP'SSD**")
    colf.write(f'**NOT**')
    for facil in factc:
       watera = water[water['FACILITY']==facil].copy()
