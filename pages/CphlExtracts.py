@@ -606,7 +606,7 @@ if df is not None and district is not None:
                         dfk['REBLED'] = dfk['REBLED'].astype(str)
                         sup = dfk[dfk['REBLED']=='RS']
                         su = sup.shape[0]
-                        row1.append(sup)
+                        row1.append(su)
                         
                         notdue = dfk[dfk['DUE']=='NOT'].copy()
                         notdue['REBLED'] = notdue['REBLED'].astype(str)
