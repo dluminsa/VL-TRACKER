@@ -96,8 +96,9 @@ st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any conce
 
 
 file = st.file_uploader('Upload your CPHL extract here')
-if 'dist' not in st.session_state:
-    st.session_state.dist = False
+if not file:
+        st.session_state.submited =False
+        
 
 ext = None
 if file is not None:
@@ -200,7 +201,7 @@ if file is not None:
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
-            st.session_state.dist = False
+            st.session_state.submited =False
            # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
