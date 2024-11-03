@@ -552,7 +552,7 @@ if df is not None and district is not None:
                 st.write(dfe)
 
 #DOWNLOADS
- 
+if df is not None and district is not None:
         if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
