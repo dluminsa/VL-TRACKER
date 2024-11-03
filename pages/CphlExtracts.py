@@ -595,40 +595,41 @@ if df is not None and district is not None:
             st.write(traceback.format_exc())
             st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
             st.stop()
-if not st.session_state.dist:
-        try:
-            facys = dfsupd['facility'].unique()
-            for facility in facys:
-                        row1 = []
-                        row1.append(district)
-                        row1.append(facility)
-                        row1.append(week)
-                        dfsupd['facility'] = dfsupd['facility'].astype(str)
-                        dfk = dfsupd[dfsupd['facility']==facility].copy()
-                        dfk['REBLED'] = dfk['REBLED'].astype(str)
-                        sup = dfk[dfk['REBLED']=='RS']
-                        su = sup.shape[0]
-                        row1.append(su)
-                        
-                        notdue = dfk[dfk['DUE']=='NOT'].copy()
-                        notdue['REBLED'] = notdue['REBLED'].astype(str)
-                        notfn = notdue[notdue['REBLED'] =='FN']
-                        nofn = notfn.shape[0]
-                        row1.append(nofn)
-                        notrn = notdue[notdue['REBLED'] =='RN']
-                        norn = notrn.shape[0]
-                        row1.append(norn)
-                        
-                        duedue = dfk[dfk['DUE']=='DUE'].copy()
-                        duedue['REBLED'] = duedue['REBLED'].astype(str)
-                        duefn = duedue[duedue['REBLED'] =='FN']
-                        dufn = duefn.shape[0]
-                        row1.append(dufn)
-                        duern = duedue[duedue['REBLED'] =='RN']
-                        durn = duern.shape[0]
-                        row1.append(durn)
-                        sheet1.append_row(row1, value_input_option='RAW')          
-            st.session_state.dist = True
+if df is not None and district is not None:                     
+            if not st.session_state.dist:
+                    try:
+                        facys = dfsupd['facility'].unique()
+                        for facility in facys:
+                                    row1 = []
+                                    row1.append(district)
+                                    row1.append(facility)
+                                    row1.append(week)
+                                    dfsupd['facility'] = dfsupd['facility'].astype(str)
+                                    dfk = dfsupd[dfsupd['facility']==facility].copy()
+                                    dfk['REBLED'] = dfk['REBLED'].astype(str)
+                                    sup = dfk[dfk['REBLED']=='RS']
+                                    su = sup.shape[0]
+                                    row1.append(su)
+                                    
+                                    notdue = dfk[dfk['DUE']=='NOT'].copy()
+                                    notdue['REBLED'] = notdue['REBLED'].astype(str)
+                                    notfn = notdue[notdue['REBLED'] =='FN']
+                                    nofn = notfn.shape[0]
+                                    row1.append(nofn)
+                                    notrn = notdue[notdue['REBLED'] =='RN']
+                                    norn = notrn.shape[0]
+                                    row1.append(norn)
+                                    
+                                    duedue = dfk[dfk['DUE']=='DUE'].copy()
+                                    duedue['REBLED'] = duedue['REBLED'].astype(str)
+                                    duefn = duedue[duedue['REBLED'] =='FN']
+                                    dufn = duefn.shape[0]
+                                    row1.append(dufn)
+                                    duern = duedue[duedue['REBLED'] =='RN']
+                                    durn = duern.shape[0]
+                                    row1.append(durn)
+                                    sheet1.append_row(row1, value_input_option='RAW')          
+                        st.session_state.dist = True
 # st.success('Your data above has been submitted')
         except Exception as e:
             # Print the error message
