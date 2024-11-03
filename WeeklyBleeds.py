@@ -220,9 +220,9 @@ elif int(fact) > 1:
     # Update layout
     distict = '.'.join(water['DISTRICT'].unique())
     figd.update_layout(
-        title=f'TOTAL MISSED APPOINTMENTS SINCE THE QUARTER BEGAN PER FACILITY IN {distict} DISTRICT',
+        title=f'TOTAL NS DUE FOR REBLEEDING IN {distict}',
         xaxis_title='FACILITIES',
-        yaxis_title='TOTAL MISSED APPOINTMENTS',
+        yaxis_title='TOTAL DUE',
         xaxis_tickangle=-45  # Optional: angle x-axis labels for better visibility
     )
     st.plotly_chart(figd)#, use_container_width=True)
@@ -235,10 +235,11 @@ else:
 st.divider()
 #TREND OF MISSED APOINTMENTS
 st.success('**TRENDS IN CLIENTS DUE, REBLED SUPPRESSING AND NOT**')
+dfq =dftx.copy()
+dfq = dfq.rename(columns = {'DUETOTAL': 'TOTAL DUE', 'NOTRN': 'RN'})
+grouped = dfq.groupby('WEEK').sum(numeric_only=True).reset_index()
 
-grouped = dftx.groupby('WEEK').sum(numeric_only=True).reset_index()
-
-melted = grouped.melt(id_vars=['WEEK'], value_vars=['DUETOTAL', 'NOTRN', 'SUPP'],
+melted = grouped.melt(id_vars=['WEEK'], value_vars=['TOTAL DUE', 'RN', 'SUPP'],
                             var_name='CATEGORIES', value_name='Total')
 
 # melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
