@@ -329,10 +329,10 @@ if df is not None and district is not None:
 if df is not None and district is not None:   
         dfe = dfq.set_index('facility')
         dfvl = dfe.reset_index()
-#         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
-#         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
-#         st.markdown(f'**VL COVERAGE FOR {district}**')
-#         #dfe = dfe.drop(columns=['index'])  
+        dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
+        #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
+        st.markdown(f'**VL COVERAGE FOR {district}**')
+        #dfe = dfe.drop(columns=['index'])  
       
 if df is not None and district is not None:
             dfw = dfhigh.copy()
@@ -543,11 +543,11 @@ if df is not None and district is not None:
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
 if df is not None and district is not None:  
          if st.session_state.submited:
-                dfe = dfq.set_index('facility')
-                dfvl = dfe.reset_index()
-                dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
-                #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
-                st.markdown(f'**VL COVERAGE FOR {district}**')
+                # dfe = dfq.set_index('facility')
+                # dfvl = dfe.reset_index()
+                # dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
+                # #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
+                # st.markdown(f'**VL COVERAGE FOR {district}**')
                 #dfe = dfe.drop(columns=['index'])
                 st.write(dfe)
 
