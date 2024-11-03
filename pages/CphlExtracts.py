@@ -199,7 +199,7 @@ if file is not None:
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
-            st.sessionstate.dist = False
+            st.session_state.dist = False
            # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
