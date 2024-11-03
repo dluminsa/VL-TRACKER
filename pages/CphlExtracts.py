@@ -631,10 +631,10 @@ if df is not None and district is not None:
                                     sheet1.append_row(row1, value_input_option='RAW')          
                         st.session_state.dist = True
 # st.success('Your data above has been submitted')
-        except Exception as e:
-            # Print the error message
-            st.write(f"ERROR: {e}")
-            st.stop()  # Stop the Streamlit app here to let the user manually retry     
+                    except Exception as e:
+                        # Print the error message
+                        st.write(f"ERROR: {e}")
+                        st.stop()  # Stop the Streamlit app here to let the user manually retry     
 if df is not None and district is not None:       
         def download_without_duplicates(df):
             st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
