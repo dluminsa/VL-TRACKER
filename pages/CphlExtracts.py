@@ -15,7 +15,8 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 #from openpyxl import * #load_workbook
 #from openpyxl.styles import *
 # from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
-
+if 'submited' not in st.session_state:
+        st.session_state.submited =False
 
 SEMBABULE = {'Ssembabule HC IV':2321,'Kyabi HC III':536,'Ntuusi HC IV':968, 'Lwemiyaga HC III':1048,
             'Makoole HC II':252,'Mateete HC III':2367, 'Lwebitakuli Gvt HC III':607,'Ntete HC II':87,'Sembabule Kabaale HC II':77}
@@ -489,50 +490,60 @@ if df is not None and district is not None:
             st.write(traceback.format_exc())
             st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
             st.stop()
-if df is not None and district is not None:                     
-            if not st.session_state.dist:
-                    try:
-                        facys = dfsupd['facility'].unique()
-                        for facility in facys:
-                                    row1 = []
-                                    row1.append(district)
-                                    row1.append(facility)
-                                    row1.append(week)
-                                    dfsupd['facility'] = dfsupd['facility'].astype(str)
-                                    dfk = dfsupd[dfsupd['facility']==facility].copy()
-                                    dfk['REBLED'] = dfk['REBLED'].astype(str)
-                                    sup = dfk[dfk['REBLED']=='RS']
-                                    su = sup.shape[0]
-                                    row1.append(su)
-                                    
-                                    notdue = dfk[dfk['DUE']=='NOT'].copy()
-                                    notdue['REBLED'] = notdue['REBLED'].astype(str)
-                                    notfn = notdue[notdue['REBLED'] =='FN']
-                                    nofn = notfn.shape[0]
-                                    row1.append(nofn)
-                                    notrn = notdue[notdue['REBLED'] =='RN']
-                                    norn = notrn.shape[0]
-                                    row1.append(norn)
-                                    
-                                    duedue = dfk[dfk['DUE']=='DUE'].copy()
-                                    duedue['REBLED'] = duedue['REBLED'].astype(str)
-                                    duefn = duedue[duedue['REBLED'] =='FN']
-                                    dufn = duefn.shape[0]
-                                    row1.append(dufn)
-                                    duern = duedue[duedue['REBLED'] =='RN']
-                                    durn = duern.shape[0]
-                                    row1.append(durn)
-                                    sheet1.append_row(row1, value_input_option='RAW')          
-                        st.session_state.dist = True
+if df is not None and district is not None:  
+    Ccola, colb, colc = st.columns(3)
+    submit = colc.button('**SUBMIT TO SEE SUMMARIES**'
+    if submit:
+        try:
+            facys = dfsupd['facility'].unique()
+            for facility in facys:
+                        row1 = []
+                        row1.append(district)
+                        row1.append(facility)
+                        row1.append(week)
+                        dfsupd['facility'] = dfsupd['facility'].astype(str)
+                        dfk = dfsupd[dfsupd['facility']==facility].copy()
+                        dfk['REBLED'] = dfk['REBLED'].astype(str)
+                        sup = dfk[dfk['REBLED']=='RS']
+                        su = sup.shape[0]
+                        row1.append(su)
+                        
+                        notdue = dfk[dfk['DUE']=='NOT'].copy()
+                        notdue['REBLED'] = notdue['REBLED'].astype(str)
+                        notfn = notdue[notdue['REBLED'] =='FN']
+                        nofn = notfn.shape[0]
+                        row1.append(nofn)
+                        notrn = notdue[notdue['REBLED'] =='RN']
+                        norn = notrn.shape[0]
+                        row1.append(norn)
+                        
+                        duedue = dfk[dfk['DUE']=='DUE'].copy()
+                        duedue['REBLED'] = duedue['REBLED'].astype(str)
+                        duefn = duedue[duedue['REBLED'] =='FN']
+                        dufn = duefn.shape[0]
+                        row1.append(dufn)
+                        duern = duedue[duedue['REBLED'] =='RN']
+                        durn = duern.shape[0]
+                        row1.append(durn)
+
+                        dfe['facility'] = dfe['facility'].astype(str)
+                        dfr = dfe[dfe['facility']==facility].copy()
+                        q3 = dfr['Q3CURR'].sum()
+                        row1.append(q3)
+                        bled = dfr['BLEEDS'].sum()
+                        row1.append(bled)
+                        cov = dfr['VL COV'].sum()
+                        sheet1.append_row(row1, value_input_option='RAW')          
+            st.session_state.submited = True
 # st.success('Your data above has been submitted')
-                    except Exception as e:
+         except Exception as e:
                         # Print the error message
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry     
 
 #DOWNLOADS
-if df is not None and district is not None: 
-        if st.session_state.dist:
+ 
+         if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
@@ -621,7 +632,7 @@ if df is not None and district is not None:
 
 ##############################################################
 if df is not None and district is not None:
-        if st.session_state.dist:
+        if st.session_state.submited:
                     def download_with_duplicates(df):
                         st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
             
@@ -649,7 +660,7 @@ if df is not None and district is not None:
 
 #############################################################################
 if df is not None and district is not None: 
-        if st.session_state.dist:
+        if st.session_state.submited:
                     def download_without_duplicates(df):
                         st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
             
