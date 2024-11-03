@@ -607,6 +607,7 @@ if df is not None and district is not None:
                         sup = dfk[dfk['REBLED']=='RS']
                         su = sup.shape[0]
                         row1.append(sup)
+                        
                         notdue = dfk[dfk['DUE']=='NOT'].copy()
                         notdue['REBLED'] = notdue['REBLED'].astype(str)
                         notfn = notdue[notdue['REBLED'] =='FN']
@@ -616,9 +617,9 @@ if df is not None and district is not None:
                         norn = notrn.shape[0]
                         row1.append(norn)
                         
-                        due = dfk[dfk['DUE']=='DUE'].copy()
-                        due['REBLED'] = due['REBLED'].astype(str)
-                        duefn = due[due['REBLED'] =='FN']
+                        duedue = dfk[dfk['DUE']=='DUE'].copy()
+                        duedue['REBLED'] = duedue['REBLED'].astype(str)
+                        duefn = duedue[duedue['REBLED'] =='FN']
                         dufn = duefn.shape[0]
                         row1.append(dufn)
                         duern = duedue[duedue['REBLED'] =='RN']
