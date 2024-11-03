@@ -43,7 +43,8 @@ if 'tx' not in st.session_state:
          st.stop()
 dftx = st.session_state.tx.copy()
 st.write(dftx)
-
+dftx[['DUEFN', 'DUERN']] = dftx[['DUEFN', 'DUERN']].apply(pd.to_numeric, errors='coerce')
+dftx['DUETOTAL']] = dftx['DUEFN'] + dftx['DUERN']
 
 
 #######################FILTERS
@@ -119,8 +120,8 @@ else:
 st.divider()
 
 
-mostd = water.groupby('DISTRICT')['DUEFN'].sum()
-mostf = water.groupby('FACILITY')['DUEFN'].sum()
+mostd = water.groupby('DISTRICT')['DUETOTAL'].sum()
+mostf = water.groupby('FACILITY')['DUETOTAL'].sum()
 
 ####TOP3
 topdis3 = mostd.nlargest(3)
@@ -159,48 +160,7 @@ elif checkd ==1:
         
 st.divider()
 #############################################################################################
-#filtered_df = filtered_df[filtered_df['WEEK']==k].copy()
-pote = water['POTENTIAL'].sum()
-Q4 = water['Q4'].sum()
-ti = water['TI'].sum()
-new = water['TXNEW'].sum()
-rt = water['RTT'].sum()  
-pot = int(Q4)+int(ti)+int(new) + int(rt)
-los = water['TWO'].sum()
-to  = water['TO'].sum()
-dd = water['DEAD'].sum()
-Q1 = water['ACTIVE'].sum()
-#uk = int(pot) - int(ti)- int(Q4) - int(new)
-uk = int(pote) - int(pot) 
 
-labels = ["Q4 Curr",   "TI",     "TX NEW",     'RTT' ,  "Potential",  "MISSED",  "DEAD",     "TO",   "Unknown",  "ACTIVE"]
-values = [Q4,           ti,        new,         rt,       pot,        -los,       -dd,        -to,     uk,          Q1]
-measure = ["absolute", "relative","relative", "relative","total",    "relative", "relative","realative","realative","total"]
-# Create the waterfall chart
-
-fig = go.Figure(go.Waterfall(
-    name="Waterfall",
-    orientation="v",
-    measure=measure,
-    x=labels,
-    textposition="outside",
-    text=[f"{v}" for v in values],
-    y=values
-))
-
-# Add titles and labels and adjust layout properties
-fig.update_layout(
-    title="Waterfall Analysis",
-    xaxis_title="Categories",
-    yaxis_title="Values",
-    showlegend=True,
-    height=425,  # Adjust height to ensure the chart fits well
-    margin=dict(l=20, r=20, t=60, b=20),  # Adjust margins to prevent clipping
-    yaxis=dict(automargin=True)
-)
-
-# Show the plot
-st.plotly_chart(fig)
 #####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
 dist = water['DISTRICT'].nunique()
 fact = water['FACILITY'].nunique()
@@ -210,12 +170,12 @@ if int(dist) > 1:
     st.divider()
     x = []
     y = []
-    water['TWO'] = pd.to_numeric(water['TWO'], errors='coerce')
+    water['TWO'] = pd.to_numeric(water['DUETOTAL'], errors='coerce')
     districts = water['DISTRICT'].unique()
-    water = water.sort_values(by = ['TWO'], ascending = False)
+    water = water.sort_values(by = ['DUETOTAL'], ascending = False)
     for each in districts:
         x.append(each)
-        dist = water[water['DISTRICT']==each]['TWO'].sum()
+        dist = water[water['DISTRICT']==each]['DUETOTAL'].sum()
         y.append(dist)   
  
     sorted_indices = sorted(range(len(y)), key=lambda i: y[i], reverse=True)
@@ -230,9 +190,9 @@ if int(dist) > 1:
     
     # Update layout
     figd.update_layout(
-        title='TOTAL MISSED APPOINTMENTS SINCE THE QUARTER BEGAN PER DISTRICT',
+        title='NS DUE FOR REBLEEDING',
         xaxis_title='District',
-        yaxis_title='TOTAL MISSED APPOINTMENTS',
+        yaxis_title='TOTAL DUE FOR REBLEEDING',
         xaxis_tickangle=-45  # Optional: angle x-axis labels for better visibility
     )
     st.plotly_chart(figd)#, use_container_width=True)
@@ -240,12 +200,12 @@ elif int(fact) > 1:
     st.divider()
     x = []
     y = []
-    water['TWO'] = pd.to_numeric(water['TWO'], errors='coerce')
+    water['DUETOTAL'] = pd.to_numeric(water['DUETOTAL'], errors='coerce')
     districts = water['FACILITY'].unique()
-    water = water.sort_values(by = ['TWO'], ascending = False)
+    water = water.sort_values(by = ['DUETOTAL'], ascending = False)
     for each in districts:
         x.append(each)
-        dist = water[water['FACILITY']==each]['TWO'].sum()
+        dist = water[water['FACILITY']==each]['DUETOTAL'].sum()
         y.append(dist)   
  
     sorted_indices = sorted(range(len(y)), key=lambda i: y[i], reverse=True)
