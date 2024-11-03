@@ -326,9 +326,9 @@ if df is not None and district is not None:
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
         dfq.loc[len(dfq)-1, 'HLVs'] = u
         dfq.loc[len(dfq)-1, 'LLVs'] = i
-# if df is not None and district is not None:   
-#         dfe = dfq.set_index('facility')
-#         dfvl = dfe.reset_index()
+if df is not None and district is not None:   
+        dfe = dfq.set_index('facility')
+        dfvl = dfe.reset_index()
 #         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
 #         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
 #         st.markdown(f'**VL COVERAGE FOR {district}**')
