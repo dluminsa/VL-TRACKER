@@ -169,7 +169,7 @@ if int(dist) > 1:
     st.divider()
     x = []
     y = []
-    water['TWO'] = pd.to_numeric(water['DUETOTAL'], errors='coerce')
+    water['DUETOTAL'] = pd.to_numeric(water['DUETOTAL'], errors='coerce')
     districts = water['DISTRICT'].unique()
     water = water.sort_values(by = ['DUETOTAL'], ascending = False)
     for each in districts:
@@ -234,28 +234,28 @@ else:
 #LINE GRAPHS
 st.divider()
 #TREND OF MISSED APOINTMENTS
-st.success('**TRENDS IN CLIENTS WHO HAVE MISSED APPOINTMENTS FOR MORE THAN 2, 3 AND 4 WEEKS**')
+st.success('**TRENDS IN CLIENTS DUE, REBLED SUPPRESSING AND NOT**')
 
-grouped = dftx.groupby('SURGE').sum(numeric_only=True).reset_index()
+grouped = dftx.groupby('WEEK').sum(numeric_only=True).reset_index()
 
-melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
-                            var_name='INTERVAL', value_name='Total')
+melted = grouped.melt(id_vars=['SURGE'], value_vars=['DUETOTAL', 'RN', 'RS'],
+                            var_name='CATEGORIES', value_name='Total')
 
 # melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
 #                             var_name='INTERVAL', value_name='Total')
 
-melted2 = grouped.melt(id_vars=['SURGE'], value_vars=['RTT', 'TO','DEAD'],
+#melted2 = grouped.melt(id_vars=['SURGE'], value_vars=['RTT', 'TO','DEAD'],
                             var_name='INTERVAL', value_name='Total')
-melted['SURGE'] = melted['SURGE'].astype(int)
-melted['SURGE'] = melted['SURGE'].astype(str)
-melted2['SURGE'] = melted2['SURGE'].astype(int)
-melted2['SURGE'] = melted2['SURGE'].astype(str)
+melted['WEEK'] = melted['WEEK'].astype(int)
+melted['WEEK'] = melted['WEEK'].astype(str)
+#melted2['SURGE'] = melted2['SURGE'].astype(int)
+#melted2['SURGE'] = melted2['SURGE'].astype(str)
 
-fig2 = px.line(melted, x='SURGE', y='Total', color='INTERVAL', markers=True,
-              title='MISSED APPOINTMENTS', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'INTERVAL': 'VARIABLES'})
+fig2 = px.line(melted, x='WEEK', y='Total', color='INTERVAL', markers=True,
+              title='REBLEEDING TRENDS', labels={'WEEK':'WEEK', 'Total': 'No. of clients', 'INTERVAL': 'CATEGORIES'})
 
-fig3 = px.line(melted2, x='SURGE', y='Total', color='INTERVAL', markers=True, color_discrete_sequence=['black','red', 'yellow'],
-              title='RTT VS TO VS DEAD', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'INTERVALS': 'VARIABLES'})
+#fig3 = px.line(melted2, x='SURGE', y='Total', color='INTERVAL', markers=True, color_discrete_sequence=['black','red', 'yellow'],
+             # title='RTT VS TO VS DEAD', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'INTERVALS': 'VARIABLES'})
 
 fig2.update_layout(
     width=800,  # Set the width of the plot
@@ -264,6 +264,10 @@ fig2.update_layout(
     yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
 )
 fig2.update_xaxes(type='category')
+st.plotly_chart(fig2, use_container_width= True)
+
+
+
 fig3.update_layout(
     width=800,  # Set the width of the plot
     height = 400,  # Set the height of the plot
