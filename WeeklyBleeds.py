@@ -166,6 +166,8 @@ NOT = int(water['DUERN'].sum())
 
 BLED = int(BLED)
 NOT = int(NOT)
+st.write(BLED)
+st.write(NOT)
 labels = ['BLED', 'DUE']
 values = [BLED, NOT]
 # Specify custom colors
