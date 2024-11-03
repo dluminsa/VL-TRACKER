@@ -3,8 +3,14 @@ import pandas as pd
 import os
 import random
 import numpy as np
+import gspread
 from openpyxl import Workbook
 from pathlib import Path
+import traceback
+import time
+from datetime import datetime, date
+from google.oauth2.service_account import Credentials
+from oauth2client.service_account import ServiceAccountCredentials
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 #from openpyxl import * #load_workbook
 #from openpyxl.styles import *
@@ -537,9 +543,95 @@ if df is not None and district is not None:
                          'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
             dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
             dfsupd = pd.concat([dfa, dups])
+            dfsupd['Dmonth'] = pd.to_numeric(dfsupd['Dmonth'], errors='coerce')
+            dfsupa = dfsupd[dfsupd['Dmonth']<7].copy()
+            dfsupb = dfsupd[dfsupd['Dmonth']>6].copy()
+            dfsupa['REBLED'] = dfsupa['REBLED'].astype(str)
+            dfsupa['DUE'] = dfsupa['REBLED'].str.replace('FN', 'DUE')
+            
+            dfsupb['DUE'] = np.nan
+            dfsupb['DUE'] = dfsupb['DUE'].fillna('NOT')
+            dfsupd = pd.concat([dfsupa,dfsupb], axis=0)
+            dfsupd = dfsupd[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
+            
+
+    # Prepare the credentials dictionary
+credentials_info = {
+        "type": secrets["type"],
+        "project_id": secrets["project_id"],
+        "private_key_id": secrets["private_key_id"],
+        "private_key": secrets["private_key"],
+        "client_email": secrets["client_email"],
+        "client_id": secrets["client_id"],
+        "auth_uri": secrets["auth_uri"],
+        "token_uri": secrets["token_uri"],
+        "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
+        "client_x509_cert_url": secrets["client_x509_cert_url"]
+    }
+current_time = time.localtime()
+week = time.strftime("%V", current_time)
+week = int(week)-39
+if df is not None and district is not None: 
+        try:
+            # Define the scopes needed for your application
+            scopes = ["https://www.googleapis.com/auth/spreadsheets",
+                        "https://www.googleapis.com/auth/drive"]              
+                 
+            credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
+                    
+            # Authorize and access Google Sheets
+            client = gspread.authorize(credentials)
+                    
+            # Open the Google Sheet by URL
+            spreadsheetu = "https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8/edit?gid=1448429519#gid=1448429519"     
+            spreadsheet = client.open_by_url(spreadsheetu)
+            sheet1 = spreadsheet.worksheet("NS")
+        except Exception as e:
+                    # Log the error message
+            st.write(f"CHECK: {e}")
+            st.write(traceback.format_exc())
+            st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
+            st.stop()
+
+        try:
+            facys = dfsupd['facility'].unique()
+            for facility in facys:
+                        row1 = []
+                        row1.append(district)
+                        row1.append(facility)
+                        row1.append(week)
+                        dfsupd['facility'] = dfsupd['facility'].astype(str)
+                        dfk = dfsupd[dfsupd['facility']==facility].copy()
+                        dfk['REBLED'] = dfk['REBLED'].astype(str)
+                        sup = dfk[dfk['REBLED']=='RS']
+                        su = sup.shape[0]
+                        row1.append(sup)
+                        notdue = dfk[dfk['DUE']=='NOT'].copy()
+                        notdue['REBLED'] = notdue['REBLED'].astype(str)
+                        notfn = notdue[notdue['REBLED'] =='FN']
+                        nofn = notfn.shape[0]
+                        row1.append(nofn)
+                        notrn = notdue[notdue['REBLED'] =='RN']
+                        norn = notrn.shape[0]
+                        row1.append(norn)
+                        
+                        due = dfk[dfk['DUE']=='DUE'].copy()
+                        due['REBLED'] = due['REBLED'].astype(str)
+                        duefn = due[due['REBLED'] =='FN']
+                        dufn = duefn.shape[0]
+                        row1.append(dufn)
+                        duern = duedue[duedue['REBLED'] =='RN']
+                        durn = duern.shape[0]
+                        row1.append(duern)
+                        sheet1.append_row(row1, value_input_option='RAW')          
+            # st.success('Your data above has been submitted')
+        except Exception as e:
+            # Print the error message
+            st.write(f"ERROR: {e}")
+            st.stop()  # Stop the Streamlit app here to let the user manually retry     
 if df is not None and district is not None:       
         def download_without_duplicates(df):
-            st.write(f"<h6>CSV FILES for {district} WITH DUPLICATES</h6>", unsafe_allow_html=True)
+            st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
 
             if df is not None and district is not None:
                 dft = dfsupd.copy()
@@ -550,7 +642,7 @@ if df is not None and district is not None:
                 with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
                     for facility in uniques:
                         dfs = dft[dft['facility'] == facility]
-                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED']]
+                        dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
                         csv_data = dfs.to_csv(index=False)
 
                         # Create a download button for each facility
