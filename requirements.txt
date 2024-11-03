@@ -1,9 +1,10 @@
 openpyxl
-streamlit==1.36.0
-pandas==1.5.3
-numpy==1.24.1
+streamlit
+pandas
+numpy
 google-auth
 oauth2client
+gspread
 st-gsheets-connection
 git+https://github.com/streamlit/gsheets-connection
 cython
