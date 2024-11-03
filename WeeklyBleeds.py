@@ -161,8 +161,8 @@ elif checkd ==1:
         
 st.divider()
 ############################################################################################
-BLED = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
-NOT = int(watera['DUERN'].sum())
+BLED = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
+NOT = int(water['DUERN'].sum())
 
 BLED = int(BLED)
 NOT = int(NOT)
