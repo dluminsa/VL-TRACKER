@@ -248,6 +248,7 @@ melted = grouped.melt(id_vars=['WEEK'], value_vars=['DUETOTAL', 'NOTRN', 'SUPP']
        #                     var_name='INTERVAL', value_name='Total')
 melted['WEEK'] = melted['WEEK'].astype(int)
 melted['WEEK'] = melted['WEEK'].astype(str)
+st.write(melted)
 #melted2['SURGE'] = melted2['SURGE'].astype(int)
 #melted2['SURGE'] = melted2['SURGE'].astype(str)
 
