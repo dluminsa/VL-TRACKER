@@ -168,7 +168,7 @@ fact = water['FACILITY'].nunique()
 #QUICK SUMMARY
 #TOTAL NS
 tot = water['TOTAL'].sum()
-bled = int(water['
+#bled = int(water['SUPP'].sum()) + int(water['
 
 
 if int(dist) > 1:
