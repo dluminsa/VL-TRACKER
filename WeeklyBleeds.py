@@ -42,10 +42,10 @@ if 'tx' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftx = st.session_state.tx.copy()
-st.write(dftx)
 dftx[['DUEFN', 'DUERN']] = dftx[['DUEFN', 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL']] = dftx['DUEFN'] + dftx['DUERN']
-
+st.write(dftx)
+dddfg
 
 #######################FILTERS
 #
