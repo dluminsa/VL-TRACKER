@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st 
 import os
 import gspread
-fgh
 from pathlib import Path
 import random
 import plotly.express as px
