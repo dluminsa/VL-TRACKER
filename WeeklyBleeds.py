@@ -161,9 +161,10 @@ elif checkd ==1:
         
 st.divider()
 ############################################################################################
-BLED = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
-NOT = int(water['DUERN'].sum())
 
+BLED = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
+NOT = int(water['DUERN'].sum()) + int(water['DUEFN'].sum())
+     
 BLED = int(BLED)
 NOT = int(NOT)
 st.write(BLED)
