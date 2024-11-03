@@ -42,8 +42,9 @@ if 'tx' not in st.session_state:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
 dftx = st.session_state.tx.copy()
-dftx[['DUEFN', 'DUERN']] = dftx[['DUEFN', 'DUERN']].apply(pd.to_numeric, errors='coerce')
+dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
+dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
 st.write(dftx)
 
 #######################FILTERS
@@ -163,6 +164,11 @@ st.divider()
 #####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
 dist = water['DISTRICT'].nunique()
 fact = water['FACILITY'].nunique()
+
+#QUICK SUMMARY
+#TOTAL NS
+tot = water['TOTAL'].sum()
+bled = int(water['
 
 
 if int(dist) > 1:
