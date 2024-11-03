@@ -95,7 +95,8 @@ st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any conce
 
 
 file = st.file_uploader('Upload your CPHL extract here')
-
+if 'dist' not in st.session_state:
+    st.session_state.dist = False
 
 ext = None
 if file is not None:
@@ -198,6 +199,7 @@ if file is not None:
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
+            st.sessionstate.dist = False
            # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
@@ -593,7 +595,7 @@ if df is not None and district is not None:
             st.write(traceback.format_exc())
             st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
             st.stop()
-
+if not st.session_state.dist:
         try:
             facys = dfsupd['facility'].unique()
             for facility in facys:
@@ -626,7 +628,8 @@ if df is not None and district is not None:
                         durn = duern.shape[0]
                         row1.append(durn)
                         sheet1.append_row(row1, value_input_option='RAW')          
-            # st.success('Your data above has been submitted')
+        st.session_state.dist = True
+# st.success('Your data above has been submitted')
         except Exception as e:
             # Print the error message
             st.write(f"ERROR: {e}")
