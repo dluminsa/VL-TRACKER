@@ -35,7 +35,7 @@ if 'tx' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'NS', usecols=list(range(8)),ttl=5)
+        exist = conn.read(worksheet= 'NS', usecols=list(range(12)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
@@ -110,7 +110,9 @@ if DISTRICT:
 if facility:
     water = water[water['FACILITY'].isin(facility)].copy()
     dftx = dftx[dftx['FACILITY'].isin(facility)].copy()
-    
+
+watervl = water.copy() 
+dfvl = dftx.copy()
 check = water.shape[0]
 if check == 0:
     st.warning('***NO DATA FOR THE SELECTION MADE**')
@@ -348,6 +350,23 @@ html_table = """
      """
 st.markdown(html_table, unsafe_allow_html=True)
 
+#PIE CHART
+#st.divider()
+col1, col2,col3 = st.columns([1,4,1])
+labels = ['DONE', 'NOT DONE']
+# Values
+values = [conducted, notdone]
+colors = ['blue', 'red']
+# Creating the pie chart with specified colors and hole
+fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+value', 
+                             insidetextorientation='radial', marker=dict(colors=colors), hole=0.4)])
 
+# Updating the layout for better readability
+fig.update_traces(textposition='inside', textfont_size=20)
+fig.update_layout(title_text='DONE vs NOT DONE', title_x=0.3)
+
+col1, col2,col3 = st.columns([1,4,1])
+with col2:
+     st.plotly_chart(fig, use_container_width=True
 #
 
