@@ -556,6 +556,7 @@ if df is not None and district is not None:
             
 
     # Prepare the credentials dictionary
+secrets = st.secrets["connections"]["gsheets"]
 credentials_info = {
         "type": secrets["type"],
         "project_id": secrets["project_id"],
