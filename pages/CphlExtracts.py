@@ -624,7 +624,8 @@ if df is not None and district is not None:
                         row1.append(dufn)
                         duern = duedue[duedue['REBLED'] =='RN']
                         durn = duern.shape[0]
-                        row1.append(duern)
+                        row1.append(durn)
+                        st.write(row1)
                         sheet1.append_row(row1, value_input_option='RAW')          
             # st.success('Your data above has been submitted')
         except Exception as e:
