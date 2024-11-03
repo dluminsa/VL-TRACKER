@@ -170,7 +170,7 @@ fact = water['FACILITY'].nunique()
 #TOTAL NS
 tot = water['TOTAL'].sum()
 bled = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
-notbled = water['
+#notbled = water['
 
 if int(dist) > 1:
     st.divider()
