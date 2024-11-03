@@ -172,6 +172,12 @@ factc = water['FACILITY'].unique()
 #TOTAL NS
 cola,colb,colc,cold,cole,colf = st.columns(6)
 if int(dist)>1:
+   cola.write('**DISTRICT**')
+   colb.write('**TOTAL**')
+   colc.write('**BLED**')
+   cold.write('**NOT_BLED**')
+   cole.write('**SUPP'SSD**')
+   colf.write(f'**NOT**')
    for distr in distc:
       watera = water[water['DISTRICT']==distr].copy()
       tot = watera['TOTAL'].sum()
@@ -187,13 +193,25 @@ if int(dist)>1:
       colf.write(f'**{notsups}**')
         
 if int(dist)==1:
+   cola.write('**FACILITY**')
+   colb.write('**TOTAL**')
+   colc.write('**BLED**')
+   cold.write('**NOT_BLED**')
+   cole.write('**SUPP'SSD**')
+   colf.write(f'**NOT**')
    for facil in factc:
       watera = water[water['FACILITY']==facil].copy()
       tot = watera['TOTAL'].sum()
       bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
       notbled = int(watera['DUERN'].sum()) + int(watera['DUEFN'].sum())
       sups = int(watera['SUPP'].sum())
-      notsups = int(watera['NOTRN'].sum()) + int(watera['DUERN'].sum())        
+      notsups = int(watera['NOTRN'].sum()) + int(watera['DUERN'].sum()) 
+      cola.write(f'**{facil}**')
+      colb.write(f'**{tot}**')
+      colc.write(f'**{bled}**')
+      cold.write(f'**{notbled}**')
+      cole.write(f'**{sups}**')
+      colf.write(f'**{notsups}**') 
 
 if int(dist) > 1:
     st.divider()
