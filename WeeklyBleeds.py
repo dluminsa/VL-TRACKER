@@ -152,16 +152,40 @@ if facility and not district:
 elif checkf <3:
     pass
 elif checkd >3:
-    st.success(f'**MOST AFFECTED DISTRICS ARE {mostdis3}, MOST AFFECTED FACILITIES ARE {mostfas3}**')
+    st.success(f'**DISTRICS WITH MOST UNBLED NS {mostdis3}, MOST AFFECTED FACILITIES  ARE {mostfas3}**')
 elif checkd ==2:
-    st.success(f'**MOST AFFECTED DISTRICS ARE {mostdis2}, MOST AFFECTED FACILITIES ARE {mostfas3}**')
+    st.success(f'**DISTRICS WITH MOST UNBLED NS ARE {mostdis2}, MOST AFFECTED FACILITIES ARE {mostfas3}**')
 elif checkd ==1:
-    st.success(f'**MOST AFFECTED FACILITIES ARE {mostfas3}**')
+    st.success(f'**FACILITIES WITH THE MOST UNBLED NS ARE {mostfas3}**')
 
         
 st.divider()
-#############################################################################################
+############################################################################################
+BLED = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
+NOT = int(watera['DUERN'].sum())
 
+BLED = int(BLED)
+NOT = int(NOT)
+labels = ['BLED', 'DUE']
+values = [BLED, NOT]
+# Specify custom colors
+colors = ['darkblue', 'red']  # Colors for NO_MMD and MMD
+# Create the 3D pie chart
+figp = go.Figure(data=[go.Pie(
+    labels=labels,
+    values=values,
+    hole=0.2,  # Creates a donut chart (0 for a full pie)
+    textinfo='label+percent',  # Show labels and percentages
+    pull=[0.1, 0],  # Slightly pull both slices for emphasis
+    marker=dict(colors=colors)
+)])
+
+# Update layout for 3D effect
+figp.update_traces(textposition='inside', textinfo='percent+label')
+st.markdown(f'**{BLED} HAVE BEEN REBLED, {NOT} HAVE NOT**')
+if facility and not district and not CLUSTER:
+    st.write(f'**SHOWING DATA FOR {facility} facility**')
+st.plotly_chart(figp, use_container_width=True)
 #####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
 dist = water['DISTRICT'].nunique()
 fact = water['FACILITY'].nunique()
@@ -180,7 +204,7 @@ if int(dist)>1:
    colf.write(f'**NOT**')
    for distr in distc:
       watera = water[water['DISTRICT']==distr].copy()
-      tot = watera['TOTAL'].sum()
+      tot = int(watera['TOTAL'].sum())
       bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
       notbled = int(watera['DUERN'].sum()) + int(watera['DUEFN'].sum())
       sups = int(watera['SUPP'].sum())
@@ -201,7 +225,7 @@ if int(dist)==1:
    colf.write(f'**NOT**')
    for facil in factc:
       watera = water[water['FACILITY']==facil].copy()
-      tot = watera['TOTAL'].sum()
+      tot = int(watera['TOTAL'].sum())
       bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
       notbled = int(watera['DUERN'].sum()) + int(watera['DUEFN'].sum())
       sups = int(watera['SUPP'].sum())
