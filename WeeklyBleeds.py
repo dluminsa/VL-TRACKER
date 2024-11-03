@@ -168,9 +168,30 @@ fact = water['FACILITY'].nunique()
 
 #QUICK SUMMARY
 #TOTAL NS
-tot = water['TOTAL'].sum()
-bled = int(water['SUPP'].sum()) + int(water['NOTRN'].sum())
-notbled = int(water['DUERN'].sum()) + int(water['DUEFN'].sum())
+cola,colb,colc,cold,cole,colf = st.columns(6)
+if int(dist)>1:
+   for distr in dist:
+      watera = water[water['DISTRICT']==distr].copy()
+      tot = watera['TOTAL'].sum()
+      bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
+      notbled = int(watera['DUERN'].sum()) + int(watera['DUEFN'].sum())
+      sups = int(watera['SUPP'].sum())
+      notsups = int(watera['NOTRN'].sum()) + int(watera['DUERN'].sum())
+      cola.write(f'**{distr}**')
+      colb.write(f'**{tot}**')
+      colc.write(f'**{bled}**')
+      cold.write(f'**{notbled}**')
+      cole.write(f'**{sups}**')
+      colf.write(f'**{notsups}**')
+        
+if int(dist)==1:
+   for facil in fact:
+      watera = water[water['FACILITY']==facil].copy()
+      tot = watera['TOTAL'].sum()
+      bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
+      notbled = int(watera['DUERN'].sum()) + int(watera['DUEFN'].sum())
+      sups = int(watera['SUPP'].sum())
+      notsups = int(watera['NOTRN'].sum()) + int(watera['DUERN'].sum())        
 
 if int(dist) > 1:
     st.divider()
