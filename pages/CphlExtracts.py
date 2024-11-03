@@ -614,7 +614,11 @@ if df is not None and district is not None:
                 # Serve the file for download
                 with open(file_path, 'rb') as f:
                       file_contents = f.read()           
-                st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                A =st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+                if A:
+                   st.session_state.dist = True
+
+
 ##############################################################
 if df is not None and district is not None:
         if st.session_state.dist:
@@ -633,13 +637,14 @@ if df is not None and district is not None:
                                     csv_data = dfs.to_csv(index=False)
             
                                     # Create a download button for each facility
-                                    st.download_button(
+                                    B = st.download_button(
                                         label=f"Download CSV for {facility} without duplicates",
                                         data=csv_data,
                                         file_name=f"{facility}_data_without_duplicates.csv",
                                         mime="text/csv"
                                     )
-
+                                 if B:
+                                         st.session_state.dist = True
 
 
 #############################################################################
@@ -661,12 +666,15 @@ if df is not None and district is not None:
                                     csv_data = dfs.to_csv(index=False)
             
                                     # Create a download button for each facility
-                                    st.download_button(
+                                    C = st.download_button(
                                         label=f"Download NS for {facility}",
                                         data=csv_data,
                                         file_name=f"{facility}_NS.csv",
                                         mime="text/csv"
                                     )
+                                    if C:
+                                         st.session_state.dist = True
+                                    
             
                     def main():
                         # Call the download functions
