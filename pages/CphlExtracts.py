@@ -549,7 +549,7 @@ if df is not None and district is not None:
                 #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
                 st.markdown(f'**VL COVERAGE FOR {district}**')
                 #dfe = dfe.drop(columns=['index'])
-                 st.write(dfe)
+                st.write(dfe)
 
 #DOWNLOADS
  
