@@ -165,12 +165,14 @@ st.divider()
 #####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
 dist = water['DISTRICT'].nunique()
 fact = water['FACILITY'].nunique()
+distc = water['DISTRICT'].unique()
+factc = water['FACILITY'].unique()
 
 #QUICK SUMMARY
 #TOTAL NS
 cola,colb,colc,cold,cole,colf = st.columns(6)
 if int(dist)>1:
-   for distr in dist:
+   for distr in distc:
       watera = water[water['DISTRICT']==distr].copy()
       tot = watera['TOTAL'].sum()
       bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
@@ -185,7 +187,7 @@ if int(dist)>1:
       colf.write(f'**{notsups}**')
         
 if int(dist)==1:
-   for facil in fact:
+   for facil in factc:
       watera = water[water['FACILITY']==facil].copy()
       tot = watera['TOTAL'].sum()
       bled = int(watera['SUPP'].sum()) + int(watera['NOTRN'].sum())
