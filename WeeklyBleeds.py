@@ -66,7 +66,7 @@ water = pd.concat(dfy)
 dfs=[]   
 for each in weeks:
     dftx['WEEK'] = pd.to_numeric(dftx['WEEK'], errors='coerce')
-    dfa = dftx[dftx['SURGE']==each]
+    dfa = dftx[dftx['WEEK']==each]
     dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
     dfs.append(dfa)
 dftx = pd.concat(dfs)
