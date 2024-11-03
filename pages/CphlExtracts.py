@@ -326,8 +326,9 @@ if df is not None and district is not None:
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
         dfq.loc[len(dfq)-1, 'HLVs'] = u
         dfq.loc[len(dfq)-1, 'LLVs'] = i
-if df is not None and district is not None:           
+if df is not None and district is not None:   
         dfe = dfq.set_index('facility')
+        dfvl = dfe.reset_index()
         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         st.markdown(f'**VL COVERAGE FOR {district}**')
@@ -493,7 +494,7 @@ if df is not None and district is not None:
 if df is not None and district is not None:  
     Ccola, colb, colc = st.columns([1,2,1])
     submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
-    st.write(dfq)
+    st.write(dfvl)
     if submit:
         #try:
             facys = dfsupd['facility'].unique()
@@ -527,8 +528,8 @@ if df is not None and district is not None:
                         durn = duern.shape[0]
                         row1.append(durn)
 
-                        dfq['facility'] = dfq['facility'].astype(str)
-                        dfr = dfq[dfq['facility']==facility].copy()
+                        dfvl['facility'] = dfvl['facility'].astype(str)
+                        dfr = dfvl[dfvl['facility']==facility].copy()
                         q3 = dfr['Q3CURR'].sum()
                         row1.append(q3)
                         bled = dfr['BLEEDS'].sum()
