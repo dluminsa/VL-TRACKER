@@ -1,7 +1,6 @@
 import pandas as pd 
 import streamlit as st 
 import os
-dfg
 import gspread
 from pathlib import Path
 import random
