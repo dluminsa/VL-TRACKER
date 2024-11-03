@@ -65,7 +65,7 @@ water = pd.concat(dfy)
 #REMOVE DUPLICATES FROM TX SHEET # HOLD THIS IN SESSION LATER
 dfs=[]   
 for each in weeks:
-    dftx['SURGE'] = pd.to_numeric(dftx['SURGE'], errors='coerce')
+    dftx['WEEK'] = pd.to_numeric(dftx['WEEK'], errors='coerce')
     dfa = dftx[dftx['SURGE']==each]
     dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
     dfs.append(dfa)
