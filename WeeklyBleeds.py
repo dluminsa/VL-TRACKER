@@ -1,761 +1,1091 @@
+import pandas as pd 
 import streamlit as st 
-import pandas as pd
 import os
 import gspread
-import random
-import numpy as np
-from openpyxl import Workbook
-from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
-import time
 from pathlib import Path
-#from streamlit_gsheets import GSheetsConnection
-st.write('BEING UPDATED')
-st.stop()
-st.set_page_config(
-    page_title = 'VL TRACKER',
-    page_icon =":bar_chart"
-)
-st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
-current_time = time.localtime()
-week = time.strftime("%U", current_time)
-week = int(week) + 1
-
-
-
-st.markdown(f"******* **REMINDER!! we are currently in week {week}** *****")
-
-st.markdown('**FIRST RENAME THESE COLUMNS BEFORE YOU PROCEED:**')
-col1, col2, col3 = st.columns([1,1,1])
-col1.markdown('Rename the **HIV CLINIC NO.** column to **A**')
-col1.markdown('Rename the **ART START DATE** column to **AS**')
-col2.markdown('Rename the **RETURN VISIT DATE** column to **RD**')
-col2.markdown('Rename the **RETURN VISIT DATE_1** column to **RD1**')
-col3.markdown('Rename the **HIV VIRAL LOAD DATE** column to **VD**')
-col3.markdown('Rename the **HIV VIRAL LOAD DATE_1** column to **VD1**')
-
-file = st.file_uploader("Upload your EMR extract here", type=['csv', 'xlsx', 'txt'])
-
-ext = None
-if file is not None:
-    # Get the file name
-    fileN = file.name
-    ext = os.path.basename(fileN).split('.')[1]
-df = None
-if file is not None:
-    if ext !='xlsx':
-        st.write('Unsupported file format, first save the excel as xlsx and try again')
-        st.stop()
-    else:
-        df = pd.read_excel(file)
-        st.write('Excel accepted')
-
-    if df is not None:
-        columns = ['A', 'AS', 'VD', 'VD1', 'RD', 'RD1']
-        cols = df.columns.to_list()
-        if not all(column in cols for column in columns):
-            missing_columns = [column for column in columns if column not in cols]
-            for column in missing_columns:
-                st.markdown(f' **ERROR !!! {column} is not in the file uploaded**')
-                st.markdown('**First rename all the columns as guided above**')
-                st.stop()
-        else:
-            # Convert 'A' column to string and create 'ART' column with numeric part
-            df['A'] = df['A'].astype(str)
-            df['ART'] = df['A'].str.replace('[^0-9]', '', regex=True)
-            df['ART'] = pd.to_numeric(df['ART'], errors= 'coerce')
-            df = df[df['ART']>0]
-            df.dropna(subset='ART', inplace=True)
-            #st.write(df.shape[0])
-            df = df.copy()
-            
-            df[['AS', 'RD', 'VD','VD1','RD1']] = df[['AS', 'RD', 'VD', 'VD1','RD1']].astype(str)
-
-            df['AS'] = df['AS'].str.replace('/', '*', regex=True)
-            df['RD'] = df['RD'].str.replace('/', '*', regex=True)
-            df['VD'] = df['VD'].str.replace('/', '*',regex=True)
-            #df['LD'] = df['LD'].str.replace('/', '*',regex=True)
-            df['RD1'] = df['RD1'].str.replace('/', '*',regex=True)
-            df['VD1'] = df['VD1'].str.replace('/', '*',regex=True)
-
-            df['AS'] = df['AS'].str.replace('-', '*',regex=True)
-            df['RD'] = df['RD'].str.replace('-', '*',regex=True)
-            df['VD'] = df['VD'].str.replace('-', '*',regex=True)
-            #df['LD'] = df['LD'].str.replace('-', '*',regex=True)
-            df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
-            df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
-
-            df['AS'] = df['AS'].str.replace('00:00:00', '', regex=True)
-            df['RD'] = df['RD'].str.replace('00:00:00', '', regex=True)
-            df['VD'] = df['VD'].str.replace('00:00:00', '', regex=True)
-            #df['LD'] = df['LD'].str.replace('00:00:00', '', regex=True)
-            df['RD1'] = df['RD1'].str.replace('00:00:00', '', regex=True)
-            df['VD1'] = df['VD1'].str.replace('00:00:00', '',regex=True)
-            try:
-                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df['AS'] = pd.to_numeric(df['AS'], errors='coerce')
-                df['AS'] = pd.to_datetime(df['AS'], origin='1899-12-30', unit='D')
-                df['AS'] =  df['AS'].astype(str)
-                df['AS'] = df['AS'].str.replace('-', '*',regex=True)
-                df[['Ayear', 'Amonth', 'Aday']] = df['AS'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df['RD'] = pd.to_numeric(df['RD'], errors='coerce')
-                df['RD'] = pd.to_datetime(df['RD'], origin='1899-12-30', unit='D')
-                df['RD'] =  df['RD'].astype(str)
-                df['RD'] = df['RD'].str.replace('-', '*',regex=True)
-                df[['Ryear', 'Rmonth', 'Rday']] = df['RD'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df['VD'] = pd.to_numeric(df['VD'], errors='coerce')
-                df['VD'] = pd.to_datetime(df['VD'], origin='1899-12-30', unit='D')
-                df['VD'] =  df['VD'].astype(str)
-                df['VD'] = df['VD'].str.replace('-', '*',regex=True)
-                df[['Vyear', 'Vmonth', 'Vday']] = df['VD'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df['RD1'] = pd.to_numeric(df['RD1'], errors='coerce')
-                df['RD1'] = pd.to_datetime(df['RD1'], origin='1899-12-30', unit='D')
-                df['RD1'] =  df['RD1'].astype(str)
-                df['RD1'] = df['RD1'].str.replace('-', '*',regex=True)
-                df[['RD1year', 'RD1month', 'RD1day']] = df['RD1'].str.split('*', expand = True) 
-            except:
-                pass
-            try:
-               df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
-            except:
-                pass
-            try:
-                df['VD1'] = pd.to_numeric(df['VD1'], errors='coerce')
-                df['VD1'] = pd.to_datetime(df['VD1'], origin='1899-12-30', unit='D')
-                df['VD1'] =  df['VD1'].astype(str)
-                df['VD1'] = df['VD1'].str.replace('-', '*',regex=True)
-                df[['VD1year', 'VD1month', 'VD1day']] = df['VD1'].str.split('*', expand = True)
-            except:
-                pass
-           
-            #BRINGING BACK THE / IN DATES
-            df['AS'] = df['AS'].str.replace('*', '/',regex=True)
-            df['RD'] = df['RD'].str.replace('*', '/',regex=True)
-            df['VD'] = df['VD'].str.replace('*', '/',regex=True)
-            #df['LD'] = df['LD'].str.replace('*', '/',regex=True)
-            df['RD1'] = df['RD1'].str.replace('*', '/',regex=True)
-            df['VD1'] = df['VD1'].str.replace('*', '/',regex=True)
-
-
-            #SORTING THE VIRAL LOAD YEARS
-            df[['Vyear', 'Vmonth', 'Vday']] =df[['Vyear', 'Vmonth', 'Vday']].apply(pd.to_numeric, errors = 'coerce') 
-            df['Vyear'] = df['Vyear'].fillna(2022)
-            a = df[df['Vyear']>31].copy()
-            b = df[df['Vyear']<32].copy()
-            b = b.rename(columns={'Vyear': 'Vday1', 'Vday': 'Vyear'})
-            b = b.rename(columns={'Vday1': 'Vday'})
-            df = pd.concat([a,b])
-            dfa = df.shape[0]
-
-            #SORTING THE VIRAL LOAD DATE1 YEARS
-            df[['VD1year', 'VD1month', 'VD1day']] =df[['VD1year', 'VD1month', 'VD1day']].apply(pd.to_numeric, errors = 'coerce')
-            df['VD1year'] = df['VD1year'].fillna(2022)
-            a = df[df['VD1year']>31].copy()
-            b = df[df['VD1year']<32].copy()
-            b = b.rename(columns={'VD1year': 'VD1day1', 'VD1day': 'VD1year'})
-            b = b.rename(columns={'VD1day1': 'VD1day'})
-            df = pd.concat([a,b])
-            dfb = df.shape[0]
-            #SORTING THE RETURN VISIT DATE YEARS
-            df[['Rday', 'Ryear']] = df[['Rday', 'Ryear']].apply(pd.to_numeric, errors='coerce')
-            df['Ryear'] = df['Ryear'].fillna(2022)
-            a = df[df['Ryear']>31].copy()
-            b = df[df['Ryear']<32].copy()
-            b = b.rename(columns={'Ryear': 'Rday1', 'Rday': 'Ryear'})
-            b = b.rename(columns={'Rday1': 'Rday'})
-
-            df = pd.concat([a,b])
-            dfc = df.shape[0]
-            #SORTING THE RETURN VISIT DATE1 YEAR
-            df[['RD1day', 'RD1year']] = df[['RD1day', 'RD1year']].apply(pd.to_numeric, errors='coerce')
-            df['RD1year'] = df['RD1year'].fillna(2022)
-            a = df[df['RD1year']>31].copy()
-            b = df[df['RD1year']<32].copy()
-            b = b.rename(columns={'RD1year': 'RD1day1', 'RD1day': 'RD1year'})
-            b = b.rename(columns={'RD1day1': 'RD1day'})
-            df = pd.concat([a,b])
-
-            dfd = df.shape[0]
-            #SORTING THE ART START YEARS
-            df[['Ayear', 'Amonth', 'Aday']] =df[['Ayear', 'Amonth', 'Aday']].apply(pd.to_numeric, errors = 'coerce')
-            df['Ayear'] = df['Ayear'].fillna(2022)
-            a = df[df['Ayear']>31].copy()
-            b = df[df['Ayear']<32].copy()
-            b = b.rename(columns={'Ayear': 'Aday1', 'Aday': 'Ayear'})
-            b = b.rename(columns={'Aday1': 'Aday'})
-            df = pd.concat([a,b])
-            dfe = df.shape[0]
-            #print(dfa, dfb, dfc, dfd, dfe)
-            # AVOIDING NUMPY
-            def fill(r):
-                if r > 0:
-                    return 'BLED'
-                else:
-                    return 'BLED'
-
-            #SORTING THE TX_NEW
-
-            def Eligible(x):
-                if x <2024:
-                    return ('ELLIGIBLE')
-                else:
-                    return('NOT')
-             #LAST WEEK, THIS WEEK
-            def this(a):
-                if a == week-1:
-                    return 'LAST WEEK'
-                elif a == week:
-                    return 'THIS WEEK'
-                elif a == week+1:
-                    return 'NEXT WEEK'
-                else:
-                    return a
-
-            #FOR THOSE DUE
-            def Due(x, y):
-                if x ==2024:
-                    if y < 4:
-                        return 'ALREADY'
-                    elif y > 3:
-                        return 'BLED'     
-                elif x == 2023:
-                    if y > 6:
-                        return 'ALREADY'
-                    else:
-                        return 'DUE'
-                else:
-                    return('DUE')
-
-            #FOR WEEKS
-            def week (c,a,b):
-                if c ==2024:
-                    if a == 4:
-                        if 1 <= b <=7:
-                            return 14
-                        elif 8<= b <= 14:
-                            return 15
-                        elif 15 <= b <=21:
-                            return 16
-                        elif 22<= b <= 28:
-                            return 17
-                        elif 29 <= b <=30:
-                            return 18
-                    elif a == 5:
-                        if 1 <= b <=5:
-                            return 18
-                        elif 6<= b <= 12:
-                            return 19
-                        elif 13 <= b <= 19:
-                            return 20
-                        elif 20 <= b <=26:
-                            return 21
-                        elif 27 <= b <= 31:
-                            return 22
-                    elif a == 6:
-                        if 1 <= b <= 2:
-                            return 22
-                        elif 3 <= b <= 9:
-                            return 23
-                        elif 10 <= b <= 16:
-                            return 24
-                        elif 17 <= b <= 23:
-                            return 25
-                        elif 24 <= b <= 30:
-                            return 26
-                    else:
-                        return None
-                else:
-                    return None
-                    
-            #APPLYING THE WEEK FORMULA ON VL DATES
-            df[['Vday', 'Vyear','Vmonth']] = df[['Vday', 'Vyear', 'Vmonth']].apply(pd.to_numeric, errors='coerce')
-            df['BWEEK'] = df.apply(lambda wee: week(wee['Vyear'],wee['Vmonth'], wee['Vday']), axis=1)
-            #APPLYIN THE DUE FORMULA ON VL DATES
-            df['DUE'] = df.apply(lambda due: Due(due['Vyear'], due['Vmonth']), axis=1)
-            
-            #APPLYING THE DUE FORMUA TO VD1 DATES
-            df[['VD1day', 'VD1year','VD1month']] = df[['VD1day', 'VD1year', 'VD1month']].apply(pd.to_numeric, errors='coerce')
-            df['DUE1'] = df.apply(lambda due: Due(due['VD1year'], due['VD1month']), axis=1)
-            
-            #APPLYING THE WEEK FORMULA TO RETURN VISIT DATES
-            df[['Rday', 'Ryear','Rmonth']] = df[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
-            df['WEEK'] = df.apply(lambda row: week(row['Ryear'], row['Rmonth'], row['Rday']),axis=1)
-            
-            #APPLYING THE WEEK FORMULA TO RETURN VISIT DATES 1
-            df[['RD1day', 'RD1year','RD1month']] = df[['RD1day', 'RD1year', 'RD1month']].apply(pd.to_numeric, errors='coerce')
-            df['WEEK1'] = df.apply(lambda row: week(row['RD1year'], row['RD1month'], row['RD1day']),axis=1)
-            #APPLYING THE FORMULA TO RULE OUT TX NEW
-            df['Ayear'] = pd.to_numeric(df['Ayear'], errors= 'coerce')
-            
-            #APPLYING THE FORMULA TO RULE OUT TX NEW
-            df['Ayear'] = pd.to_numeric(df['Ayear'], errors= 'coerce')
-            df['ELL'] = df['Ayear'].apply(Eligible)
-            
-            #RECONSTRUCTING RETURN VISIT DATES
-            df['Ryear'] = pd.to_numeric(df['Ryear'], errors= 'coerce')
-            dfa = df[df['Ryear']==2024].copy()
-            df['RD1year'] = pd.to_numeric(df['RD1year'], errors= 'coerce')
-            dfb = df[df['RD1year']==2024].copy()
-
-            dfa[['Rday', 'Ryear','Rmonth']] = dfa[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
-            CURRa = dfa[((dfa['Rmonth']>3) | ((dfa['Rmonth']==3) & (dfa['Rday'] >3)))].copy()
-            dfb[['RD1day', 'RD1year','RD1month']] = dfb[['RD1day', 'RD1year', 'RD1month']].apply(pd.to_numeric, errors='coerce')
-            CURRb = dfb[((dfb['RD1month']>3) | ((dfb['RD1month']==3) & (dfb['RD1day'] >3)))].copy()
-            CURRb = CURRb.drop(columns=['WEEK'])
-            CURRa = CURRa.drop(columns=['WEEK1'])
-            CURRb = CURRb.rename(columns={'WEEK1': 'WEEK'})
-            #..dfcurr = pd.concat([CURRa, CURRb])
-            #..dfcurr['ELL'] = dfcurr['ELL'].astype(str)
-            #..dfcurr = dfcurr[dfcurr['ELL'] == 'ELLIGIBLE'].copy()
-            
-            #COMPUTING WEEKLY BLEEDS
-            #CHOOSE BLEEDS DONE IN THE QUARTER
-            df[['Vday', 'Vyear','Vmonth']] = df[['Vday', 'Vyear', 'Vmonth']].apply(pd.to_numeric, errors='coerce')
-            dfv = df[(df['Vyear']==2024) & (df['Vmonth']>3)].copy()
-            dfv['DUE'] = dfv['DUE'].astype(str)
-            dfv['DUE1'] = dfv['DUE1'].astype(str)
-            
-            #REBLEEDS
-            REBLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'ALREADY'))].copy()
-            #REBLED['STATUS'] = REBLED.apply(lambda d: fill(d['Rmonth']), axis=1)
-            #REBLED['STATUS'] = REBLED['STATUS'].replace('BLED', 'REBLED')
-            REBLED['STATUS'] = np.nan
-            REBLED['STATUS'] = REBLED['STATUS'].fillna('REBLED')
-            REBLEDpivo = pd.pivot_table(REBLED, index= 'BWEEK', values='A', aggfunc = 'count')
-            REBLEDF = REBLEDpivo.reset_index()
-            REBLEDF = REBLEDF.rename(columns={'A': 'REBLED'})
-            
-            #BLEEDS, original dataframe should be dfv
-            BLED = dfv[((dfv['DUE'] == 'BLED')& (dfv['DUE1'] == 'DUE'))].copy()
-            #BLED['STATUS'] = BLED.apply(lambda d: fill(d['Rmonth']), axis=1)
-            BLED['STATUS'] = np.nan
-            BLED['STATUS'] = BLED['STATUS'].fillna('BLED')
-            BLEDpivo = pd.pivot_table(BLED, index= 'BWEEK', values='A', aggfunc = 'count')
-            BLEDF = BLEDpivo.reset_index()
-            BLEDF = BLEDF.rename(columns={'A': 'BLED'})
-            BLEDF = BLEDF.rename(columns={'A': 'BLED'})
-            
-            #TOTAL BLEEDS
-            TOTAL = pd.pivot_table(dfv, index= 'BWEEK', values='A', aggfunc = 'count')
-            TOTAL = TOTAL.reset_index()   
-            TOTAL = TOTAL.rename(columns={'A':'TOTAL BLEEDS'}) 
-            
-            #####FIRST PIVOT FROM BLED, REBLED, AND TOTAL BLEEDS   
-            BLEDF['BWEEK'] = pd.to_numeric(BLEDF['BWEEK'], errors='coerce')     
-            REBLEDF['BWEEK'] = pd.to_numeric(REBLEDF['BWEEK'], errors='coerce')
-            dfy = pd.merge(BLEDF, REBLEDF, on = 'BWEEK', how ='outer')
-            TOTAL['BWEEK'] = pd.to_numeric(TOTAL['BWEEK'], errors='coerce')
-            dfy['BWEEK'] = pd.to_numeric(dfy['BWEEK'], errors='coerce')
-            dfg = pd.merge(dfy, TOTAL, on = 'BWEEK', how='outer')
-            dfg = dfg.rename(columns = {'BWEEK': 'WEEK'})
-            efg = dfg.copy()
-            current_time = time.localtime()
-            week = time.strftime("%U", current_time)
-            week = int(week) + 1
-            w = week-1
-            we = efg[efg['WEEK']==w].copy()
-            test = we.shape[0]
-            if test==0:
-                we = 0
-            else:
-                try:
-                  we = int(we.iloc[0,1])
-                except:
-                    we = 0
-            dfg = dfg.set_index('WEEK')
-            weekly = dfg.copy()
-           
-             #DETERMINING TX_CURR
-            #MODIFY HERE TO INCLUDE 2025 LATER
-            CURR = df.copy()
-            CURR[['Rday', 'Ryear','Rmonth']] = CURR[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
-            CURR = CURR[CURR['Ryear']==2024].copy()
-            CURR = CURR[((CURR['Rmonth']>3) | ((CURR['Rmonth']==3) & (CURR['Rday'] >3)))].copy()
-            CUR = CURR.copy()
-            APPONT = CURR.copy()
-            
-            #NEW CODE..................
-            #MISSED APPOINTMENT BUT DUE FOR VL
-            CURRa = CURRa[CURRa['ELL'] == 'ELLIGIBLE'].copy()
-            CURRa = CURRa[['A', 'RD','Rmonth', 'Rday', 'AS', 'VD', 'DUE', 'WEEK']]
-            CURRa['Rmonth'] = pd.to_numeric(CURRa['Rmonth'], errors = 'coerce')
-            MARCHm = CURRa[CURRa['Rmonth']==3].copy()
-            CURRm =  CURRa[CURRa['Rmonth'].isin([4,5,6])].copy()
-            CURRm['WEEK'] = pd.to_numeric(CURRm['WEEK'], errors='coerce')
-            current_time = time.localtime()
-            week = time.strftime("%U", current_time)
-            week = int(week) + 1
-            CURRm = CURRm[CURRm['WEEK'] < week].copy()
-            CURR['DUE'] = CURR['DUE'].astype(str)
-            CURRm = CURRm[CURRm['DUE'] =='DUE'].copy()
-            ram = CURRm.shape[0]
-            pivotm = pd.pivot_table(CURRm, index = 'WEEK', values = 'A', aggfunc = 'count')
-            pivotm = pivotm.reset_index()
-            pivotm = pivotm.set_index('WEEK')
-            MARCHm = MARCHm[MARCHm['DUE']=='DUE'].copy()
-            MARCHm['WEEK'] = MARCHm['WEEK'].fillna('MARCH')
-            rbm = MARCHm.shape[0]
-            pivotrbm = pd.pivot_table(MARCHm, index = 'WEEK', values = 'A', aggfunc = 'count')
-            pivotrbm = pivotrbm.reset_index()
-            pivotrbm = pivotrbm.set_index('WEEK')
-            pivotmissed = pd.concat([pivotrbm, pivotm])
-            pivotmissed = pivotmissed.rename(columns= {'A': 'MISSED, DUE FOR VL'})
-            #pivotmissed['WEEK'] =  pd.to_numeric(pivotmissed['WEEK'], errors='coerce')
-            MISSED = pd.concat([MARCHm, CURRm])
-            rm = MISSED.shape[0]
-
-            #RETURNED BUT NOT BLED
-            CURRb = CURRb[CURRb['ELL'] == 'ELLIGIBLE'].copy()
-            CURRb = CURRb[['A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE', 'WEEK']]
-            CURRb['RD1month'] = pd.to_numeric(CURRb['RD1month'], errors = 'coerce')
-            MARCH = CURRb[CURRb['RD1month']==3].copy()
-            CURRr =  CURRb[CURRb['RD1month'].isin([4,5,6])].copy()
-            CURRr = CURRr[CURRr['WEEK'] < week].copy()
-            CURRr = CURRr[CURRr['DUE'] =='DUE'].copy()
-            ra = CURRr.shape[0]
-            pivotr = pd.pivot_table(CURRr, index = 'WEEK', values = 'A', aggfunc = 'count')
-            MARCH = MARCH[MARCH['DUE']=='DUE']
-            rb = MARCH.shape[0]
-            MARCH['WEEK'] = MARCH['WEEK'].fillna('MARCH')
-            pivotrb = pd.pivot_table(MARCH, index = 'WEEK', values = 'A', aggfunc = 'count')
-            pivotreturned = pd.concat([pivotrb, pivotr])
-            pivotreturned = pivotreturned.reset_index()
-            pivotreturned = pivotreturned.rename(columns= {'A': 'RETURNED NOT BLED'})
-            pivotreturned['WEEK.'] = pivotreturned.apply(lambda q: this(q['WEEK']), axis=1)
-            pivotreturned = pivotreturned.drop(columns='WEEK')
-            pivotreturned = pivotreturned.set_index('WEEK.')
-            RETURNED = pd.concat([MARCH, CURRr])
-            r = RETURNED.shape[0]
-
-            #CLIENTS ON APPT VS ELIGIBLE
-            APPONT['Rmonth'] = pd.to_numeric(APPONT['Rmonth'], errors = 'coerce')
-            APPONT = APPONT[APPONT['Rmonth'].isin([4,5,6])].copy()
-            APPONT['WEEK'] = pd.to_numeric(APPONT['WEEK'], errors = 'coerce')
-            APPONT = APPONT[APPONT['WEEK']>=week].copy()
-            pivoappt = pd.pivot_table(APPONT, index = 'WEEK', values = 'A', aggfunc = 'count')
-            pivoappt = pivoappt.reset_index()
-            pivoappt = pivoappt.rename(columns={'A': 'ON APPT'})
-            APPONT = APPONT[APPONT['ELL'] == 'ELLIGIBLE'].copy()
-            APPONT = APPONT[APPONT['DUE']=='DUE'].copy()
-            pivoapptd = pd.pivot_table(APPONT, index = 'WEEK', values = 'A', aggfunc = 'count')
-            pivoapptd = pivoapptd.reset_index()
-            pivoapptd = pivoapptd.rename(columns={'A': 'DUE FOR BLEEDING'})
-            appt = pd.merge(pivoappt, pivoapptd, on = 'WEEK', how='outer')
-            appt['WEEK'] = pd.to_numeric(appt['WEEK'], errors = 'coerce')
-            appt['WEEK.'] = appt.apply(lambda q: this(q['WEEK']),axis = 1)
-            next = week+1
-            ee = appt[appt['WEEK'] == next]
-            tes = ee.shape[0]
-            if tes==0:
-                el = 0
-            else:
-                try:
-                  el = int(ee.iloc[0,2])
-                except:
-                    el = 0
-            appt = appt.set_index('WEEK.')
-            appt = appt.drop(columns = 'WEEK')
-            
-        
-            #DETERMINING TX_CURR
-            #MODIFY HERE TO INCLUDE 2025 LATER
-            # CURR = df.copy()
-            # CURR[['Rday', 'Ryear','Rmonth']] = CURR[['Rday', 'Ryear', 'Rmonth']].apply(pd.to_numeric, errors='coerce')
-            # CURR = CURR[CURR['Ryear']==2024].copy()
-            # CURR = CURR[((CURR['Rmonth']>3) | ((CURR['Rmonth']==3) & (CURR['Rday'] >3)))].copy()
-            # CUR = CURR.copy()
-            a = CUR.shape[0]
-            CUR['ELL'] = CUR['ELL'].astype(str)
-            #COUNT THOSE NOT ELLIGIBLE
-            f = CUR[CUR['ELL'] =='NOT'].shape[0]
-            CURB = CUR[CUR['ELL'] =='ELLIGIBLE'].copy()
-            b = CURB[CURB['DUE']== 'ALREADY'].shape[0]
-            c = CURB[CURB['DUE']=='BLED'].shape[0]
-            d = CURB[CURB['DUE']=='DUE'].shape[0]
-            E =  b + c + f 
-            G = int((E/a)*100)
-            H = int((a*0.95)- E)
-            data = {'TX_CURR' : [a],
-            'NOT DUE' : [E],
-            'VL COV' : [G],
-            'BALANCE TO 95%' : [H],
-            'DUE FOR VL' : [d]}
-            PERFORMANCE = pd.DataFrame(data)
-            PERFORMANCE = PERFORMANCE.set_index('TX_CURR')
-            #st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
-            CURB = CURB.rename(columns = {'DUE' : 'VL STATUS'})
-            linelist = CURB[['A', 'AS', 'RD', 'Ryear', 'Rmonth', 'Rday', 'VD', 'VL STATUS']].copy()
-            linelist['AS'] = linelist['AS'].astype(str)
-            linelist['AS'] = linelist['AS'].str.replace('*', '/', regex=True)
-            linelist['AS'] = linelist['AS'].str.replace('NaT', '',regex=True)
-            linelist['RD'] = linelist['RD'].astype(str)
-            linelist['RD'] = linelist['RD'].str.replace('*', '/',regex=True)
-            linelist['RD'] = linelist['RD'].str.replace('NaT', '',regex=True)
-            linelist['VD'] = linelist['VD'].astype(str)
-            linelist['VD'] = linelist['VD'].str.replace('*', '/',regex=True)
-            linelist['VD'] = linelist['VD'].str.replace('NaT', '',regex=True)
-            linelist['VL STATUS'] = linelist['VL STATUS'].astype(str)
-            linelist = linelist[linelist['VL STATUS']== 'DUE']
-            linelist = linelist.rename(columns = {'A': 'ART-NO', 'RD': 'RETURN DATE', 'VD': 'VIRAL LOAD DATE', 'AS':'ART START'})
-            linelist[['Ryear', 'Rmonth', 'Rday']] = linelist[['Ryear', 'Rmonth', 'Rday']].apply(pd.to_numeric, errors='coerce')
-            linelist = linelist.sort_values(by = ['Ryear', 'Rmonth', 'Rday'])
-            #
-            #DUE FOR VL PER MONTH
-            bymonth = pd.pivot_table(linelist, index='Rmonth', values= 'ART-NO', aggfunc='count')
-            bymonth = bymonth.reset_index()
-            bymonth = bymonth.rename(columns={'ART-NO': 'DUE PER MONTH', 'Rmonth':'MONTH'})
-            bymonth['MONTH'] = bymonth['MONTH'].astype(int)
-            bymonth = bymonth.set_index('MONTH')
-            bymonth = bymonth.transpose()
-
-            #DISPLAYS
-            st.markdown(f'**NOTE!! This EMR shows {d} that are not yet bled**')
-            weeks = 26+1 - week
-            bleed = int(H/weeks)
-            st.markdown(f'**You will have to bleed {bleed} clients per week in the remaining {weeks} weeks if you are to hit 95%**')
-            st.markdown("**_THIS TX_CURR**, is from March 4th, (doesn't exclude TIs, TOs, and TX_news)_")
-            st.write(PERFORMANCE)
-            st.write('**No. Not BLED IN EACH MONTH ON APPOINTMENT**')
-            st.table(bymonth)
-            weekly = weekly.rename(columns={'A':'REBLED'})
-            cola, colb = st.columns([1,1])
-            cola.write('**BLEEDS  DONE PER WEEK**')
-            cola.write(weekly)
-            colb.write('**No. ELLIGIBLE FOR BLEEEDING IN THE COMING WEEKS**')
-            colb.write(appt)
-            st.markdown(f'**This emr shows {r} clients that returned and were not bled, {rb} in March and {ra} this quarter, scroll down to download this list and audit it first**')
-            st.markdown(f'**Also there are {rm} cients that have missed appointment but are due for VL; {rbm} in March and {ram} this quarter, find them in the VL LINELIST**')
-            cole, colf = st.columns([1,1])
-            cole.markdown('**RETURNED, NOT BLED**')
-            cole.write(pivotreturned)
-            colf.markdown('**MISSED, DUE FOR VL**')
-            colf.write(pivotmissed)
-            st.markdown('**Sample linelist**')
-            st.write(linelist.head(5))
-            #st.write(appt)
-    
-
-# if df is not None:
-#     def download_weekly(df):
-#         st.write(f"<h6>DOWNLOAD WEEKLY BLEEDS AND NEW VL LINELIST</h6>", unsafe_allow_html=True)
-
-#         if df is not None:
-#             dft = weekly.copy()
-#             csv_data = dft.to_csv(index=True)
-
-#                     # Create a download button for each facility
-
-#             st.download_button(
-#                         label=" DOWNLOAD WEEKLY BLEEDS",
-#                         data=csv_data,
-#                         file_name=f"WEEKLY_BLEEDS.csv",
-#                         mime="text/csv"
-#                     )
-
-
-#     def main():
-#         # Call the download functions
-#         download_weekly(df)
-
-
-#     if __name__ == "__main__":
-#         main()
-
-if df is not None:
-    def download_returned(df):
-        st.write(f"<h6>DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED</h6>", unsafe_allow_html=True)
-
-        if df is not None:
-            dft = RETURNED.copy()
-            dft = dft[[ 'A', 'RD', 'RD1','RD1month', 'RD1day', 'AS', 'VD', 'DUE']]
-            dft['VD'] = dft['VD'].replace('NaT', '')
-            dft = dft.rename(columns = {'RD': 'RETURN DATE', 'RD1': 'RETURN DATE1','A': 'ART-NO.', 'DUE': 'VL STATUS', 'VD': 'VIRAL LOAD DATE'})
-            dft[['RD1month', 'RD1day']] = dft[['RD1month', 'RD1day']].apply(pd.to_numeric, errors = 'coerce')
-            dft = dft.sort_values(by = ['RD1month', 'RD1day'])
-            
-            csv_data = dft.to_csv(index=False)
-
-                    # Create a download button for each facility
-
-            st.download_button(key ='XXX',
-                        label=" DOWNLOAD CLIENTS THAT RETURNED BUT WERE NOT BLED",
-                        data=csv_data,
-                        file_name=f"RETURNED_NOT_BLED.csv",
-                        mime="text/csv"
-                    )
-    def main():
-        # Call the download functions
-        download_returned(df)
-    if __name__ == "__main__":
-        main()
-
-if df is not None:
-        st.write(f"<h6>DOWNLOAD NEW VL LINELIST</h6>", unsafe_allow_html=True)
-        ran = random.random()
-        rand = round(ran,2)
-        #st.success(f'Your file will be downloaded as "VL LINELIST {rand}.xlsx" in your Downloads folder.')
-    #if st.button('DOWNLOAD CURRENT LINELIST'):
-    #if st.button('DOWNLOAD CURRENT LINELIST'):
-        wb = Workbook()
-        ws = wb.active
-        # Convert DataFrame to Excel
-        for r_idx, row in enumerate(linelist.iterrows(), start=1):
-            for c_idx, value in enumerate(row[1], start=1):
-                ws.cell(row=r_idx, column=c_idx, value=value)
-        ws.insert_rows(0)
-
-        blue = PatternFill(fill_type = 'solid', start_color = 'C8CDCD')
-        # ws.column_dimensions['H'].width = 14
-
-        for num in range (1, ws.max_row+1):
-            for letter in ['G', 'H']:
-                ws[f'{letter}{num}'].font = Font(b= True, i = True)
-                ws[f'{letter}{num}'].font = Font(b= True, i = True)
-                ws[f'{letter}{num}'].fill = blue
-                ws[f'{letter}{num}'].border = Border(top = Side(style = 'thin', color ='000000'),
-                                                    right = Side(style = 'thin', color ='000000'),
-                                                    left = Side(style = 'thin', color ='000000'),
-                                                    bottom = Side(style = 'thin', color ='000000'))
-        ws['A1'] ='ART NO.'
-        ws['B1'] = 'ART START DATE'
-        ws['C1'] = 'RETURN VISIT DATE'
-        ws['D1'] = 'Ryear'
-        ws['E1'] = 'Rmonth'
-        ws['F1'] = 'Rday'
-        ws['G1'] = 'VIRAL LOAD DATE' 
-        ws['H1'] = 'VL STATUS'
-        ws['I1']  = 'WAS CLIENT BLED (Y/N)'
-        ws['J1'] = 'IF YES, HAS EMR BEEN UPDATED (Y/N)'
-
-
-        letters = ['B', 'C', 'G']
-        for letter in letters:
-            ws.column_dimensions[letter].width =17
-
-        ws.column_dimensions['H'].width = 12
-        ws.column_dimensions['I'].width = 12
-        ws['I1'].alignment = Alignment(wrap_text=True)
-        ws.column_dimensions['J'].width = 20
-        ws['J1'].alignment = Alignment(wrap_text=True)
-
-        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'VL LINELIST {rand}.xlsx')
-        directory = os.path.dirname(file_path)
-        Path(directory).mkdir(parents=True, exist_ok=True)
-
-      # Save the workbook
-        wb.save(file_path)
-    
-    # Serve the file for download
-        with open(file_path, 'rb') as f:
-            file_contents = f.read()
-        
-        st.download_button(label='Download VL LINELIST', data=file_contents,file_name=f'VL LINELIST {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-             
-                        #SUBMISSION
-conn = st.connection('gsheets', type=GSheetsConnection)
-exist = conn.read(worksheet ='VL', usecols = list(range(12)), ttl=5)
-existing = exist.dropna(how='all')
-
-if df is not None:
-     if 'ent' not in st.session_state:
-         st.session_state.ent = ''
-
-#     # Create two equal columns
-     cola, colb = st.columns([1, 1])
-
-#     # Text input in the first column
-     st.session_state.ent = cola.text_input('**Enter name of the facility here and press the submit button**', 
-                                         value=st.session_state.ent, 
-                                         placeholder="e.g Mateete HCIII")
-
-#     # Button in the second column
-     submit = colb.button('Submit') 
-  
-     Facility = st.session_state.ent  
-     WEEK = week-1
-     TX_CURR = a
-     NO_WITH_VL = E
-     VL_COV = G
-     BALANCE_TO_95 =H
-     TOTAL_DUE_FOR_VL = d
-     No_OF_BLEEDS_IN_THE_WEEK = we
-     ON_APPT_NEXT_WEEK_DUE = el
-     ADJUSTED_WEEKLY_TARGET = bleed
-     No_RETURNED_NOT_BLED = r
-     MISSED_APPT_BUT_DUE = rm
-
-     # if submit:
-     #      if Facility == '':
-     #          st.warning("**NOT SUBMITTED, YOU DIDN'T ENTER FACILITY NAME!!**")
-     #          st.stop()
-     #      else:        
-     #          details = pd.DataFrame({'FACILITY': [Facility],
-     #                                    'WEEK':[WEEK],
-     #                                    'TX_CURR':[a],
-     #                                    'No. WITH VL':[E],
-     #                                    'VL COV': [G],
-     #                                    'BALANCE TO 95':[H],
-     #                                    'TOTAL UNMET IN THIS EMR EXTRACT': [d],
-     #                                    'No. OF BLEEDS IN THE WEEK' : [we],
-     #                                    'No.ON APPT NEXT WEEK THAT ARE DUE FOR VL': [el],
-     #                                    'ADJUSTED WEEKLY TARGET' : [bleed],
-     #                                    'No. RETURNED BUT NOT BLED' : [r],
-     #                                    'MISSED APPT BUT DUE FOR VL' : [rm]
-     #                                })
-     #          #st.write(updated)
-     #          updated = pd.concat([existing, details], ignore_index =True)
-     #          conn.update(worksheet = 'VL', data = updated)
-     #          st.success('Your data has been submitted, view it below:')
-     #          st.table(details)
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import random
+import plotly.express as px
+import plotly.graph_objects as go
+import traceback
+import time
+from streamlit_gsheets import GSheetsConnection
+from datetime import datetime
+
+# st.set_page_config(
+#     page_title = 'PROGRAM GROWTH',
+#     page_icon =":bar_chart"
+#     )
+
+#st.header('CODE UNDER MAINTENANCE, TRY AGAIN TOMORROW')
+#st.stop()
+cola,colb,colc = st.columns([1,3,1])
+colb.subheader('TRACKING NS')
+
+today = datetime.now()
+todayd = today.strftime("%Y-%m-%d")# %H:%M")
+wk = today.strftime("%V")
+week = int(wk)-39
+cola,colb = st.columns(2)
+cola.write(f"**DATE TODAY:    {todayd}**")
+colb.write(f"**CURRENT WEEK:    {week}**")
+dd = int(week)
+k = int(wk)
+
+if 'tx' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'NS', usecols=list(range(8)),ttl=5)
+        tx = exist.dropna(how='all')
+        st.session_state.tx = tx
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dftx = st.session_state.tx.copy()
+st.write(dftx)
+
+if 'yr' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'YEARS', usecols=list(range(33)),ttl=5)
+        tx = exist.dropna(how='all')
+        st.session_state.yr = tx 
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfyr = st.session_state.yr.copy()
+
+if 'erl' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'THREEO', usecols=list(range(24)),ttl=5)
+        tx = exist.dropna(how='all')
+        st.session_state.erl = tx 
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfearly = st.session_state.erl.copy()
+
+if 'cira' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'CIRA', usecols=list(range(48)),ttl=5)
+        tx = exist.dropna(how='all')
+        st.session_state.cira = tx 
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfcira = st.session_state.cira.copy()
+
+
+#REPORTING RATES
+@st.cache_data
+def report():
+    df = pd.read_csv('CLUSTERS.csv')
+    df['Q4 CUR'] = pd.to_numeric(df['Q4 CUR'], errors='coerce')
+    df = df[df['Q4 CUR']>0].copy()
+    return df  
+
+dfrep = report()
+dfa = dfrep[['DISTRICT', 'FACILITY']].copy() ## EXPECTED DISTRICTS
+dftx['SURGE'] = pd.to_numeric(dftx['SURGE'], errors='coerce')
+dfb = dftx[dftx['SURGE'] == dd].copy()  #FACILITIES FROM TX SHEET
+dfb = dfb[['DISTRICT' , 'FACILITY']]
+dfb = dfb.drop_duplicates(subset='FACILITY', keep='last')
+dfa['FACILITY'] = dfa['FACILITY'].astype(str)
+dfb['FACILITY'] = dfb['FACILITY'].astype(str)
+none = dfa[~dfa['FACILITY'].isin(dfb['FACILITY'])].copy()
+# merged = dfa.merge(dfb, on=['DISTRICT', 'FACILITY'], how='left', indicator=True)
+# none = merged[merged['_merge'] == 'left_only'].drop(columns=['_merge'])
+# none = none.reset_index()
+# none = none.drop(columns='index')
+all = none.shape[0]
+buk = none[none['DISTRICT']=='BUKOMANSIMBI'].copy()
+semb = none[none['DISTRICT']=='SEMBABULE'].copy()
+dist = none[none['DISTRICT']=='MASAKA DISTRICT'].copy()
+kal = none[none['DISTRICT']=='KALUNGU'].copy()
+city = none[none['DISTRICT']=='MASAKA CITY'].copy()
+lwe = none[none['DISTRICT']=='LWENGO'].copy()
+lya = none[none['DISTRICT']=='LYANTONDE'].copy()
+kala = none[none['DISTRICT']=='KALANGALA'].copy()
+mpi = none[none['DISTRICT']=='MPIGI'].copy()
+goa = none[none['DISTRICT']=='GOMBA'].copy()
+but = none[none['DISTRICT']=='BUTAMBALA'].copy()
+wak = none[none['DISTRICT']=='WAKISO'].copy()
+rak = none[none['DISTRICT']=='RAKAI'].copy()
+kyo = none[none['DISTRICT']=='KYOTERA'].copy()
+
+
+bu = buk.shape[0]
+se = semb.shape[0]
+di = dist.shape[0]
+ka = kal.shape[0]
+ci = city.shape[0]
+ky = kyo.shape[0]
+rk = rak.shape[0]
+waki = wak.shape[0]
+bt = but.shape[0]
+g =  goa.shape[0]
+mp = mpi.shape[0]
+kal = kala.shape[0]
+ly = lya.shape[0]
+lw = lwe.shape[0]
+
+
+if kal ==0: ####KALAGALA
+   kg = 'all facilities have reported'
+else:
+   kg = f'{kal}'
+
+if waki ==0: ####WAKISO
+   wak = 'all facilities have reported'
+else:
+   wak = f'{waki}'
+
+if mp ==0: ####MPIGI
+   mpi = 'all facilities have reported'
+else:
+   mpi = f'{mp}'
+
+if g ==0: ####GOMBA
+   gom = 'all facilities have reported'
+else:
+   gom = f'{g}'
+
+if bt ==0: ####BUTAMBALA
+   but = 'all facilities have not reported'
+else:
+   but = f'{bt}'
+
+
+if lw ==0: ####LWENGO
+   lwe = 'all facilities have reported'
+else:
+   lwe = f'{lw}'
+
+if ly ==0: ####LYANTONDE
+    lya= 'all facilities have reported'
+else:
+   lya = f'{ly}'
+
+
+if rk ==0: ####RAKAI
+   r = 'all facilities have reported'
+else:
+   r = f'{rk}'
+
+if ky ==0: ####KYOTERA
+   y = 'all facilities have reported'
+else:
+   y = f'{ky}'
  
+if bu ==0:
+   b = 'all facilities have reported'
+else:
+   b = f'{bu}'
+    
+if se ==0:
+   s = 'all facilities reported'
+else:
+   s = f'{se}'
+    
+if di ==0:
+   d = 'all facilities reported'
+else:
+   d = f'{di}'
+    
+if ka ==0:
+   k = 'all facilities reported'
+else:
+   k = f'{ka}'
+    
+if ci ==0:
+   c = 'all facilities reported'
+else:
+   c = f'{ci}'
+if all ==0:
+    st.write('** ALL FACILITIES HAVE REPORTED**')
+else:
+    st.divider()
+    st.markdown(f"**{all} FACILITIES HAVEN'T REPORTED THIS WEEK**")
+    st.markdown(f'**KALANGALA {kg}, WAKISO {wak}, BUKOMANSIMBI {b}, SEMBABULE {s}, KALUNGU {k}, MKA CITY {c}, MKA DISTRICT {d}, MPIGI {mpi}, BUTAMBALA {but}, GOMBA {gom},LYANTONDE {lya}, LWENGO {lwe}, KYOTERA {r}, RAKAI {r}**')
+    with st.expander('ClICK TO SEE PENDING FACILITIES'):
+        st.dataframe(none)
+#######################FILTERS
+clusters = dfrep['CLUSTER'].unique()
+weeks = dftx['SURGE'].unique()
+
+fac = dfyr['FACILITY'].unique()
+
+#TO USE WHERE WEEKS ARE NOT NEEDED FOR TX
+dfy = []
+for every in fac:
+    dff = dftx[dftx['FACILITY']== every]
+    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfy.append(dff)
+water = pd.concat(dfy)
+
+#TO USE WHERE WEEKS ARE NOT NEEDED FOR 1 YR
+dfy = []
+for every in fac:
+    dff = dfyr[dfyr['FACILITY']== every]
+    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfy.append(dff)
+wateryr = pd.concat(dfy)
+
+#TO USE WHERE WEEKS ARE NOT NEEDED FOR CIRA
+dfy = []
+for every in fac:
+    dff = dfcira[dfcira['FACILITY']== every]
+    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfy.append(dff)
+watercira= pd.concat(dfy)
+
+dfy = []
+for every in fac:
+    dff = dfearly[dfearly['FACILITY']== every]
+    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfy.append(dff)
+waterly = pd.concat(dfy)
+
+#REMOVE DUPLICATES FROM TX SHEET # HOLD THIS IN SESSION LATER
+dfs=[]   
+for each in weeks:
+    dftx['SURGE'] = pd.to_numeric(dftx['SURGE'], errors='coerce')
+    dfa = dftx[dftx['SURGE']==each]
+    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfs.append(dfa)
+dftx = pd.concat(dfs)
+
+#REMOVE DUPLICATES FROM YEAR SHEET # HOLD THIS IN SESSION LATER
+dfs=[]   
+for each in weeks:
+    dfyr['SURGE'] = pd.to_numeric(dfyr['SURGE'], errors='coerce')
+    dfa = dfyr[dfyr['SURGE']==each]
+    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfs.append(dfa)    
+dfyr= pd.concat(dfs)
+
+
+#REMOVE DUPLICATES FROM EARLY SHEET # HOLD THIS IN SESSION LATER
+dfs=[]   
+for each in weeks:
+    dfearly['SURGE'] = pd.to_numeric(dfearly['SURGE'], errors='coerce')
+    dfa = dfearly[dfearly['SURGE']==each]
+    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfs.append(dfa)
+dfearly = pd.concat(dfs)
+
+#REMOVE DUPLICATES FROM CIRA SHEET # HOLD THIS IN SESSION LATER
+dfs=[]   
+for each in weeks:
+    dfcira['SURGE'] = pd.to_numeric(dfcira['SURGE'], errors='coerce')
+    dfa = dfcira[dfcira['SURGE']==each]
+    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
+    dfs.append(dfa)
+dfcira = pd.concat(dfs)
+
+#FILTERS
+st.sidebar.subheader('**Filter from here**')
+CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
+
+#create for the state
+if not CLUSTER:
+    dfyr2 = dfyr.copy()
+    dfcira2 = dfcira.copy()
+    dfearly2 = dfearly.copy()
+    dfrep2 = dfrep.copy()
+    dftx2 = dftx.copy()
+    water2 = water.copy()
+    wateryr2 = wateryr.copy()
+    waterly2 = waterly.copy()
+    watercira2 = watercira.copy()
+
+else:
+    dfyr['CLUSTER'] = dfyr['CLUSTER'].astype(str)
+    dfyr2 = dfyr[dfyr['CLUSTER'].isin(CLUSTER)]
+
+    dfcira['CLUSTER'] = dfcira['CLUSTER'].astype(str)
+    dfcira2 = dfcira[dfcira['CLUSTER'].isin(CLUSTER)]
+
+    dfearly['CLUSTER'] = dfearly['CLUSTER'].astype(str)
+    dfearly2 = dfearly[dfearly['CLUSTER'].isin(CLUSTER)]
+
+    dfrep['CLUSTER'] = dfrep['CLUSTER'].astype(str)
+    dfrep2 = dfrep[dfrep['CLUSTER'].isin(CLUSTER)]
+
+    dftx['CLUSTER'] = dftx['CLUSTER'].astype(str)
+    dftx2 = dftx[dftx['CLUSTER'].isin(CLUSTER)]
+    
+    water['CLUSTER'] = water['CLUSTER'].astype(str)
+    water2 = water[water['CLUSTER'].isin(CLUSTER)]
+    wateryr2 = wateryr[wateryr['CLUSTER'].isin(CLUSTER)]
+    waterly2 = waterly[waterly['CLUSTER'].isin(CLUSTER)]
+    watercira2 = watercira[watercira['CLUSTER'].isin(CLUSTER)]
+
+district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfrep2['DISTRICT'].unique(), key='b')
+if not district:
+    dfyr3 = dfyr2.copy()
+    dfcira3 = dfcira2.copy()
+    dfearly3 = dfearly2.copy()
+    dfrep3 = dfrep2.copy()
+    dftx3 = dftx2.copy()
+    water3 = water2.copy()
+    wateryr3 = wateryr2.copy()
+    waterly3 = waterly2.copy()
+    watercira3 = watercira2.copy()
+else:
+    dfyr2['DISTRICT'] = dfyr2['DISTRICT'].astype(str)
+    dfyr3 = dfyr2[dfyr2['DISTRICT'].isin(district)].copy()
+
+    dfcira2['DISTRICT'] = dfcira2['DISTRICT'].astype(str)
+    dfcira3 = dfcira2[dfcira2['DISTRICT'].isin(district)].copy()
+
+    dfearly2['DISTRICT'] = dfearly2['DISTRICT'].astype(str)
+    dfearly3 = dfearly2[dfearly2['DISTRICT'].isin(district)].copy()
+
+    dfrep2['DISTRICT'] = dfrep2['DISTRICT'].astype(str)
+    dfrep3 = dfrep2[dfrep2['DISTRICT'].isin(district)].copy()
+
+    dftx2['DISTRICT'] = dftx2['DISTRICT'].astype(str)
+    dftx3 = dftx2[dftx2['DISTRICT'].isin(district)].copy()
+    
+    water2['DISTRICT'] = water2['DISTRICT'].astype(str)
+    water3 = water2[water2['DISTRICT'].isin(district)].copy()
+    wateryr3 = wateryr2[wateryr2['DISTRICT'].isin(district)].copy()
+    waterly3 = waterly2[waterly2['DISTRICT'].isin(district)].copy()
+    watercira3 = watercira2[watercira2['DISTRICT'].isin(district)].copy()
+
+facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dfrep3['FACILITY'].unique(), key='c')
+if not facility:
+    dfyr4 = dfyr3.copy()
+    dfcira4 = dfcira3.copy()
+    dfearly4 = dfearly3.copy()
+    dfrep4 = dfrep3.copy()
+    dftx4 = dftx3.copy()
+    water4 = water3.copy()
+    wateryr4 = wateryr3.copy()
+    waterly4 = waterly3.copy()
+    watercira4 = watercira3.copy()
+else:
+    dfyr4 = dfyr3[dfyr3['FACILITY'].isin(facility)].copy()
+    dfcira4 = dfcira3[dfcira3['FACILITY'].isin(facility)].copy()
+    dfearly4 = dfearly3[dfearly3['FACILITY'].isin(facility)].copy()
+    dfrep4 = dfrep3[dfrep3['FACILITY'].isin(facility)].copy()
+    dftx4 = dftx3[dftx3['FACILITY'].isin(facility)].copy()
+    water4 = water3[water3['FACILITY'].isin(facility)].copy()
+    wateryr4 = wateryr3[wateryr3['FACILITY'].isin(facility)].copy()
+    waterly4 = waterly3[waterly3['FACILITY'].isin(facility)].copy()
+    watercira4 = watercira3[watercira3['FACILITY'].isin(facility)].copy()
+
+# Base DataFrame to filter
+dfyr = dfyr4.copy()
+dfcira = dfcira4.copy()
+dfdearly = dfearly4.copy()
+dfrep = dfrep4.copy()
+dftx = dftx4.copy()
+water = water4.copy()
+wateryr = wateryr4.copy()
+waterly = waterly4.copy()
+watercira = watercira4.copy()
+
+# Apply filters based on selected criteria
+if CLUSTER:
+    dfyr = dfyr[dfyr['CLUSTER'].isin(CLUSTER)].copy()
+    water = water[water['CLUSTER'].isin(CLUSTER)].copy()
+    dfearly = dfearly[dfearly['CLUSTER'].isin(CLUSTER)].copy()
+    dfrep = dfrep[dfrep['CLUSTER'].isin(CLUSTER)].copy()
+    dftx = dftx[dftx['CLUSTER'].isin(CLUSTER)].copy()
+    wateryr = wateryr[wateryr['CLUSTER'].isin(CLUSTER)].copy()
+    waterly = waterly[waterly['CLUSTER'].isin(CLUSTER)].copy()
+
+if district:
+    dfyr = dfyr[dfyr['DISTRICT'].isin(district)].copy()
+    water = water[water['DISTRICT'].isin(district)].copy()
+    dfearly = dfearly[dfearly['DISTRICT'].isin(district)].copy()
+    dfrep = dfrep[dfrep['DISTRICT'].isin(district)].copy()
+    dftx = dftx[dftx['DISTRICT'].isin(district)].copy()
+    wateryr = wateryr[wateryr['DISTRICT'].isin(district)].copy()
+    waterly = waterly[waterly['DISTRICT'].isin(district)].copy()
+
+if facility:
+    dfyr = dfyr[dfyr['FACILITY'].isin(facility)].copy()
+    water = water[water['FACILITY'].isin(facility)].copy()
+    dfearly = dfearly[dfearly['FACILITY'].isin(facility)].copy()
+    dfrep = dfrep[dfrep['FACILITY'].isin(facility)].copy()
+    dftx = dftx[dftx['FACILITY'].isin(facility)].copy()
+    wateryr = wateryr[wateryr['FACILITY'].isin(facility)].copy()
+    waterly = waterly[waterly['FACILITY'].isin(facility)].copy()
+    
+check = water.shape[0]
+if check == 0:
+    st.warning('***NO DATA FOR THE SELECTION MADE**')
+    st.stop()
+else:
+    pass
+#st.write(water.columns)
+st.divider()
+cola, colb, colc = st.columns(3)
+colb.success('**QUICK SUMMARY**')
+cola, colb, colc,cold = st.columns(4)
+cola.info('**ON APPT**')
+colb.info('**ATTENDED**')
+colc.info('**MISSED**')
+cold.info("**% ATT'DCE**")
+apot = water[['APPT', 'TWO']].copy()
+apot[['APPT', 'TWO']] = apot[['APPT', 'TWO']].apply(pd.to_numeric,errors='coerce')
+onat = int(apot['APPT'].sum())
+onmi = int(apot['TWO'].sum())
+ont = int(onat + onmi)
+perc =round((onat/ont)*100)
+cola.metric(label='a', value =f'{ont}', label_visibility='hidden')
+colb.metric(label='b', value =f'{onat}', label_visibility='hidden')
+colc.metric(label='c', value =f'{onmi}', label_visibility='hidden')
+cold.metric(label='d', value = f'{perc}', label_visibility='hidden')
+wik = week -2 
+st.write(f'**APPOINTMENTS SINCE 3rd SEPT TO WEEK {wik}**')
+
+mostd = water.groupby('DISTRICT')['TWO'].sum()
+mostf = water.groupby('FACILITY')['TWO'].sum()
+
+####TOP3
+topdis3 = mostd.nlargest(3)
+topdis3 = topdis3.reset_index()
+mostdis3 = ','.join(topdis3['DISTRICT'].unique())
+
+topfas3 = mostf.nlargest(3)
+topfas3 = topfas3.reset_index()
+mostfas3 = ','.join(topfas3['FACILITY'].unique())
+
+##TOP 2
+topdis2 = mostd.nlargest(2)
+topdis2 = topdis2.reset_index()
+mostdis2 = ','.join(topdis2['DISTRICT'].unique())
+
+##TOP 1
+# topfas3 = mostf.nlargest(3)
+# topfas3 = topfas3.reset_index()
+# mostfas3 = ','.join(topfas3['FACILITY'].unique())
+
+
+
+checkf = water['FACILITY'].nunique()
+checkd = water['DISTRICT'].nunique()
+if facility and not CLUSTER and not district:
+    pass
+elif checkf <3:
+    pass
+elif checkd >3:
+    st.success(f'**MOST AFFECTED DISTRICS ARE {mostdis3}, MOST AFFECTED FACILITIES ARE {mostfas3}**')
+elif checkd ==2:
+    st.success(f'**MOST AFFECTED DISTRICS ARE {mostdis2}, MOST AFFECTED FACILITIES ARE {mostfas3}**')
+elif checkd ==1:
+    st.success(f'**MOST AFFECTED FACILITIES ARE {mostfas3}**')
+
+        
+st.divider()
+#############################################################################################
+#filtered_df = filtered_df[filtered_df['WEEK']==k].copy()
+pote = water['POTENTIAL'].sum()
+Q4 = water['Q4'].sum()
+ti = water['TI'].sum()
+new = water['TXNEW'].sum()
+rt = water['RTT'].sum()  
+pot = int(Q4)+int(ti)+int(new) + int(rt)
+los = water['TWO'].sum()
+to  = water['TO'].sum()
+dd = water['DEAD'].sum()
+Q1 = water['ACTIVE'].sum()
+#uk = int(pot) - int(ti)- int(Q4) - int(new)
+uk = int(pote) - int(pot) 
+
+labels = ["Q4 Curr",   "TI",     "TX NEW",     'RTT' ,  "Potential",  "MISSED",  "DEAD",     "TO",   "Unknown",  "ACTIVE"]
+values = [Q4,           ti,        new,         rt,       pot,        -los,       -dd,        -to,     uk,          Q1]
+measure = ["absolute", "relative","relative", "relative","total",    "relative", "relative","realative","realative","total"]
+# Create the waterfall chart
+
+fig = go.Figure(go.Waterfall(
+    name="Waterfall",
+    orientation="v",
+    measure=measure,
+    x=labels,
+    textposition="outside",
+    text=[f"{v}" for v in values],
+    y=values
+))
+
+# Add titles and labels and adjust layout properties
+fig.update_layout(
+    title="Waterfall Analysis",
+    xaxis_title="Categories",
+    yaxis_title="Values",
+    showlegend=True,
+    height=425,  # Adjust height to ensure the chart fits well
+    margin=dict(l=20, r=20, t=60, b=20),  # Adjust margins to prevent clipping
+    yaxis=dict(automargin=True)
+)
+
+# Show the plot
+st.plotly_chart(fig)
+#####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
+dist = water['DISTRICT'].nunique()
+fact = water['FACILITY'].nunique()
+
+
+if int(dist) > 1:
+    st.divider()
+    x = []
+    y = []
+    water['TWO'] = pd.to_numeric(water['TWO'], errors='coerce')
+    districts = water['DISTRICT'].unique()
+    water = water.sort_values(by = ['TWO'], ascending = False)
+    for each in districts:
+        x.append(each)
+        dist = water[water['DISTRICT']==each]['TWO'].sum()
+        y.append(dist)   
+ 
+    sorted_indices = sorted(range(len(y)), key=lambda i: y[i], reverse=True)
+    x = [x[i] for i in sorted_indices]
+    y = [y[i] for i in sorted_indices]
+    num_bars = len(x)
+    colors = [f'rgba({random.randint(0, 255)}, {random.randint(0, 255)}, {random.randint(0, 255)}, 0.7)' for _ in range(num_bars)]
+    
+    figd = go.Figure(data=[
+        go.Bar(x=x, y=y, marker_color=colors)
+    ])
+    
+    # Update layout
+    figd.update_layout(
+        title='TOTAL MISSED APPOINTMENTS SINCE THE QUARTER BEGAN PER DISTRICT',
+        xaxis_title='District',
+        yaxis_title='TOTAL MISSED APPOINTMENTS',
+        xaxis_tickangle=-45  # Optional: angle x-axis labels for better visibility
+    )
+    st.plotly_chart(figd)#, use_container_width=True)
+elif int(fact) > 1:
+    st.divider()
+    x = []
+    y = []
+    water['TWO'] = pd.to_numeric(water['TWO'], errors='coerce')
+    districts = water['FACILITY'].unique()
+    water = water.sort_values(by = ['TWO'], ascending = False)
+    for each in districts:
+        x.append(each)
+        dist = water[water['FACILITY']==each]['TWO'].sum()
+        y.append(dist)   
+ 
+    sorted_indices = sorted(range(len(y)), key=lambda i: y[i], reverse=True)
+    x = [x[i] for i in sorted_indices]
+    y = [y[i] for i in sorted_indices]
+    num_bars = len(x)
+    colors = [f'rgba({random.randint(0, 255)}, {random.randint(0, 255)}, {random.randint(0, 255)}, 0.7)' for _ in range(num_bars)]
+    
+    figd = go.Figure(data=[
+        go.Bar(x=x, y=y, marker_color=colors)
+    ])
+    
+    # Update layout
+    distict = '.'.join(water['DISTRICT'].unique())
+    figd.update_layout(
+        title=f'TOTAL MISSED APPOINTMENTS SINCE THE QUARTER BEGAN PER FACILITY IN {distict} DISTRICT',
+        xaxis_title='FACILITIES',
+        yaxis_title='TOTAL MISSED APPOINTMENTS',
+        xaxis_tickangle=-45  # Optional: angle x-axis labels for better visibility
+    )
+    st.plotly_chart(figd)#, use_container_width=True)
+    
+else:
+    pass    
+
+#############################################################################################
+#LINE GRAPHS
+st.divider()
+#TREND OF MISSED APOINTMENTS
+st.success('**TRENDS IN CLIENTS WHO HAVE MISSED APPOINTMENTS FOR MORE THAN 2, 3 AND 4 WEEKS**')
+
+grouped = dftx.groupby('SURGE').sum(numeric_only=True).reset_index()
+
+melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
+                            var_name='INTERVAL', value_name='Total')
+
+# melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
+#                             var_name='INTERVAL', value_name='Total')
+
+melted2 = grouped.melt(id_vars=['SURGE'], value_vars=['RTT', 'TO','DEAD'],
+                            var_name='INTERVAL', value_name='Total')
+melted['SURGE'] = melted['SURGE'].astype(int)
+melted['SURGE'] = melted['SURGE'].astype(str)
+melted2['SURGE'] = melted2['SURGE'].astype(int)
+melted2['SURGE'] = melted2['SURGE'].astype(str)
+
+fig2 = px.line(melted, x='SURGE', y='Total', color='INTERVAL', markers=True,
+              title='MISSED APPOINTMENTS', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'INTERVAL': 'VARIABLES'})
+
+fig3 = px.line(melted2, x='SURGE', y='Total', color='INTERVAL', markers=True, color_discrete_sequence=['black','red', 'yellow'],
+              title='RTT VS TO VS DEAD', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'INTERVALS': 'VARIABLES'})
+
+fig2.update_layout(
+    width=800,  # Set the width of the plot
+    height=400,  # Set the height of the plot
+    xaxis=dict(showline=True, linewidth=1, linecolor='black'),  # Show x-axis line
+    yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
+)
+fig2.update_xaxes(type='category')
+fig3.update_layout(
+    width=800,  # Set the width of the plot
+    height = 400,  # Set the height of the plot
+    xaxis=dict(showline=True, linewidth=1, linecolor='black'),  # Show x-axis line
+    yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
+)
+fig3.update_xaxes(type='category')
+colx,coly = st.columns([2,1])
+with colx:
+    st.plotly_chart(fig2, use_container_width= True)
+
+with coly:
+    st.plotly_chart(fig3, use_container_width= True)
+    #st.plotly_chart(fig3, use_container_width=True)
+#############################################################################################
+# #HIGHEST TXML 
+st.divider()
+highest = water[water['TWO']>100]
+
+highest = highest.sort_values(by=['TWO'])#, ascending=False)
+highesta = highest.shape[0]
+
+highesty = water[water['TWO']<101]
+highesty = highesty[highesty['TWO']>49]
+highestb = highesty.sort_values(by=['TWO'], ascending=False)
+highestb = highestb.shape[0]
+# highestb = highest[highest['WEEK']==m]
+
+coly, colu = st.columns(2)
+with coly:
+    if highesta ==0:
+        st.warning('**FACILITY SELECTED IS NOT AMONG**')
+        pass
+    else:
+        figa = px.bar(
+        highest,
+        x='TWO',
+        y='FACILITY',
+        orientation='h',
+        title='FACILITIES WITH >100 MISSED APPTS',
+        labels={'TWO': 'CLIENTS MISSED', 'FACILITY': 'Facility'}
+            )
+        figa.update_traces(marker_color='#be7869')
+        st.plotly_chart(figa, use_container_width=True)
+with colu:
+    if highestb ==0:
+        st.write('**FACILITY SELECTED IS NOT AMONG**')
+        pass
+    else:
+        figa = px.bar(
+        highesty,
+        x='TWO',
+        y='FACILITY',
+        orientation='h',
+        title='FACILITIES WITH 50-100 MISSED APPTS',
+        labels={'TWO': 'CLIENTS MISSED', 'FACILITY': 'Facility'}
+        )
+        figa.update_traces(marker_color='green')
+        st.plotly_chart(figa, use_container_width=True)
+st.divider()
+#MMD PERFORMANCE
+#OF THOSE THAT ARE DUE, HOW MANY ARE OURS, HOW MANY ARE VISITOR
+
+dftx[['M2','M3', 'M6']] = dftx[['M2','M3', 'M6']].apply(pd.to_numeric, errors='coerce')
+M2 = water['M2'].sum()
+M3 = water['M3'].sum()
+M6 = water['M6'].sum()
+
+
+# Creating the grouped bar chart
+fig4 = go.Figure(data=[
+    go.Bar(name='<3 MTHS', x=['<3 MTHS'], y=[M2], marker=dict(color='red')),
+    go.Bar(name='3-5 MTHS', x=['3-5 MTHS'], y=[M3], marker=dict(color='green')),
+    go.Bar(name='6+ MTHS', x=['6+ MTHS'], y=[M6], marker=dict(color='blue'))
+])
+
+# Setting the layout to have no gap between bars
+fig4.update_layout(barmode='group', bargap=0, bargroupgap=0)
+
+NO_MMD = M2
+MMD = int(M3) + int(M6)
+
+labels = ['NO MMD', 'MMD']
+values = [NO_MMD, MMD]
+# Specify custom colors
+colors = ['DarkRed', 'purple']  # Colors for NO_MMD and MMD
+# Create the 3D pie chart
+figp = go.Figure(data=[go.Pie(
+    labels=labels,
+    values=values,
+    hole=0.3,  # Creates a donut chart (0 for a full pie)
+    textinfo='label+percent',  # Show labels and percentages
+    pull=[0.1, 0],  # Slightly pull both slices for emphasis
+    marker=dict(colors=colors)
+)])
+
+# Update layout for 3D effect
+figp.update_traces(textposition='inside', textinfo='percent+label')
+
+M2 = int(M2)
+M3 = int(M3)
+M6 = int(M6)
+# Display the chart
+st.success(f'**{M2} Clients were given < 3 Months, {M3} received between 4 to 5 five months, {M6} received 6+ MTHS**')
+cola,colb = st.columns(2)
+with cola:
+    st.plotly_chart(fig4, use_container_width=True)
+
+with colb:
+    st.markdown('')
+    st.markdown('')
+    st.plotly_chart(figp, use_container_width=True)
+
+st.divider()
+##########################################################################
+#######ONE YEAR COHORT
+#filtered_df = filtered_df[filtered_df['WEEK']==k].copy()
+
+total = wateryr['TOTAL'].sum()
+newti = wateryr['TI'].sum()
+newlydx = wateryr['ORIG'].sum()
+
+newlos = wateryr['LOST'].sum()
+newto  = wateryr['TO'].sum()
+newdd = wateryr['DEAD'].sum()
+active = wateryr['ACTIVE'].sum()
+
+labels = ["NEWLY DX", "TIs", "TOTAL", 'LTFU',"TOs","DEAD", "ACTIVE"]
+values = [newlydx, newti, total, -newlos, -newto,-newdd, active]
+measure = ["absolute", "relative", "total", "relative", "relative", "relative","total"]
+# Create the waterfall chart
+figy = go.Figure(go.Waterfall(
+    name="Waterfall",
+    orientation="v",
+    measure=measure,
+    x=labels,
+    textposition="outside",
+    text=[f"{v}" for v in values],
+    y=values
+))
+
+# Add titles and labels and adjust layout properties
+figy.update_layout(
+    title="ONE YEAR COHORT ANALYSIS",
+    xaxis_title="Categories",
+    yaxis_title="Values",
+    showlegend=True,
+    height=425,  # Adjust height to ensure the chart fits well
+    margin=dict(l=20, r=20, t=60, b=20),  # Adjust margins to prevent clipping
+    yaxis=dict(automargin=True)
+)
+
+st.plotly_chart(figy)
+st.divider()
+########################################################################################
+#ONE YEAR PIE CHART
+col1, col2 = st.columns(2)
+pied = wateryr.copy()#[filtered_df['WEEK']==k]
+#pied['LOST NEW'] = pied['ORIGINAL COHORT']- pied['ONE YEAR ACTIVE'] 
+pied = pied[['LOST', 'ACTIVE']]
+melted = pied.melt(var_name='Category', value_name='values')
+fig = px.pie(melted, values= 'values', title='ONE YEAR RETENTION RATE', names='Category', hole=0.3,color='Category',  
+             color_discrete_map={'LOST': 'red', 'ACTIVE': 'blue'} )
+    #fig.update_traces(text = 'RETENTION', text_position='Outside')
+grouped = dfyr2.groupby('SURGE').sum(numeric_only=True).reset_index()
+
+melted = grouped.melt(id_vars=['SURGE'], value_vars=['ACTIVE', 'LOST'],
+                            var_name='OUTCOME', value_name='Total')
+melted['SURGE'] = melted['SURGE'].astype(int)
+melted['SURGE'] = melted['SURGE'].astype(str)
+colors = ['DarkRed', 'purple']
+
+fig2 = px.line(melted, x='SURGE', y='Total', color='OUTCOME', markers=True,
+              title='MISSED APPOINTMENTS', labels={'SURGE':'WEEK', 'Total': 'No. of clients', 'OUTCOME': 'OUTCOME'})
+
+fig2.update_layout(
+    width=800,  # Set the width of the plot
+    height=400,  # Set the height of the plot
+    xaxis=dict(showline=True, linewidth=1, linecolor='black'),  # Show x-axis line
+    yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
+    #marker=dict(colors=colors)
+)
+
+
+fig2.update_xaxes(type='category')
+if pied.shape[0]==0:
+    pass
+else:
+    with col1:
+        st.plotly_chart(fig, use_container_width=True)
+    with col2:
+        st.plotly_chart(fig2, use_container_width=True)
+
+###############################
+st.divider()
+st.info('**EARLY RETENTION**')
+st.write('**NOTE: The 9 months cohort will be the focus for 1 year cohort next quarter, the TX NEWs are the clients diagnosed this quarter**') 
+pied = wateryr.copy()#[filtered_df['WEEK']==k]
+#pied['LOST NEW'] = pied['ORIGINAL COHORT']- pied['ONE YEAR ACTIVE'] 
+pied = pied[['LOSTS', 'ACTIVES']]
+pied = pied.rename(columns={'LOSTS':'LOST', 'ACTIVES':'ACTIVE'})
+melted = pied.melt(var_name='Category', value_name='values')
+fig6 = px.pie(melted, values= 'values', title='6 MTHS', names='Category', hole=0.3,color='Category',  
+             color_discrete_map={'LOST': 'red', 'ACTIVE': 'blue'} )
+
+pied = waterly.copy()#[filtered_df['WEEK']==k]
+#pied['LOST NEW'] = pied['ORIGINAL COHORT']- pied['ONE YEAR ACTIVE'] 
+pied = pied[['LOSTT', 'ACTIVET']]
+pied = pied.rename(columns={'LOSTT':'LOST', 'ACTIVET':'ACTIVE'})
+melted = pied.melt(var_name='Category', value_name='values')
+fig3 = px.pie(melted, values= 'values', title='3 MTHS', names='Category', hole=0.3,color='Category',  
+             color_discrete_map={'LOST': 'red', 'ACTIVE': 'yellow'} )
+#pied['LOST NEW'] = pied['ORIGINAL COHORT']- pied['ONE YEAR ACTIVE']
+pied = waterly.copy() 
+pied = pied[['LOSTO', 'ACTIVEO']]
+pied = pied.rename(columns={'LOSTO':'LOST', 'ACTIVEO':'ACTIVE'})
+melted = pied.melt(var_name='Category', value_name='values')
+fig1 = px.pie(melted, values= 'values', title='TX NEWS', names='Category', hole=0.3,color='Category',  
+             color_discrete_map={'LOST': 'red', 'ACTIVE': 'green'} )
+pied = wateryr.copy() 
+pied = pied[['LOSTN', 'ACTIVEN']]
+pied = pied.rename(columns={'LOSTN':'LOST', 'ACTIVEN':'ACTIVE'})
+melted = pied.melt(var_name='Category', value_name='values')
+fig9 = px.pie(melted, values= 'values', title='9 MTHS', names='Category', hole=0.3,color='Category',  
+             color_discrete_map={'LOST': 'red', 'ACTIVE': 'purple'} )
+
+cola, colb, colc,cold = st.columns(4)
+with cola:
+    st.plotly_chart(fig9, use_container_width=True)
+with colb:
+    st.plotly_chart(fig6, use_container_width=True)
+with colc:
+    st.plotly_chart(fig3, use_container_width=True)
+with cold:
+    st.plotly_chart(fig1, use_container_width=True)
+####TRACKING TXML
+st.info('**TRENDS IN TXML (FOR CLIENTS THAT WERE REPORTED AS TXML LAST QUARTER)**')
+grouped = dftx.groupby('SURGE').sum(numeric_only=True).reset_index()
+grouped['SURGE'] = grouped['SURGE'].astype(int)  # Ensure SURGE is integer
+grouped['SURGE'] = grouped['SURGE'].astype(str)# Convert SURGE to string
+
+# Create the line chart using Plotly Express
+figM = px.line(grouped, 
+               x='SURGE', 
+               y='TXML', 
+               title='TXML FOR Q4', 
+               labels={'SURGE': 'WEEK', 'TXML': 'No. of clients'},
+               markers=True)
+
+# Update trace color to red
+figM.update_traces(line=dict(color='red'))
+
+# Update layout for better appearance
+figM.update_layout(
+    width=800,  # Set the width of the plot
+    height=400,  # Set the height of the plot
+    xaxis=dict(showline=True, linewidth=1, linecolor='black'),  # Show x-axis line
+    yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
+)
+
+# Set x-axis to categorical
+figM.update_xaxes(type='category')
+
+# Display the plot
+st.plotly_chart(figM, use_container_width=True)
+st.divider()
+
+html_table = """
+<h4><b><u style="color: green;">CYCLE OF INTERUPTION AND RETURN TO ART (CIRA)</u></b></h4>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
+
+#LOST IN LESS THAN 3 MONTHS
+lesl = watercira['L1'].sum() +  watercira['L10'].sum() + watercira['L20'].sum() + watercira['L30'].sum() + watercira['L40'].sum() +  watercira['L50'].sum() + watercira['LG50'].sum()
+#LOST IN 3 to 5 MTHS
+thrl = watercira['L13'].sum() +  watercira['L103'].sum() + watercira['L203'].sum() + watercira['L303'].sum() + watercira['L403'].sum() +  watercira['L503'].sum() + watercira['LG503'].sum()
+#LOST IN 6 MTHS
+sixl = watercira['L16'].sum() +  watercira['L106'].sum() + watercira['L206'].sum() + watercira['L306'].sum() + watercira['L406'].sum() +  watercira['L506'].sum() + watercira['LG506'].sum()
+
+#ACTIVE THAN 3 MONTHS
+lesA = watercira['A1'].sum() +  watercira['A10'].sum() + watercira['A20'].sum() + watercira['A30'].sum() + watercira['A40'].sum() +  watercira['A50'].sum() + watercira['AG50'].sum()
+#ACTIVE IN 3 to 5 MTHS
+thrA = watercira['A13'].sum() +  watercira['A103'].sum() + watercira['A203'].sum() + watercira['A303'].sum() + watercira['A403'].sum() +  watercira['A503'].sum() + watercira['AG503'].sum()
+#ACTIVE IN 6 MTHS
+sixA = watercira['A16'].sum() +  watercira['A106'].sum() + watercira['A206'].sum() + watercira['A306'].sum() + watercira['A406'].sum() +  watercira['A506'].sum() + watercira['AG506'].sum()
+
+totallos = lesl + thrl + sixl
+totalact = lesA + thrA + sixA
+totalcira = totallos + totalact
+
+# Creating the grouped bar chart
+figC = go.Figure(data=[
+    go.Bar(name='IIT(TOTAL)', x=['IIT(TOTAL)'], y=[totalcira], marker=dict(color='rgb(0, 71, 171)')),  # Cobalt Blue,
+    go.Bar(name='RETURNED', x=['RETURNED'], y=[totalact], marker=dict(color='green'))
+])
+
+# Setting the layout to have no gap between bars
+figC.update_layout(title = 'Returning clients to ART', barmode='group', bargap=0, bargroupgap=0)
+
+
+###STACKED BAR CHART
+totalact = lesA + thrA + sixA
+
+# Define the values for the variables
+a = lesA
+b = thrA
+c = sixA
+
+#LESS THAN 1 YR
+a1 = watercira['A1'].sum() + watercira['A13'].sum() + watercira['A16'].sum()
+a2 = a1 + watercira['L1'].sum() + watercira['L13'].sum() + watercira['L16'].sum() 
+if a2 ==0:
+   a3 = 0
+else:
+   a3 = round(int((a1/a2)*100))
+     
+#LESS THAN 10 YRs
+a21 = watercira['A10'].sum() + watercira['A103'].sum() + watercira['A106'].sum()
+a22 = a21 + watercira['L10'].sum() + watercira['L103'].sum() + watercira['L106'].sum() 
+if a22 ==0:
+   a23 = 0
+else:
+   a23 = round(int((a21/a22)*100))
+
+#LESS THAN 20 YRs
+a31 = watercira['A20'].sum() + watercira['A203'].sum() + watercira['A206'].sum()
+a32 = a31 + watercira['L20'].sum() + watercira['L203'].sum() + watercira['L206'].sum() 
+if a32 ==0:
+   a33 = 0
+else:
+   a33 = round(int((a31/a32)*100))
+
+#LESS THAN 30 YRs
+a41 = watercira['A30'].sum() + watercira['A303'].sum() + watercira['A306'].sum()
+a42 = a41 + watercira['L30'].sum() + watercira['L303'].sum() + watercira['L306'].sum() 
+if a42 ==0:
+   a43 = 0
+else:
+   a43 = round(int((a41/a42)*100))
+
+#LESS THAN 40 YRs
+a51 = watercira['A40'].sum() + watercira['A403'].sum() + watercira['A406'].sum()
+a52 = a51 + watercira['L40'].sum() + watercira['L403'].sum() + watercira['L406'].sum() 
+if a52 ==0:
+   a53 = 0
+else:
+   a53 = round(int((a51/a52)*100))
+     
+#LESS THAN 50 YRs
+a61 = watercira['A50'].sum() + watercira['A503'].sum() + watercira['A506'].sum()
+a62 = a61 + watercira['L50'].sum() + watercira['L503'].sum() + watercira['L506'].sum() 
+if a62 ==0:
+   a63 = 0
+else:
+   a63 = round(int((a61/a62)*100))
+
+#GREATER THAN 50 YRs
+a71 = watercira['AG50'].sum() + watercira['AG503'].sum() + watercira['AG506'].sum()
+a72 = a71 + watercira['LG50'].sum() + watercira['LG503'].sum() + watercira['LG506'].sum() 
+if a72 ==0:
+   a73 = 0
+else:
+   a73 = round(int((a71/a72)*100))
+
+# Create the stacked bar chart
+figD = go.Figure()
+
+# Add the bottom layer (a) in cobalt blue
+figD.add_trace(go.Bar(
+    name='<3 MONTHS',
+    y=[a],
+    x=['Variables'],
+    marker_color='rgb(0, 71, 171)'  # Cobalt blue color
+))
+
+# Add the middle layer (b) in green
+figD.add_trace(go.Bar(
+    name='3-5 MONTHS',
+    y=[b],
+    x=['Variables'],
+    marker_color='green'
+))
+
+# Add the top layer (c) in purple
+figD.add_trace(go.Bar(
+    name='6 + MONTHS',
+    y=[c],
+    x=['Variables'],
+    marker_color='purple'
+))
+
+# Update the layout to make it a stacked bar chart
+figD.update_layout(
+    barmode='stack',
+    title='Length of interruption before return',
+    yaxis_title='Values'
+)
+cola, colb,colc, cold = st.columns([1,1,1,3])
+cola.write('**AGE**')
+colb.write('**Returned**')
+colc.write('**IIT(Total)**')
+cold.write('**Proportion CIRA Returned**')
+cola.write('**<01**')
+colb.write(f'**{int(a1)}**')
+colc.write(f'**{int(a2)}**')
+cold.write(f'**{int(a3)} %**')
+
+cola.write('**1-9**')
+colb.write(f'**{int(a21)}**')
+colc.write(f'**{int(a22)}**')
+cold.write(f'**{int(a23)} %**')
+
+cola.write('**10-19**')
+colb.write(f'**{int(a31)}**')
+colc.write(f'**{int(a32)}**')
+cold.write(f'**{int(a33)} %**')
+
+cola.write('**20-29**')
+colb.write(f'**{int(a41)}**')
+colc.write(f'**{int(a42)}**')
+cold.write(f'**{int(a43)} %**')
+
+cola.write('**30-39**')
+colb.write(f'**{int(a51)}**')
+colc.write(f'**{int(a52)}**')
+cold.write(f'**{int(a53)} %**')
+
+cola.write('**40-49**')
+colb.write(f'**{int(a61)}**')
+colc.write(f'**{int(a62)}**')
+cold.write(f'**{int(a63)} %**')
+
+cola.write('**50+**')
+colb.write(f'**{int(a71)}**')
+colc.write(f'**{int(a72)}**')
+cold.write(f'**{int(a73)} %**')
+st.divider()
+
+cola,colb = st.columns(2)
+with cola:
+    #st.markdown('**Returning clients to ART**')
+    st.plotly_chart(figC, use_container_width=True)
+
+with colb:
+    #st.markdown('**Length of interruption before return**')
+    st.plotly_chart(figD, use_container_width=True)
+
+st.divider()
+
+st.write('')
+st.write('')
+st.write('')
+st.success('**CREATED BY Dr. LUMINSA DESIRE**')
+
+
