@@ -164,6 +164,7 @@ if file is not None:
          
             
         if district:
+            st.session_state.submited = False
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
