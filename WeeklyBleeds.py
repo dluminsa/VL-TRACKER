@@ -377,7 +377,7 @@ with col2:
 #
 ####TRACKING TXML
 st.info('**TRENDS IN VL COVERAGE**')
-grouped = dfdfvl.groupby('WEEK').sum(numeric_only=True).reset_index()
+grouped = dfvl.groupby('WEEK').sum(numeric_only=True).reset_index()
 grouped['WEEK'] = grouped['WEEK'].astype(int)  # Ensure SURGE is integer
 grouped['WEEK'] = grouped['WEEK'].astype(str)# Convert SURGE to string
 
