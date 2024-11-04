@@ -351,11 +351,17 @@ html_table = """
 st.markdown(html_table, unsafe_allow_html=True)
 
 #PIE CHART
+BLED = int(watervl['BLED'].sum()) #+ int(water['NOTRN'].sum())
+NOT = int(watervl['Q3'].sum()) - int(water['BLED'].sum())
+     
+BLED = int(BLED)
+NOT = int(NOT)
+
+labels = ['BLED', 'DUE']
+values = [BLED, NOT]
 #st.divider()
 col1, col2,col3 = st.columns([1,4,1])
-labels = ['DONE', 'NOT DONE']
 # Values
-values = [conducted, notdone]
 colors = ['blue', 'red']
 # Creating the pie chart with specified colors and hole
 fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+value', 
@@ -363,7 +369,7 @@ fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+value
 
 # Updating the layout for better readability
 fig.update_traces(textposition='inside', textfont_size=20)
-fig.update_layout(title_text='DONE vs NOT DONE', title_x=0.3)
+fig.update_layout(title_text='VL COVERAGE AT CPHL', title_x=0.3)
 
 col1, col2,col3 = st.columns([1,4,1])
 with col2:
