@@ -492,8 +492,14 @@ if df is not None and district is not None:
             st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
             st.stop()
 if df is not None and district is not None:  
-    Ccola, colb, colc = st.columns([1,2,1])
+    cola, colb, colc = st.columns([1,2,1])
     submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
+    if 'yr' not in st.session_state:   
+                st.session_state.yr = dfe.copy()
+    dfe = st.session_state.yr 
+    if 'yra' not in st.session_state:   
+                st.session_state.yra = df.copy()
+    df = st.session_state.yr.copy()
     if submit:
         try:
             facys = dfsupd['facility'].unique()
@@ -536,12 +542,7 @@ if df is not None and district is not None:
                         cov = dfr['VL COV'].sum()
                         row1.append(cov)
                         sheet1.append_row(row1, value_input_option='RAW') 
-        if 'yr' not in st.session_state:   
-                st.session_state.yr = dfe.copy()
-        dfe = st.session_state.yr 
-        if 'yra' not in st.session_state:   
-                st.session_state.yra = df.copy()
-        df = st.session_state.yr.copy()
+
         st.session_state.submited = True
 
 # # st.success('Your data above has been submitted')
