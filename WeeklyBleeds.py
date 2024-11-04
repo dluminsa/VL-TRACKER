@@ -348,7 +348,8 @@ st.plotly_chart(fig2, use_container_width= True)
 html_table = """
        <h4><b><u style="color: maroon;">VL SECTION</u></b></h4>
      """
-st.markdown(html_table, unsafe_allow_html=True)
+cola,colb,colc = st.columns([1,2,1])
+colb.markdown(html_table, unsafe_allow_html=True)
 
 #PIE CHART
 BLED = int(watervl['BLED'].sum()) #+ int(water['NOTRN'].sum())
