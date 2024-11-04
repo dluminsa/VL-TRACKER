@@ -543,7 +543,14 @@ if df is not None and district is not None:
                         # Print the error message
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
-#if df is not None and district is not None:  
+if df is not None and district is not None:  
+        if 'yr' not in st.session_state:   
+                st.session_state.yr = dfe.copy()
+        dfe = st.session_state.yr 
+        if 'yra' not in st.session_state:   
+                st.session_state.yra = df.copy()
+        df = st.session_state.yr.copy()
+        
         if st.session_state.submited:
                 # dfe = dfq.set_index('facility')
                 # dfvl = dfe.reset_index()
@@ -554,7 +561,7 @@ if df is not None and district is not None:
                 st.write(dfe)
 
 #DOWNLOADS
-#if df is not None and district is not None:
+if df is not None and district is not None:
         #if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
@@ -637,14 +644,12 @@ if df is not None and district is not None:
                 # Serve the file for download
                 with open(file_path, 'rb') as f:
                       file_contents = f.read()           
-                A =st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-                if A:
-                   st.session_state.dist = True
+                st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
 ##############################################################
-#if df is not None and district is not None:
-        #if st.session_state.submited:
+if df is not None and district is not None:
+        if st.session_state.submited:
                     def download_with_duplicates(df):
                         st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
             
@@ -671,12 +676,12 @@ if df is not None and district is not None:
 
 
 #############################################################################
-#if df is not None and district is not None: 
-        #if st.session_state.submited:
+if df is not None and district is not None: 
+        if st.session_state.submited:
                     def download_without_duplicates(df):
                         st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
             
-                        if df is not None and district is not None:
+                        #if df is not None and district is not None:
                             dft = dfsupd.copy()
                             #dft = ppp.copy()
                             #dft = dft.rename(columns = {'facility_y': 'facility'})
