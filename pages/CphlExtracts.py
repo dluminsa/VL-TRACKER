@@ -534,6 +534,7 @@ if df is not None and district is not None:
                         bled = dfr['BLEEDS'].sum()
                         row1.append(bled)
                         cov = dfr['VL COV'].sum()
+                        row1.append(cov)
                         sheet1.append_row(row1, value_input_option='RAW')          
             st.session_state.submited = True
 
