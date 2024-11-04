@@ -31,7 +31,8 @@ KALUNGU = {'Lukaya Health Care Center-Uganda Cares HC II': 3676,
 LYANTONDE ={'Kabatema HC II':118,
            'Kabayanda HC II':95,'Kaliiro HC III':485,'Kasagama HC III':477,
            'Kinuuka  HC III':315,'Lyakajura HC II': 415,'Lyantonde Hospital':4190,'Mpumudde HC III':470}
-st.write('HEY')
+if 'yar' not in st.session_state:   
+                st.session_state.yar = None
 
 MASAKA_CITY ={'Bukoto HC III':454,
              'Kiyumba HC IV':888,'Masaka Police HC II':418,'Mpugwe HC III':317,'Nyendo HC II':359,'TASO Masaka CLINIC':8093}
@@ -169,7 +170,10 @@ if file is not None:
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
             #st.session_state.submited =False
-           # emrcolumns= ['A', 'RE', 'VOB']
+           # emrcolumns= ['A', 'RE', 'VOB']  
+            st.session_state.yar = district
+            district = st.session_state.yar 
+            
         
             for facility in facilities:
                 # if facility not in facextr:
