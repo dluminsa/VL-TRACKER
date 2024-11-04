@@ -17,6 +17,8 @@ from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
 # from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
 if 'submited' not in st.session_state:
         st.session_state.submited =False
+def reset_year():
+    st.session_state.submited =False
 
 SEMBABULE = {'Ssembabule HC IV':2321,'Kyabi HC III':536,'Ntuusi HC IV':968, 'Lwemiyaga HC III':1048,
             'Makoole HC II':252,'Mateete HC III':2367, 'Lwebitakuli Gvt HC III':607,'Ntete HC II':87,'Sembabule Kabaale HC II':77}
@@ -161,7 +163,7 @@ if file is not None:
             district = 'WAKISO'
         else:
             st.write("**I can't determine the origin of this extract, kindly choose a district from below**")
-            district = st.selectbox('Select a district:', districts, index=None)
+            district = st.selectbox('Select a district:', districts, index=None,on_change=reset_year)
          
             
         if district:
