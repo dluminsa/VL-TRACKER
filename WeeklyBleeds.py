@@ -46,7 +46,7 @@ dftx = st.session_state.tx.copy()
 #dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
 dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
 dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
-st.write(dftx)
+#st.write(dftx)
 
 #######################FILTERS
 #
@@ -375,4 +375,34 @@ col1, col2,col3 = st.columns([1,4,1])
 with col2:
      st.plotly_chart(fig, use_container_width=True)
 #
+####TRACKING TXML
+st.info('**TRENDS IN VL COVERAGE**')
+grouped = dfdfvl.groupby('WEEK').sum(numeric_only=True).reset_index()
+grouped['WEEK'] = grouped['WEEK'].astype(int)  # Ensure SURGE is integer
+grouped['WEEK'] = grouped['WEEK'].astype(str)# Convert SURGE to string
 
+# Create the line chart using Plotly Express
+figM = px.line(grouped, 
+               x='WEEK', 
+               y='COV', 
+               title='VL COVERAGE TRENDS', 
+               labels={'WEEK': 'WEEK', 'COV': 'VL coverage'},
+               markers=True)
+
+# Update trace color to red
+figM.update_traces(line=dict(color='red'))
+
+# Update layout for better appearance
+figM.update_layout(
+    width=800,  # Set the width of the plot
+    height=400,  # Set the height of the plot
+    xaxis=dict(showline=True, linewidth=1, linecolor='black'),  # Show x-axis line
+    yaxis=dict(showline=True, linewidth=1, linecolor='black')   # Show y-axis line
+)
+
+# Set x-axis to categorical
+figM.update_xaxes(type='category')
+
+# Display the plot
+st.plotly_chart(figM, use_container_width=True)
+st.divider()
