@@ -198,7 +198,7 @@ factc = water['FACILITY'].unique()
 
 #QUICK SUMMARY
 #TOTAL NS
-cola,colb,colc,cold,cole,colf = st.columns(6)
+cola,colb,colc,cold,cole,colf = st.columns([2,1,1,1,1,1])
 if int(dist)>1:
    cola.write('**DISTRICT**')
    colb.write('**TOTAL**')
