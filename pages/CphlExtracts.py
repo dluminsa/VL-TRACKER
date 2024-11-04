@@ -311,7 +311,7 @@ if df is not None and district is not None:
         dfe['DISTRICT'] = dfe['DISTRICT'].fillna(district)
         st.markdown(f'**VL COVERAGE FOR {district}**')
         #dfe = dfe.drop(columns=['index'])  
-         st.write(dfe)
+        st.write(dfe)
       
 if df is not None and district is not None:
             dfw = dfhigh.copy()
