@@ -535,7 +535,13 @@ if df is not None and district is not None:
                         row1.append(bled)
                         cov = dfr['VL COV'].sum()
                         row1.append(cov)
-                        sheet1.append_row(row1, value_input_option='RAW')          
+                        sheet1.append_row(row1, value_input_option='RAW') 
+        if 'yr' not in st.session_state:   
+                st.session_state.yr = dfe.copy()
+        dfe = st.session_state.yr 
+        if 'yra' not in st.session_state:   
+                st.session_state.yra = df.copy()
+        df = st.session_state.yr.copy()
             st.session_state.submited = True
 
 # # st.success('Your data above has been submitted')
@@ -543,172 +549,159 @@ if df is not None and district is not None:
                         # Print the error message
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
-if df is not None and district is not None:  
-        if 'yr' not in st.session_state:   
-                st.session_state.yr = dfe.copy()
-        dfe = st.session_state.yr 
-        if 'yra' not in st.session_state:   
-                st.session_state.yra = df.copy()
-        df = st.session_state.yr.copy()
-        
-        if st.session_state.submited:
-                # dfe = dfq.set_index('facility')
-                # dfvl = dfe.reset_index()
-                # dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
-                # #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
-                # st.markdown(f'**VL COVERAGE FOR {district}**')
-                #dfe = dfe.drop(columns=['index'])
-                st.write(dfe)
+#if df is not None and district is not None:
+if st.session_state.submited:
+        st.write(dfe)
 
 #DOWNLOADS
-if df is not None and district is not None:
+#if df is not None and district is not None:
         #if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
-                wb = Workbook()
-                ws = wb.active
+        wb = Workbook()
+        ws = wb.active
                 # Convert DataFrame to Excel
-                for r_idx, row in enumerate(dfe.iterrows(), start=1):
-                    for c_idx, value in enumerate(row[1], start=1):
+        for r_idx, row in enumerate(dfe.iterrows(), start=1):
+                for c_idx, value in enumerate(row[1], start=1):
                                 ws.cell(row=r_idx, column=c_idx, value=value)
 
-                ws.insert_rows(0)
-                ws['A1'] = 'FACILITY'
-                ws['B1'] = 'Q3 CURR'
-                ws['C1'] = 'BLEEDS'
-                ws['D1'] = 'VL COV'
-                ws['E1'] = 'BALANCE TO 95%'
-                ws['F1'] = 'HLVs'
-                ws['G1'] = 'LLVs'
+        ws.insert_rows(0)
+        ws['A1'] = 'FACILITY'
+        ws['B1'] = 'Q3 CURR'
+        ws['C1'] = 'BLEEDS'
+        ws['D1'] = 'VL COV'
+        ws['E1'] = 'BALANCE TO 95%'
+        ws['F1'] = 'HLVs'
+        ws['G1'] = 'LLVs'
                 
-                max_row = ws.max_row
-                ws.cell(row=max_row, column=1).alignment = Alignment(horizontal = 'center')
+        max_row = ws.max_row
+        ws.cell(row=max_row, column=1).alignment = Alignment(horizontal = 'center')
     
-                ws.column_dimensions['A'].width = 20
-                ws.column_dimensions['E'].width = 17
-                ws.column_dimensions['B'].width = 10
-                ws.column_dimensions['D'].width = 10
+        ws.column_dimensions['A'].width = 20
+        ws.column_dimensions['E'].width = 17
+        ws.column_dimensions['B'].width = 10
+        ws.column_dimensions['D'].width = 10
 
                 #letters = ['A1', 'B1', 'C1', 'D1']
                 
 
-                letter = 'D'
-                red = PatternFill(fill_type = 'solid', start_color = 'ff0000')
-                yellow = PatternFill(fill_type = 'solid', start_color = 'ffff00')
-                green = PatternFill(fill_type = 'solid', start_color = '04AA6D')
+        letter = 'D'
+        red = PatternFill(fill_type = 'solid', start_color = 'ff0000')
+        yellow = PatternFill(fill_type = 'solid', start_color = 'ffff00')
+        green = PatternFill(fill_type = 'solid', start_color = '04AA6D')
 
-                for num in range(2, ws.max_row +1):
-                    ws[f'{letter}{num}'].alignment = Alignment(horizontal='center')
-                    if ws[f'{letter}{num}'].value <85:
-                        ws[f'{letter}{num}'].fill = red
-                    elif ws[f'{letter}{num}'].value <95:
-                        ws[f'{letter}{num}'].fill = yellow   
-                    else:
-                        ws[f'{letter}{num}'].fill = green
-                        ws[f'{letter}{num}'].border = Border(top= Side(style = 'thick'),
-                                                        left= Side(style = 'thick'),
-                                                        right= Side(style = 'thick'),
-                                                        bottom= Side(style = 'thick')) 
+        for num in range(2, ws.max_row +1):
+            ws[f'{letter}{num}'].alignment = Alignment(horizontal='center')
+            if ws[f'{letter}{num}'].value <85:
+                ws[f'{letter}{num}'].fill = red
+            elif ws[f'{letter}{num}'].value <95:
+                ws[f'{letter}{num}'].fill = yellow   
+            else:
+                ws[f'{letter}{num}'].fill = green
+                ws[f'{letter}{num}'].border = Border(top= Side(style = 'thick'),
+                                                left= Side(style = 'thick'),
+                                                right= Side(style = 'thick'),
+                                                bottom= Side(style = 'thick')) 
                     
-                blue = PatternFill(fill_type = 'solid', start_color = '80F5F5')
-                letter = ['A1', 'B1', 'C1', 'D1','E1','F1','G1']
-                for each in letter:
-                    ws[f'{each}'].font = Font(b= True, i = True)
-                    ws[f'{each}'].fill = blue
-                    ws[f'{each}'].border = Border(top = Side(style = 'thin', color ='000000'),
-                                                            right = Side(style = 'thin', color ='000000'),
-                                                            left = Side(style = 'thin', color ='000000'),
-                                                            bottom = Side(style = 'thin', color ='000000'))
-              
-                grey = PatternFill(fill_type = 'solid', start_color = 'ECF1F1')
-                letter = ['A', 'B', 'C','E','F','G']
-                for each in letter:
-                    ws[f'{each}{max_row}'].font = Font(b= True, i = True)
-                    ws[f'{each}{max_row}'].fill = grey
-                    ws[f'{each}{max_row}'].border = Border(top = Side(style = 'thin', color ='000000'),
-                                                            right = Side(style = 'thin', color ='000000'),
-                                                            left = Side(style = 'thin', color ='000000'),
-                                                            bottom = Side(style = 'thin', color ='000000'))
+        blue = PatternFill(fill_type = 'solid', start_color = '80F5F5')
+        letter = ['A1', 'B1', 'C1', 'D1','E1','F1','G1']
+        for each in letter:
+            ws[f'{each}'].font = Font(b= True, i = True)
+            ws[f'{each}'].fill = blue
+            ws[f'{each}'].border = Border(top = Side(style = 'thin', color ='000000'),
+                                                    right = Side(style = 'thin', color ='000000'),
+                                                    left = Side(style = 'thin', color ='000000'),
+                                                    bottom = Side(style = 'thin', color ='000000'))
+      
+        grey = PatternFill(fill_type = 'solid', start_color = 'ECF1F1')
+        letter = ['A', 'B', 'C','E','F','G']
+        for each in letter:
+            ws[f'{each}{max_row}'].font = Font(b= True, i = True)
+            ws[f'{each}{max_row}'].fill = grey
+            ws[f'{each}{max_row}'].border = Border(top = Side(style = 'thin', color ='000000'),
+                                                    right = Side(style = 'thin', color ='000000'),
+                                                    left = Side(style = 'thin', color ='000000'),
+                                                    bottom = Side(style = 'thin', color ='000000'))
 
 
 
-                ws.sheet_view.ShowGridLines = False        
+                #ws.sheet_view.ShowGridLines = False        
 
-                ran = random.random()
-                rand = round(ran,2)
-                file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{district}VL_COV {rand}.xlsx')
-                directory = os.path.dirname(file_path)
-                Path(directory).mkdir(parents=True, exist_ok=True)
+        ran = random.random()
+        rand = round(ran,2)
+        file_path = os.path.join(os.path.expanduser('~'), 'Downloads', f'{district}VL_COV {rand}.xlsx')
+        directory = os.path.dirname(file_path)
+        Path(directory).mkdir(parents=True, exist_ok=True)
 
-                  # Save the workbook
-                wb.save(file_path)
-                # Serve the file for download
-                with open(file_path, 'rb') as f:
-                      file_contents = f.read()           
-                st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+          # Save the workbook
+        wb.save(file_path)
+        # Serve the file for download
+        with open(file_path, 'rb') as f:
+              file_contents = f.read()           
+        st.download_button(label=f'DONLOAD VL COV FOR {district} ', data=file_contents,file_name=f' {district} VL COV {rand}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
 ##############################################################
-if df is not None and district is not None:
-        if st.session_state.submited:
-                    def download_with_duplicates(df):
-                        st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
-            
-                        if df is not None and district is not None:
-                            dft = dfnodups.copy()
-                            uniques = dft['facility'].unique()
-            
-                            # Create an expander to contain the download buttons
-                            with st.expander(f"Download files for {district} Facilities without duplicates"):
-                                 for facility in uniques:
-                                    dfs = dft[dft['facility'] == facility]
-                                    dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
-                                    csv_data = dfs.to_csv(index=False)
-            
-                                    # Create a download button for each facility
-                                    B = st.download_button(
-                                        label=f"Download CSV for {facility} without duplicates",
-                                        data=csv_data,
-                                        file_name=f"{facility}_data_without_duplicates.csv",
-                                        mime="text/csv"
-                                    )
-                                 if B:
-                                         st.session_state.dist = True
+# if df is not None and district is not None:
+        # if st.session_state.submited:
+        def download_with_duplicates(df):
+                st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
+    
+                if df is not None and district is not None:
+                    dft = dfnodups.copy()
+                    uniques = dft['facility'].unique()
+    
+                    # Create an expander to contain the download buttons
+                    with st.expander(f"Download files for {district} Facilities without duplicates"):
+                         for facility in uniques:
+                            dfs = dft[dft['facility'] == facility]
+                            dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
+                            csv_data = dfs.to_csv(index=False)
+    
+                            # Create a download button for each facility
+                            B = st.download_button(
+                                label=f"Download CSV for {facility} without duplicates",
+                                data=csv_data,
+                                file_name=f"{facility}_data_without_duplicates.csv",
+                                mime="text/csv"
+                            )
+                         if B:
+                                 st.session_state.dist = True
 
 
 #############################################################################
-if df is not None and district is not None: 
-        if st.session_state.submited:
-                    def download_without_duplicates(df):
-                        st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
-            
-                        if df is not None and district is not None:
-                            dft = dfsupd.copy()
-                            #dft = ppp.copy()
-                            #dft = dft.rename(columns = {'facility_y': 'facility'})
-                            uniques = dft['facility'].unique()
-                            # Create an expander to contain the download buttons
-                            with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
-                                for facility in uniques:
-                                    dfs = dft[dft['facility'] == facility]
-                                    dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
-                                    csv_data = dfs.to_csv(index=False)
-            
-                                    # Create a download button for each facility
-                                    C = st.download_button(
-                                        label=f"Download NS for {facility}",
-                                        data=csv_data,
-                                        file_name=f"{facility}_NS.csv",
-                                        mime="text/csv"
-                                    )
-                                    if C:
-                                         st.session_state.dist = True
-                                    
-            
-                    def main():
-                        # Call the download functions
-                        download_with_duplicates(df)
-                        download_without_duplicates(df)
-            
-                    if __name__ == "__main__":
-                        main()
+# if df is not None and district is not None: 
+#         if st.session_state.submited:
+        def download_without_duplicates(df):
+                st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
+    
+                if df is not None and district is not None:
+                    dft = dfsupd.copy()
+                    #dft = ppp.copy()
+                    #dft = dft.rename(columns = {'facility_y': 'facility'})
+                    uniques = dft['facility'].unique()
+                    # Create an expander to contain the download buttons
+                    with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
+                        for facility in uniques:
+                            dfs = dft[dft['facility'] == facility]
+                            dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
+                            csv_data = dfs.to_csv(index=False)
+    
+                            # Create a download button for each facility
+                            C = st.download_button(
+                                label=f"Download NS for {facility}",
+                                data=csv_data,
+                                file_name=f"{facility}_NS.csv",
+                                mime="text/csv"
+                            )
+                            if C:
+                                 st.session_state.dist = True
+                            
+    
+            def main():
+                # Call the download functions
+                download_with_duplicates(df)
+                download_without_duplicates(df)
+    
+            if __name__ == "__main__":
+                main()
 
