@@ -307,6 +307,8 @@ if df is not None and district is not None:
         dfvl = dfe.reset_index()
         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
+        dfe['DISTRICT'] = np.nan
+        dfe['DISTRICT'] = dfe['DISTRICT'].fillna(district)
         st.markdown(f'**VL COVERAGE FOR {district}**')
         #dfe = dfe.drop(columns=['index'])  
       
@@ -529,6 +531,7 @@ if df is not None and district is not None:
 #if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()
+if district not in dfe['
 if st.session_state.submited:
                 st.write(dfe)
         
