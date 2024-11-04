@@ -543,8 +543,8 @@ if df is not None and district is not None:
                         # Print the error message
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
-if df is not None and district is not None:  
-         if st.session_state.submited:
+#if df is not None and district is not None:  
+        if st.session_state.submited:
                 # dfe = dfq.set_index('facility')
                 # dfvl = dfe.reset_index()
                 # dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
@@ -554,7 +554,7 @@ if df is not None and district is not None:
                 st.write(dfe)
 
 #DOWNLOADS
-if df is not None and district is not None:
+#if df is not None and district is not None:
         if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
@@ -643,7 +643,7 @@ if df is not None and district is not None:
 
 
 ##############################################################
-if df is not None and district is not None:
+#if df is not None and district is not None:
         if st.session_state.submited:
                     def download_with_duplicates(df):
                         st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
@@ -671,7 +671,7 @@ if df is not None and district is not None:
 
 
 #############################################################################
-if df is not None and district is not None: 
+#if df is not None and district is not None: 
         if st.session_state.submited:
                     def download_without_duplicates(df):
                         st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
