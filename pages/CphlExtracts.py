@@ -307,13 +307,14 @@ if df is not None and district is not None:
         dfvl = dfe.reset_index()
         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
+        
         @st.cache_data
-        def dfe():
+        def lost():
                 dfa = dfe.copy()
                 dfa['DISTRICT'] = np.nan
                 dfa['DISTRICT'] = dfa['DISTRICT'].fillna(district)
                 return dfa
-        dfe = dfe()
+        dfe = lost()
       
 if df is not None and district is not None:
             dfw = dfhigh.copy()
