@@ -518,7 +518,7 @@ if df is not None and district is not None:
                         st.write(f"ERROR: {e}")
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
 #if df is not None and district is not None:
-        if st.session_state.submited:
+if st.session_state.submited:
                 st.write(dfe)
         
         #DOWNLOADS
