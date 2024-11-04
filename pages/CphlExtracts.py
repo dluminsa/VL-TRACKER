@@ -6,7 +6,6 @@ import numpy as np
 import gspread
 from openpyxl import Workbook
 from pathlib import Path
-dd
 import traceback
 import time
 from datetime import datetime, date
@@ -32,7 +31,7 @@ KALUNGU = {'Lukaya Health Care Center-Uganda Cares HC II': 3676,
 LYANTONDE ={'Kabatema HC II':118,
            'Kabayanda HC II':95,'Kaliiro HC III':485,'Kasagama HC III':477,
            'Kinuuka  HC III':315,'Lyakajura HC II': 415,'Lyantonde Hospital':4190,'Mpumudde HC III':470}
-
+st.write('HEY')
 
 MASAKA_CITY ={'Bukoto HC III':454,
              'Kiyumba HC IV':888,'Masaka Police HC II':418,'Mpugwe HC III':317,'Nyendo HC II':359,'TASO Masaka CLINIC':8093}
