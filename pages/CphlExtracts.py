@@ -555,7 +555,7 @@ if df is not None and district is not None:
 
 #DOWNLOADS
 #if df is not None and district is not None:
-        if st.session_state.submited:
+        #if st.session_state.submited:
        # if st.button('DOWNLOAD FILE FOR VL COVERAGE ', key='active'):
                 wb = Workbook()
                 ws = wb.active
@@ -644,7 +644,7 @@ if df is not None and district is not None:
 
 ##############################################################
 #if df is not None and district is not None:
-        if st.session_state.submited:
+        #if st.session_state.submited:
                     def download_with_duplicates(df):
                         st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
             
@@ -672,7 +672,7 @@ if df is not None and district is not None:
 
 #############################################################################
 #if df is not None and district is not None: 
-        if st.session_state.submited:
+        #if st.session_state.submited:
                     def download_without_duplicates(df):
                         st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
             
