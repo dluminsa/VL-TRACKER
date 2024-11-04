@@ -698,11 +698,11 @@ if st.session_state.submited:
                                  st.session_state.dist = True
                             
     
-            def main():
+        def main():
                 # Call the download functions
-                download_with_duplicates(df)
-                download_without_duplicates(df)
+              download_with_duplicates(df)
+              download_without_duplicates(df)
     
-            if __name__ == "__main__":
+        if __name__ == "__main__":
                 main()
 
