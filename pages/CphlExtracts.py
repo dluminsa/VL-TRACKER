@@ -541,6 +541,7 @@ if district not in dfe['DISTRICT'].unique():
         st.session_state.submited = False
 if st.session_state.submited:
                 st.markdown(f'**VL COVERAGE FOR {district}**')
+                dfe = dfe.drop(columns = 'DISTRICT')
                 st.write(dfe)
         
         #DOWNLOADS
