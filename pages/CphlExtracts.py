@@ -19,7 +19,8 @@ if 'submited' not in st.session_state:
         st.session_state.submited =False
 def reset_year():
     st.session_state.submited =False
-
+    st.session_state.yra = None
+    st.session_state.yr = None
 SEMBABULE = {'Ssembabule HC IV':2321,'Kyabi HC III':536,'Ntuusi HC IV':968, 'Lwemiyaga HC III':1048,
             'Makoole HC II':252,'Mateete HC III':2367, 'Lwebitakuli Gvt HC III':607,'Ntete HC II':87,'Sembabule Kabaale HC II':77}
 
