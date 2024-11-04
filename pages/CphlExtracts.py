@@ -307,11 +307,13 @@ if df is not None and district is not None:
         dfvl = dfe.reset_index()
         dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
-        dfe['DISTRICT'] = np.nan
-        dfe['DISTRICT'] = dfe['DISTRICT'].fillna(district)
-        st.markdown(f'**VL COVERAGE FOR {district}**')
-        #dfe = dfe.drop(columns=['index'])  
-        st.write(dfe)
+        @st.cache_data
+        def dfe():
+                dfa = dfe.copy()
+                dfa['DISTRICT'] = np.nan
+                dfa['DISTRICT'] = dfa['DISTRICT'].fillna(district)
+                return dfa
+        dfe = dfe()
       
 if df is not None and district is not None:
             dfw = dfhigh.copy()
@@ -472,9 +474,9 @@ if df is not None and district is not None:
 if df is not None and district is not None:  
     cola, colb, colc = st.columns([1,2,1])
     submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
-    if 'yr' not in st.session_state:   
-                st.session_state.yr = dfe.copy()
-    dfe = st.session_state.yr 
+    # if 'yr' not in st.session_state:   
+    #             st.session_state.yr = dfe.copy()
+    # dfe = st.session_state.yr
     if 'yra' not in st.session_state:   
                 st.session_state.yra = df.copy()
     df = st.session_state.yr.copy()
@@ -533,8 +535,11 @@ if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()
 if district not in dfe['DISTRICT'].unique():
+        st.cache_data.clear()
+        st.cache_resource.clear()
         st.session_state.submited = False
 if st.session_state.submited:
+                st.markdown(f'**VL COVERAGE FOR {district}**')
                 st.write(dfe)
         
         #DOWNLOADS
