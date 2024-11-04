@@ -162,46 +162,12 @@ if file is not None:
             st.write("**I can't determine the origin of this extract, kindly choose a district from below**")
             district = st.selectbox('Select a district:', districts, index=None)
          
-
-        # if district  == 'BUKOMANSIMBI':
-        #     fac = pd.DataFrame(list(BUKOMANSIMBI.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'SEMBABULE':
-        #     fac = pd.DataFrame(list(SEMBABULE.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'MASAKA_CITY':
-        #     fac = pd.DataFrame(list(MASAKA_CITY.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'MASAKA_DISTRICT':
-        #     fac = pd.DataFrame(list(MASAKA_DISTRICT.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'KALUNGU':
-        #     fac = pd.DataFrame(list(KALUNGU.items()), columns=['facility', 'Q3CURR'])
-        # elif district == 'MPIGI':
-        #     fac = pd.DataFrame(list(MPIGI.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'BUTAMBALA':
-        #     fac = pd.DataFrame(list(BUTAMBALA.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'GOMBA':
-        #     fac = pd.DataFrame(list(GOMBA.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'KYOTERA':
-        #     fac = pd.DataFrame(list(KYOTERA.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'RAKAI':
-        #     fac = pd.DataFrame(list(RAKAI.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'KALANGALA':
-        #     fac = pd.DataFrame(list(KALANGALA.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'LYANTONDE':
-        #     fac = pd.DataFrame(list(LYANTONDE.items()), columns=['facility', 'Q3CURR'])
-        # elif district  == 'LWENGO':
-        #     fac = pd.DataFrame(list(LWENGO.items()), columns=['facility', 'Q3CURR'])
-        # elif district == 'WAKISO HUB':
-        #     fac = pd.DataFrame(list(WAKISO.items()), columns=['facility', 'Q3CURR'])
-        # elif district == 'ENTEBBE HUB':
-        #     fac = pd.DataFrame(list(ENTEBBE.items()), columns=['facility', 'Q3CURR'])
-        # else:
-        #     st.write('NO DISTRICT CHOSEN')
-            #print('NO DISTRICT CHOSEN'
             
         if district:
             fac = dfd[dfd['DISTRICT']==district].copy()
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
-            st.session_state.submited =False
+            #st.session_state.submited =False
            # emrcolumns= ['A', 'RE', 'VOB']
         
             for facility in facilities:
@@ -501,6 +467,7 @@ if df is not None and district is not None:
                 st.session_state.yra = df.copy()
     df = st.session_state.yr.copy()
     if submit:
+        st.session_state.submited =True
         try:
             facys = dfsupd['facility'].unique()
             for facility in facys:
