@@ -531,7 +531,7 @@ if df is not None and district is not None:
 #if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()
-if district not in dfe['
+# if district not in dfe['
 if st.session_state.submited:
                 st.write(dfe)
         
