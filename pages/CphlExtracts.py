@@ -644,15 +644,15 @@ if st.session_state.submited:
 ##############################################################
 # if df is not None and district is not None:
         # if st.session_state.submited:
-        def download_with_duplicates(df):
-                st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
+        #def download_with_duplicates(df):
+        st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
     
-                if df is not None and district is not None:
-                    dft = dfnodups.copy()
-                    uniques = dft['facility'].unique()
+                #if df is not None and district is not None:
+        dft = dfnodups.copy()
+        uniques = dft['facility'].unique()
     
                     # Create an expander to contain the download buttons
-                    with st.expander(f"Download files for {district} Facilities without duplicates"):
+        with st.expander(f"Download files for {district} Facilities without duplicates"):
                          for facility in uniques:
                             dfs = dft[dft['facility'] == facility]
                             dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'Dyear', 'Dmonth', 'Dday', 'result_numeric']]
@@ -672,37 +672,36 @@ if st.session_state.submited:
 #############################################################################
 # if df is not None and district is not None: 
 #         if st.session_state.submited:
-        def download_without_duplicates(df):
-                st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
+        #def download_without_duplicates(df):
+         st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
     
-                if df is not None and district is not None:
-                    dft = dfsupd.copy()
+         #       if df is not None and district is not None:
+         dft = dfsupd.copy()
                     #dft = ppp.copy()
                     #dft = dft.rename(columns = {'facility_y': 'facility'})
-                    uniques = dft['facility'].unique()
+         uniques = dft['facility'].unique()
                     # Create an expander to contain the download buttons
-                    with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
+         with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
                         for facility in uniques:
                             dfs = dft[dft['facility'] == facility]
                             dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
                             csv_data = dfs.to_csv(index=False)
     
                             # Create a download button for each facility
-                            C = st.download_button(
+                            st.download_button(
                                 label=f"Download NS for {facility}",
                                 data=csv_data,
                                 file_name=f"{facility}_NS.csv",
                                 mime="text/csv"
                             )
-                            if C:
-                                 st.session_state.dist = True
+      
                             
     
-        def main():
-                # Call the download functions
-              download_with_duplicates(df)
-              download_without_duplicates(df)
+        # def main():
+        #         # Call the download functions
+        #       download_with_duplicates(df)
+        #       download_without_duplicates(df)
     
-        if __name__ == "__main__":
-                main()
+        # if __name__ == "__main__":
+        #         main()
 
