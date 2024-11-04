@@ -542,7 +542,7 @@ if df is not None and district is not None:
         if 'yra' not in st.session_state:   
                 st.session_state.yra = df.copy()
         df = st.session_state.yr.copy()
-            st.session_state.submited = True
+        st.session_state.submited = True
 
 # # st.success('Your data above has been submitted')
         except Exception as e:
