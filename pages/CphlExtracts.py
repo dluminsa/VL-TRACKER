@@ -92,7 +92,7 @@ districts = dfd['DISTRICT'].unique()
   # st.write('BEING UPDATED')
   # st.stop()
 
-st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
+#st.success('WELCOME, this app was developed by Dr. Luminsa Desire, for any concern, reach out to him at desireluminsa@gmail.com')
 
 
 file = st.file_uploader('Upload your CPHL extract here')
