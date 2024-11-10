@@ -548,7 +548,7 @@ if st.session_state.submited:
                 def dupliks():
                         dfp = dfe.copy()
                         return dfp
-                st.markdown(f'**VL COVERAGE FOR {district}**')
+                
                 dfe = dupliks()
                 @st.cache_data
         
