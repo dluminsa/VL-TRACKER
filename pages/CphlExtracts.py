@@ -1,5 +1,6 @@
 import streamlit as st 
 import pandas as pd
+dfgh
 import os
 import random
 import numpy as np
@@ -174,7 +175,16 @@ if file is not None:
             facilities = fac['facility'].unique().tolist()
             facextr = df['facility'].unique().tolist()
             #st.session_state.submited =False
-           # emrcolumns= ['A', 'RE', 'VOB']  
+           # emrcolumns= ['A', 'RE', 'VOB'] 
+            if 'dstr' not st.session_state:
+                    st.session_state.dstr = district
+            if str(district) != str(st.session_state.dstr):
+                   st.session_state.dstr = district 
+                   st.cache_data.clear()
+                   st.cache_resource.clear()
+                   st.session_state.submited = False
+                   #st.session_state.submited = False
+                   st.rerun()
             st.session_state.yar = district
             district = st.session_state.yar 
             
@@ -535,12 +545,21 @@ if df is not None and district is not None:
 #if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()
-if district not in dfe['DISTRICT'].unique():
-        st.cache_data.clear()
-        st.cache_resource.clear()
-        st.session_state.submited = False
+        
 if st.session_state.submited:
+                @st.cache_data
+                def dupliks():
+                        dfp = dfe.copy()
+                        return dfp
                 st.markdown(f'**VL COVERAGE FOR {district}**')
+                dfe = dupliks()
+                @st.cache_data
+                def rebleds():
+                        dfg = dft.copy()
+                        return dfg
+                st.markdown(f'**VL COVERAGE FOR {district}**')
+                dft = rebleds()
+                dfe = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
                 st.write(dfe)
         
