@@ -198,8 +198,9 @@ if file is not None:
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
-                    
+                    st.write(df['dCOL'])
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
+                    st.write(df['dCOL'])
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     
