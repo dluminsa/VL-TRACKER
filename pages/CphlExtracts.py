@@ -176,7 +176,7 @@ if file is not None:
             facextr = df['facility'].unique().tolist()
             #st.session_state.submited =False
            # emrcolumns= ['A', 'RE', 'VOB'] 
-            if 'dstr' not st.session_state:
+            if 'dstr' not in st.session_state:
                     st.session_state.dstr = district
             if str(district) != str(st.session_state.dstr):
                    st.session_state.dstr = district 
