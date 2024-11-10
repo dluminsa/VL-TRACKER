@@ -195,7 +195,6 @@ if file is not None:
                 #     st.stop()
                 # else:
                     facilitys = fac['facility'].unique().tolist()
-                    st.write(facilitys)
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
