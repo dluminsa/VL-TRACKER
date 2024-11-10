@@ -195,17 +195,15 @@ if file is not None:
                 #     st.stop()
                 # else:
                     facilitys = fac['facility'].unique().tolist()
+                    st.write(df)
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART'] = df['art_number'].replace('[^0-9]','',regex=True)
                     df['dCOL'] = df['date_collected'].astype(str)
-                    st.write(df['dCOL'])
                     df['dCOL'] = df['dCOL'].str.replace('/', '*')
-                    st.write(df['dCOL'])
                     df['dCOL'] = df['dCOL'].str.replace('-', '*')
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     
                   
-                    st.write(df['dCOL'])
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
