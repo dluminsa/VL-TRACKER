@@ -1,6 +1,5 @@
 import streamlit as st 
 import pandas as pd
-dfff
 import os
 import random
 import numpy as np
