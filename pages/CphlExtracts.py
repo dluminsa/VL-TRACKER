@@ -204,7 +204,7 @@ if file is not None:
                     #df['dCOL'] = df['dCOL'].str.replace('/', '*')
                     
                   
-                    
+                    st.write(df['dCOL'])
                     df[['Dyear', 'Dmonth', 'Dday']] = df['dCOL'].str.split('*', expand=True)
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
