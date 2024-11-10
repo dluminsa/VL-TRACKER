@@ -553,8 +553,9 @@ if st.session_state.submited:
                 st.markdown(f'**VL COVERAGE FOR {district}**')
                 dfe = dupliks()
                 @st.cache_data
+        
                 def rebleds():
-                        dfg = dft.copy()
+                        dfg = dfnodups.copy()
                         return dfg
                 st.markdown(f'**VL COVERAGE FOR {district}**')
                 dft = rebleds()
@@ -657,7 +658,7 @@ if st.session_state.submited:
                 st.write(f"<h6>CSV FILES for {district} WITH NO DUPLICATES</h6>", unsafe_allow_html=True)
             
                         #if df is not None and district is not None:
-                dft = dfnodups.copy()
+                dft = dft.copy()
                 uniques = dft['facility'].unique()
             
                             # Create an expander to contain the download buttons
