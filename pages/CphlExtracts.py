@@ -4,7 +4,6 @@ import os
 import random
 import numpy as np
 import gspread
-fff
 from openpyxl import Workbook
 from pathlib import Path
 import traceback
