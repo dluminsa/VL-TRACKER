@@ -543,9 +543,7 @@ if df is not None and district is not None:
                         st.stop()  # Stop the Streamlit app here to let the user manually retry  
 #if df is not None and district is not None:
 if not st.session_state.submited:
-        st.stop()
-st.write('**FFF***')
-st.write(dfe)       
+        st.stop()       
 if st.session_state.submited:
                 @st.cache_data
                 def dupliks():
@@ -560,8 +558,11 @@ if st.session_state.submited:
                 st.markdown(f'**VL COVERAGE FOR {district}**')
                 dft = rebleds()
                 dfe = dupliks()
+                dfg = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
                 st.write(dfe)
+                st.write('**FOOOFF***')
+                st.write(dfg)
         
         #DOWNLOADS
         #if df is not None and district is not None:
