@@ -543,7 +543,7 @@ if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()
 st.write('**FFF***')
-st.write(dfp)       
+st.write(dfe)       
 if st.session_state.submited:
                 @st.cache_data
                 def dupliks():
