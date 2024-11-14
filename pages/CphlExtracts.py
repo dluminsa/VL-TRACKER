@@ -558,11 +558,9 @@ if st.session_state.submited:
                 st.markdown(f'**VL COVERAGE FOR {district}**')
                 dft = rebleds()
                 dfe = dupliks()
-                dfg = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
+                dfe = dfe.reset_index()     
                 st.write(dfe)
-                st.write('**FOOOFF***')
-                st.write(dfg)
         
         #DOWNLOADS
         #if df is not None and district is not None:
