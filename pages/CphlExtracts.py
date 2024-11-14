@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import random
+dff
 import numpy as np
 import gspread
 from openpyxl import Workbook
@@ -12,6 +13,8 @@ from datetime import datetime, date
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+st.cache_data.clear()
+st.cache_resource.clear()
 #from openpyxl import * #load_workbook
 #from openpyxl.styles import *
 # from openpyxl.utils.cell import coordinate_from_string, column_index_from_string
