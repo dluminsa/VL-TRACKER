@@ -187,7 +187,7 @@ figp = go.Figure(data=[go.Pie(
 # Update layout for 3D effect
 figp.update_traces(textposition='inside', textinfo='percent+label')
 st.markdown(f'**{BLED} HAVE BEEN REBLED, {NOT} HAVE NOT**')
-if facility and not district and not CLUSTER:
+if facility and not DISTRICT:# and not CLUSTER:
     st.write(f'**SHOWING DATA FOR {facility} facility**')
 st.plotly_chart(figp, use_container_width=True)
 #####################ONLY SHOWS WHEN THERE ARE MANY FACILITIES OR DISTRTICTS
