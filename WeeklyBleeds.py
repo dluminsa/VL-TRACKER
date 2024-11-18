@@ -149,7 +149,7 @@ mostdis2 = ','.join(topdis2['DISTRICT'].unique())
 
 checkf = water['FACILITY'].nunique()
 checkd = water['DISTRICT'].nunique()
-if facility and not district:
+if facility and not DISTRICT:
     pass
 elif checkf <3:
     pass
