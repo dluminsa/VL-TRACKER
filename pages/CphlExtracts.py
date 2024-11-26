@@ -126,6 +126,8 @@ if file is not None:
         df['facility'] =  df['facility'].str.replace('Mukwano Medical Centre CLINIC', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('St. Francis Maternity Home HC II', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('Teguzibirwa Dom Clinic', 'Lukaya HC III')
+        df['facility'] =  df['facility'].str.replace('Bulwadda HC II', 'Kifampa HC III')
+        df['facility'] =  df['facility'].str.replace('Mawuki HC II', 'Kifampa HC III')
         
         dist = df['facility'].unique()
 
