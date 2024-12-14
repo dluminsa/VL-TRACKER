@@ -328,7 +328,7 @@ melted['WEEK'] = melted['WEEK'].astype(str)
 #melted2['SURGE'] = melted2['SURGE'].astype(int)
 #melted2['SURGE'] = melted2['SURGE'].astype(str)
 
-fig2 = px.line(melted, x='WEEK', y='Total', color='CATEGORIES', markers=True,color_discrete_sequence=['purple','black'],
+fig2 = px.line(melted, x='WEEK', y='Total', color='CATEGORIES', markers=True,color_discrete_sequence=['green','black'],
               title='REBLEEDING TRENDS', labels={'WEEK':'WEEK', 'Total': 'No. of clients', 'INTERVAL': 'CATEGORIES'})
 
 #fig3 = px.line(melted2, x='SURGE', y='Total', color='INTERVAL', markers=True, color_discrete_sequence=['black','red', 'yellow'],
