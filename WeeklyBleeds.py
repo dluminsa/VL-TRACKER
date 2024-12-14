@@ -315,7 +315,7 @@ dfq =dftx.copy()
 dfq = dfq.rename(columns = {'DUETOTAL': 'TOTAL DUE', 'NOTRN': 'RN'})
 grouped = dfq.groupby('WEEK').sum(numeric_only=True).reset_index()
 
-melted = grouped.melt(id_vars=['WEEK'], value_vars=['TOTAL DUE', 'RN', 'SUPP'],
+melted = grouped.melt(id_vars=['WEEK'], value_vars=['TOTAL DUE', 'SUPP']#'RN', 'SUPP'],
                             var_name='CATEGORIES', value_name='Total')
 
 # melted = grouped.melt(id_vars=['SURGE'], value_vars=['TWO', 'THREE', 'FOUR'],
