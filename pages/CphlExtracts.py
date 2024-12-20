@@ -1,4 +1,4 @@
-import streamlit as st 
+  import streamlit as st 
 import pandas as pd
 import os
 import random
@@ -12,6 +12,7 @@ from datetime import datetime, date
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
+st.stop()
 st.cache_data.clear()
 st.cache_resource.clear()
 #from openpyxl import * #load_workbook
