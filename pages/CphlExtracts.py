@@ -223,9 +223,8 @@ if file is not None:
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df['Dyear'] = df['Dyear'].replace(24, 2024, regex=False)
-                    df = df[df['Dyear']>=2024].copy() #| ((df['Dyear']==2023) & (df['Dmonth']>9)))].copy()
+                    df = df[df['Dyear']>2024]| ((df['Dyear']==2024) & (df['Dmonth']>3)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-                    dfhigh = df.copy()
 
                     def Viremia (x):
                         if 0<= x <= 200:
@@ -328,238 +327,55 @@ if df is not None and district is not None:
                 return dfa
         dfe = lost()
       
-if df is not None and district is not None:
-            dfw = dfhigh.copy()
-            dfw['RDO'] = dfw['date_collected'].astype(str)
-            dfw['result_numeric'] = pd.to_numeric(dfw['result_numeric'], errors='coerce')
-            nsups = dfw[dfw['result_numeric']>999].copy()
-            sups = dfw[dfw['result_numeric']<1000].copy()
-            sups[['Dyear', 'Dmonth']] = sups[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
-            
-            sups = sups.sort_values(by = ['Dyear', 'Dmonth'], ascending = True)
-            firsts =[]
-            nsups['facility'] = nsups['facility'].astype(str)
-            sups['facility'] = sups['facility'].astype(str)
-            
-            sups['ART'] = pd.to_numeric(sups['ART'], errors='coerce')
-            nsups['ART'] = pd.to_numeric(nsups['ART'], errors='coerce')
 
-            nsups[['Dyear', 'Dmonth', 'Dday']] = nsups[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-            nsups = nsups.sort_values(by = ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-
-            dus =[]
-            
-            for facility in facilities:
-                nsups['facility'] = nsups['facility'].astype(str)
-                dfq = nsups[nsups['facility']==facility].copy()
-                dfq[['Dyear', 'Dmonth', 'Dday']] = dfq[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
-                dfq = dfq.sort_values(by = ['Dyear', 'Dmonth', 'Dday'], ascending=False)
-                dfq['ART'] = pd.to_numeric(dfq['ART'],errors='coerce')
-                dfz = dfq[dfq.duplicated(subset=['ART'], keep='last')]
-                dus.append(dfz)
-            dups = pd.concat(dus)
-           
-            dupsa =[]
-            for facility in facilities:
-                dups['facility'] = dups['facility'].astype(str)
-                dfx = dups[dups['facility']==facility].copy()
-                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
-                dupsa.append(dfy)
-            dups = pd.concat(dupsa)
-            
-            dups['REBLED'] = np.nan
-            dups['REBLED'] = dups['REBLED'].fillna('RN')
-            
-            notd = []
-            #NS WHO ARE NOT DUPS
-            for facility in facilities:
-                nsups['facility'] = nsups['facility'].astype(str)
-                dups['facility'] = dups['facility'].astype(str)
-                dfx = nsups[nsups['facility']==facility].copy()
-                dfm = dups[dups['facility']==facility].copy()
-                        
-                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfm['ART'] = pd.to_numeric(dfm['ART'],errors='coerce')
-                #dfy = dfx[~dfx.duplicated(subset=['ART'])]#, keep='first')]
-                dfy = dfx[~dfx['ART'].isin(dfm['ART'])]        
-                notd.append(dfy)
-            notdups =pd.concat(notd)
-            #ppp = notdups.copy()
-
-            nodups = []
-            for facility in facilities:
-                sups['facility'] = sups['facility'].astype(str)
-                dfx = sups[sups['facility']==facility].copy()
-                dfx['ART'] = pd.to_numeric(dfx['ART'],errors='coerce')
-                dfy = dfx.drop_duplicates(subset=['ART'], keep='first')
-                nodups.append(dfy)
-            sups = pd.concat(nodups)
-            
-            dfj = []
-            for facility in facilities:
-                sups['facility'] = sups['facility'].astype(str)
-                dfa = sups[sups['facility'] == facility].copy()
-                
-                notdups['facility'] = notdups['facility'].astype(str)
-                dfb = notdups[notdups['facility'] == facility].copy()
-                
-                dfa['ART'] = pd.to_numeric(dfa['ART'],errors='coerce')
-                dfb['ART'] = pd.to_numeric(dfb['ART'],errors='coerce')
-                dfy = pd.merge(dfa, dfb, on = 'ART', how= 'right')
-                dfj.append(dfy)
-            dfa = pd.concat(dfj)
-            
-            fna =dfa[dfa['RDO_x'].isnull()].copy()
-            dn =dfa[~dfa['RDO_x'].isnull()].copy()
-            dn[['Dyear_x', 'Dyear_y']] = dn[['Dyear_x', 'Dyear_y']].apply(pd.to_numeric, errors ='coerce')
-            dn['YEAR'] = dn['Dyear_x']-dn['Dyear_y']
-            dn[['Dmonth_x', 'Dmonth_y']] = dn[['Dmonth_x', 'Dmonth_y']].apply(pd.to_numeric, errors ='coerce')
-            dn['MONTH'] = dn['Dmonth_x']- dn['Dmonth_y']
-            dn['YEAR'] = pd.to_numeric(dn['YEAR'], errors='coerce')
-            dn['MONTH'] = pd.to_numeric(dn['MONTH'], errors='coerce')
-            fnb = dn[dn['YEAR']<0].copy()
-            rsa = dn[dn['YEAR']>0].copy()
-            fnc = dn[((dn['YEAR']==0)& (dn['MONTH'] <0))].copy()
-            rsb = dn[((dn['YEAR']==0)& (dn['MONTH'] >0))].copy()
-            fnd = dn[((dn['YEAR']==0)& (dn['MONTH'] ==0))].copy()
-            fn = pd.concat([fna,fnb, fnc,fnd])
-            rs = pd.concat([rsa,rsb])
-            fn['REBLED'] = np.nan
-            fn['REBLED'] = fn['REBLED'].fillna('FN')
-            rs['REBLED'] = np.nan
-            rs['REBLED'] = rs['REBLED'].fillna('RS')
-            dfa = pd.concat([fn,rs])
-            dfa = dfa.rename(columns= ({'art_number_y':'art_number', 'facility_y': 'facility', 'date_collected_y':'date_collected', 'result_numeric_y':'result_numeric',
-                         'RDO_y':'RDO', 'Dyear_y':'Dyear', 'Dmonth_y':'Dmonth', 'Dday_y':'Dday', 'SUP_y':'SUP'}))
-            dfa = dfa[['ART', 'art_number','facility', 'date_collected', 'result_numeric', 'RDO', 'Dyear','Dmonth', 'Dday', 'REBLED']].copy()
-            dfsupd = pd.concat([dfa, dups])
-            dfsupd['Dmonth'] = pd.to_numeric(dfsupd['Dmonth'], errors='coerce')
-            dfsupa = dfsupd[dfsupd['Dmonth']<7].copy()
-            dfsupb = dfsupd[dfsupd['Dmonth']>6].copy()
-            dfsupa['REBLED'] = dfsupa['REBLED'].astype(str)
-            dfsupa['DUE'] = dfsupa['REBLED'].str.replace('FN', 'DUE')
-            
-            dfsupb['DUE'] = np.nan
-            dfsupb['DUE'] = dfsupb['DUE'].fillna('NOT')
-            dfsupd = pd.concat([dfsupa,dfsupb], axis=0)
-            dfsupd = dfsupd[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
-            
-
-    # Prepare the credentials dictionary
-secrets = st.secrets["connections"]["gsheets"]
-credentials_info = {
-        "type": secrets["type"],
-        "project_id": secrets["project_id"],
-        "private_key_id": secrets["private_key_id"],
-        "private_key": secrets["private_key"],
-        "client_email": secrets["client_email"],
-        "client_id": secrets["client_id"],
-        "auth_uri": secrets["auth_uri"],
-        "token_uri": secrets["token_uri"],
-        "auth_provider_x509_cert_url": secrets["auth_provider_x509_cert_url"],
-        "client_x509_cert_url": secrets["client_x509_cert_url"]
-    }
 current_time = time.localtime()
 week = time.strftime("%V", current_time)
 week = int(week)-39
 if df is not None and district is not None: 
-        try:
-            # Define the scopes needed for your application
-            scopes = ["https://www.googleapis.com/auth/spreadsheets",
-                        "https://www.googleapis.com/auth/drive"]              
-                 
-            credentials = Credentials.from_service_account_info(credentials_info, scopes=scopes)
-                    
-            # Authorize and access Google Sheets
-            client = gspread.authorize(credentials)
-                    
-            # Open the Google Sheet by URL
-            spreadsheetu = "https://docs.google.com/spreadsheets/d/1oXx9PN_Io9rkA-6p-bJHf29XNyw_fojupTzxtJAXPx8/edit?gid=1448429519#gid=1448429519"     
-            spreadsheet = client.open_by_url(spreadsheetu)
-            sheet1 = spreadsheet.worksheet("NS")
-        except Exception as e:
-                    # Log the error message
-            st.write(f"CHECK: {e}")
-            st.write(traceback.format_exc())
-            st.write("COULDN'T CONNECT TO GOOGLE SHEET, TRY AGAIN")
-            st.stop()
-if df is not None and district is not None:  
-    cola, colb, colc = st.columns([1,2,1])
-    submit = colc.button('**SUBMIT TO SEE SUMMARIES**')
-    # if 'yr' not in st.session_state:   
-    #             st.session_state.yr = dfe.copy()
-    # dfe = st.session_state.yr
-    if 'yra' not in st.session_state:   
-                st.session_state.yra = df.copy()
-                df = st.session_state.yra.copy()
-    if submit:
-        st.session_state.submited =True
-        try:
-            facys = dfsupd['facility'].unique()
-            for facility in facys:
-                        row1 = []
-                        row1.append(district)
-                        row1.append(facility)
-                        row1.append(week)
-                        dfsupd['facility'] = dfsupd['facility'].astype(str)
-                        dfk = dfsupd[dfsupd['facility']==facility].copy()
-                        dfk['REBLED'] = dfk['REBLED'].astype(str)
-                        sup = dfk[dfk['REBLED']=='RS']
-                        su = sup.shape[0]
-                        row1.append(su)
-                        
-                        notdue = dfk[dfk['DUE']=='NOT'].copy()
-                        notdue['REBLED'] = notdue['REBLED'].astype(str)
-                        notfn = notdue[notdue['REBLED'] =='FN']
-                        nofn = notfn.shape[0]
-                        row1.append(nofn)
-                        notrn = notdue[notdue['REBLED'] =='RN']
-                        norn = notrn.shape[0]
-                        row1.append(norn)
-                        
-                        duedue = dfk[dfk['DUE']=='DUE'].copy()
-                        duedue['REBLED'] = duedue['REBLED'].astype(str)
-                        duefn = duedue[duedue['REBLED'] =='FN']
-                        dufn = duefn.shape[0]
-                        row1.append(dufn)
-                        duern = duedue[duedue['REBLED'] =='RN']
-                        durn = duern.shape[0]
-                        row1.append(durn)
+                def nodups():
+                      dfg = dfnodups.copy()
+                      return dfg
+                st.markdown(f'**VL COVERAGE FOR {district}**')
+                dft = nodups()
+        #WHO HAS BEEN REBLED AT CPHL
+                allns = pd.read_csv('ALLNS.csv')
+                allns = allns[allns['DISTRICT']==district].copy()
+                dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
+                dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
+                facilitiz = dft['facility'].unique()
+                dfallns = []
 
-                        dfvl['facility'] = dfvl['facility'].astype(str)
-                        dfr = dfvl[dfvl['facility']==facility].copy()
-                        q3 = dfr['Q3CURR'].sum()
-                        row1.append(q3)
-                        bled = dfr['BLEEDS'].sum()
-                        row1.append(bled)
-                        cov = dfr['VL COV'].sum()
-                        row1.append(cov)
-                        sheet1.append_row(row1, value_input_option='RAW') 
+                for facilit in facilitiz:
+                        dfns['facility'] = dfns['facility.astype(str)
+                        allns['facility'] = allns['facility'].astype(str)
+                
+                        dfa = dfns[dfns['facility']==facilit]
+                        dfb = allns[allns['facility'] == facilit]
+                
+                        dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+                        dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])
+                        dfallns.append(dfrb)
+                dfreb = pd.concat(dfallns)
+                #REPEAT THE SAME BUT READING THE DESTINATION
+                dfalln = []
+                for facilit in facilitiz:
+                        dfreb['facility'] = dfreb['facility.astype(str)
+                        dfr['facility'] = dfr['facility'].astype(str)
+                
+                        dfa = dfreb[dfreb['facility']==facilit]
+                        dfb = dfr[dfr['facility'] == facilit]
+                
+                        dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+                        dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])
+                        dfalln.append(dfrb)
+                dftreb = pd.concat(dfalln)
 
-            st.session_state.submited = True
-
-# # st.success('Your data above has been submitted')
-        except Exception as e:
-                        # Print the error message
-                        st.write(f"ERROR: {e}")
-                        st.stop()  # Stop the Streamlit app here to let the user manually retry  
-#if df is not None and district is not None:
 if not st.session_state.submited:
         st.stop()       
 if st.session_state.submited:
-                @st.cache_data
-                def dupliks():
-                        dfp = dfe.copy()
-                        return dfp
-                dfe = dupliks()
-                @st.cache_data
-        
-                def rebleds():
-                        dfg = dfnodups.copy()
-                        return dfg
-                st.markdown(f'**VL COVERAGE FOR {district}**')
-                dft = rebleds()
+
                 dfe = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
                 dfe = dfe.reset_index()     
@@ -682,40 +498,7 @@ if st.session_state.submited:
         
         
         #############################################################################
-        # if df is not None and district is not None: 
-        #       if st.session_state.submited:
-                #def download_without_duplicates(df):
-                st.write(f"<h6>CSV FILES for NS IN {district}</h6>", unsafe_allow_html=True)
-            
-                 #       if df is not None and district is not None:
-                dft = dfsupd.copy()
-                            #dft = ppp.copy()
-                            #dft = dft.rename(columns = {'facility_y': 'facility'})
-                uniques = dft['facility'].unique()
-                            # Create an expander to contain the download buttons
-                with st.expander(f"DOWNLOAD NON SUPPRESORS FOR {district})"):
-                                for facility in uniques:
-                                    dfs = dft[dft['facility'] == facility]
-                                    dfs = dfs[['facility', 'ART', 'art_number', 'date_collected', 'result_numeric', 'REBLED','DUE']]
-                                    csv_data = dfs.to_csv(index=False)
-            
-                                    # Create a download button for each facility
-                                    st.download_button(
-                                        label=f"Download NS for {facility}",
-                                        data=csv_data,
-                                        file_name=f"{facility}_NS.csv",
-                                        mime="text/csv"
-                                    )
-              
-                                    
-            
-                # def main():
-                #         # Call the download functions
-                #       download_with_duplicates(df)
-                #       download_without_duplicates(df)
-            
-                # if __name__ == "__main__":
-                #         main()
+        
         #WHO HAS BEEN REBLED AT CPHL
 allns = pd.read_csv('ALLNS.csv')
 allns = allns[allns['DISTRICT']==district].copy()
