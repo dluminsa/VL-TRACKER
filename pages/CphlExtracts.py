@@ -716,4 +716,26 @@ if st.session_state.submited:
             
                 # if __name__ == "__main__":
                 #         main()
-        
+        #WHO HAS BEEN REBLED AT CPHL
+allns = pd.read_csv('ALLNS.csv')
+allns = allns[allns['DISTRICT']==district].copy()
+dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
+dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
+facilitiz = dft['facility'].unique()
+dfallns = []
+
+for facilit in facilitiz:
+        dfns['facility'] = dfns['facility.astype(str)
+        allns['facility'] = allns['facility'].astype(str)
+
+        dfa = dfns[dfns['facility']==facilit]
+        dfb = allns[allns['facility'] == facilit]
+
+        dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+        dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+        dfrb = dfb[dfb['ART'].isin(dfa['ART'])
+        dfallns.append(dfrb)
+dfreb = pd.concat(dfallns)
+#REPEAT THE SAME BUT READING THE DESTINATION
+
+
