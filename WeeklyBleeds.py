@@ -150,7 +150,10 @@ active = dfapt[dfapt['Ryear']==2025]
 ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
-st.markdown('**QUICK SUMMARY:**')
+html_table = """
+<h6><b><u style="color: yellow;">QUICK SUMMARY</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
 
 cola, colb,colc, cold, cole = st.columns(5)
 cola.write('**TOTAL**')
