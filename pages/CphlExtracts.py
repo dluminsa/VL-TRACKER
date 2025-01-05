@@ -363,8 +363,6 @@ if df is not None and district is not None:
                 conn = st.connection('gsheets', type=GSheetsConnection)
                 exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
                 existing= exist.dropna(how='all')
-                st.write(existing)
-                st.stop()
                 dfalln = []
                 for facilit in facilitiz:
                         dfreb['facility'] = dfreb['facility'].astype(str)
@@ -378,6 +376,7 @@ if df is not None and district is not None:
                         dfrb = dfb[dfb['ART'].isin(dfa['ART'])].copy()
                         dfalln.append(dfrb)
                 dftreb = pd.concat(dfalln)
+                st.write(dftreb)
 
 if not st.session_state.submited:
         st.stop()       
