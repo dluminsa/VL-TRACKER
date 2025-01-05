@@ -255,10 +255,11 @@ colf.write(f'**{other}**')
 
 st.write('**DOWNLOADS**')
 with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
-    due = due[['facility','ART','result_numeric', 'date_collected','RD', 'VD', 'TO','DD']].copy()
-    due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)', 'TO': 'T/O DATE', 'DD': 'DEATH DATE'})
+    due = due[['facility','ART','result_numeric', 'date_collected','RD', 'VD']].copy()
+    due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)'})
     due = due.reset_index()
     due = due.drop(columns = 'index')
+    due = due.set_index('facility')
     st.write(due.head(5))
     csv_data = due.to_csv(index=False)
     st.download_button(
