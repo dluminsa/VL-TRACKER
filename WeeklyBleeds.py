@@ -188,9 +188,11 @@ for facilit in facz:
     dfnt = dfa[~dfa['ARTN'].isin(dfb['ART'])]
     dfnot.append(dfnt)
     dfbled.append(dfbld)
-
-dfbleds = pd.concat(dfbled)
-bled = dfbleds.shape[0]
+if len(dfbled) == 0:
+    bled = 0
+else:
+    dfbleds = pd.concat(dfbled)
+    bled = dfbleds.shape[0]
 dfnots = pd.concat(dfnot)
 
 rebleds = dfbleds.shape[0]
