@@ -181,7 +181,7 @@ for facilit in facz:
     dfbld = dfa[dfa['ARTN'].isin(dfb['ART'])]
     dfnt = dfa[~dfa['ARTN'].isin(dfb['ART'])]
     dfnot.append(dfnt)
-    dfbled.append(dfld)
+    dfbled.append(dfbld)
 
 dfbleds = pd.concat(dfbled)
 dfnots = pd.concat(dfnot)
