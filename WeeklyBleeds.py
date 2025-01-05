@@ -210,7 +210,7 @@ st.write('**APPOINTMENTS OF THOSE WHO ARE DUE**')
 today = datetime.now()
 todayd = today.strftime("%Y-%m-%d")# %H:%M")
 
-mon = today.strftime("%m"))
+mon = today.strftime("%m")
 mon = int(mon)
 
 day = today.strftime("%d")
