@@ -99,7 +99,7 @@ else:
 # Base DataFrame to filter
 dfr = dfr4.copy()
 dfall = dfall4.copy()
-dfapt = dftapt.copy()
+dfapt = dfapt.copy()
 
 # Apply filters based on selected criteria
 if CLUSTER:
