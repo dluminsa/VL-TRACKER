@@ -354,27 +354,31 @@ if df is not None and district is not None:
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
                         dfrb = dfa[dfa['ART'].isin(dfb['ART'])].copy()
                         dfallns.append(dfrb)
-                dfreb = pd.concat(dfallns)
-                
+                if len(dfallns) > 0:
+                        dfreb = pd.concat(dfallns)        
                         
-                #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
-                conn = st.connection('gsheets', type=GSheetsConnection)
-                exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
-                dfr = exist.dropna(how='all')
-                dfalln = []
-                for facilit in facilitiz:
-                        dfreb['facility'] = dfreb['facility'].astype(str) #THE NEW BLEEDS
-                        dfr['facility'] = dfr['facility'].astype(str) #THE GOOGLE SHEET NUMBERS
-                
-                        dfa = dfreb[dfreb['facility']==facilit]
-                        dfb = dfr[dfr['facility'] == facilit]
-                
-                        dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
-                        dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
-                        dfalln.append(dfrb)
-                dftreb = pd.concat(dfalln)
-                st.write(dftreb)
+                        #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
+                        conn = st.connection('gsheets', type=GSheetsConnection)
+                        exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
+                        dfr = exist.dropna(how='all')
+                        dfra = dfr.copy()
+                        dfalln = []
+                        for facilit in facilitiz:
+                                dfreb['facility'] = dfreb['facility'].astype(str) #THE NEW BLEEDS
+                                dfr['facility'] = dfr['facility'].astype(str) #THE GOOGLE SHEET NUMBERS
+                        
+                                dfa = dfreb[dfreb['facility']==facilit]
+                                dfb = dfr[dfr['facility'] == facilit]
+                        
+                                dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+                                dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+                                dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
+                                dfalln.append(dfrb)
+                                if len(dfalln)>0:
+                                   dftreb = pd.concat(dfalln)
+                                   updated = pd.concat([dfra, dftreb], ignore_index =True)
+                                   conn.update(worksheet = 'SUP', data = updated) 
+                        
 
 if not st.session_state.submited:
         st.stop()       
