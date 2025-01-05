@@ -135,6 +135,44 @@ if not facility:
                 st.write(notemr)
     else:
         st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
+##################NS THAT ARE DEAD
+total = dfapt.shape[0]
+dead = dfapt[dfapt['DD'].notna()]
+dd = dead.shape[0]
+########### REMAINING NS AFTER THE DEAD THEN TO
+dfapt = dfapt[dfapt['DD'].isnull()].copy()
+to = dfapt[dfapt['TO'].notna()]
+totalto = to.shape[0]
+dfapt = dfapt[dfapt['TO'].isnull()].copy()
+#####ACTIVE
+dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce)
+active = dfapt[dfapt['Ryear']==2025]
+ac = active.shape[0]
+lost = dfapt[dfapt['Ryear']<2025]
+los = lost.shape[0]
+st.markdown('**QUICK SUMMARY:**')
+
+cola, colb,colc, cold, cole = st.columns(5)
+cola.write('**TOTAL**')
+colb.write('**ACTIVE**')
+colc.write('**LTFU**')
+cold.write('**T/O**')
+cole.write('**DEAD**')
+
+cola.write(f'**{total}**')
+colb.write(f'**{ac}**')
+colc.write(f'**{los}**')
+cold.write(f'**{totalto}**')
+cole.write(f'**{dd}**')
+
+
+            
+
+
+
+if cluster:
+    totalns = dfall.shape[0]
+###
 st.stop()
 watervl = water.copy() 
 dfvl = dftx.copy()
