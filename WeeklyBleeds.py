@@ -120,6 +120,7 @@ if facility:
 ###FACILITIES THAT HAVEN'T UPLOADED EMR
 s1 = dfall['facility'].unique()
 s2 = dfapt['facility'].unique()
+notemr = s1 - s2
 # if facility not in s2:
 #     st.warning('**EMR EXTRACT FOR THIS FACILITY HAS NOT BEEN UPLOADED YET**')
 #     st.stop()
