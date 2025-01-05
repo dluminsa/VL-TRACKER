@@ -167,7 +167,7 @@ cole.write(f'**{dd}**')
 
 ###########
 html_table = """
-<h4><b><u style="color: green;">REBLEEDING AMONGST THOSE ACTIVE</u></b></h4>
+<h6><b><u style="color: green;">REBLEEDING AMONGST THOSE THAT ARE ACTIVE</u></b></h6>
 """
 st.markdown(html_table, unsafe_allow_html=True)
 facz = active['facility'].unique()
@@ -209,7 +209,7 @@ colc.write(f'**{aw}**')
 cold.write(f'**{du}**')
 
 html_table = """
-<h4><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h4>
+<h6><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h6>
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
