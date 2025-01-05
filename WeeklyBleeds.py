@@ -117,8 +117,23 @@ if facility:
     dfr = dfr[dfr['facility'].isin(facility)].copy()
     dfall = dfall[dfall['facility'].isin(facility)].copy()
     dfapt = dfapt[dfapt['facility'].isin(facility)].copy()
-st.write(dfr)
+###FACILITIES THAT HAVEN'T UPLOADED EMR
+s1 = dfall['facility'].unique()
+s2 = dfapt['facility'].unique()
+notemr = set(s1)- set(s2)
 
+num = len(list(notemr))
+if num >0:
+    if num >1:
+        st.write(f'**{num} facilities have not uploaded their emr extarcts for tracking**')
+        with st.expander('CLICK HERE TO SEE THEM'):
+            st.write(notemr)
+    if num ==1:
+        st.write(f'**{num} facility has not uploaded their emr extarcts for tracking**')
+        with st.expander('CLICK HERE TO SEE IT'):
+            st.write(notemr)
+else:
+    st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
 st.stop()
 watervl = water.copy() 
 dfvl = dftx.copy()
