@@ -167,7 +167,24 @@ cole.write(f'**{dd}**')
 
 ###########
 st.write('**REBLEEDING AMONGST THOSE ACTIVE**')
-active
+facz = active['facility'].unique()
+
+dfnot = []
+dfbled = []
+for facilit in facz:
+    dfa = active[active['facility']==facilit].copy()
+    dfb = dfr[dfr['facility']==facilit].copy()
+
+    dfa['ARTN'] = pd.to_numeric(dfa['ARTN'], errors = 'coerce')
+    dfb['ART'] = pd.to_numeric(dfba['ART'], errors = 'coerce')
+
+    dfbld = dfa[dfa['ARTN'].isin(dfb['ART'])]
+    dfnt = dfa[~dfa['ARTN'].isin(dfb['ART'])]
+    dfnot.append(dfnt)
+    dfbled.append(dfld)
+
+dfbleds = pd.concat(dfbled)
+dfnots = pd.concat(dfnot)
          
             
 
