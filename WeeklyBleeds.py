@@ -31,6 +31,11 @@ colb.write(f"**CURRENT WEEK:    {week}**")
 dd = int(week)
 k = int(wk)
 
+conn = st.connection('gsheets', type=GSheetsConnection)
+exist = conn.read(worksheet= 'ALLNS', usecols=list(range(20)),ttl=5)
+tx = exist.dropna(how='all')
+st.session_state.tx = tx
+
 if 'tx' not in st.session_state:     
      try:
         #cola,colb= st.columns(2)
