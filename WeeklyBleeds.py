@@ -165,13 +165,15 @@ colc.write(f'**{los}**')
 cold.write(f'**{totalto}**')
 cole.write(f'**{dd}**')
 
-
+###########
+st.write('**REBLEEDING AMONGST THOSE ACTIVE**')
+active
+         
             
 
 
 
-if cluster:
-    totalns = dfall.shape[0]
+
 ###
 st.stop()
 watervl = water.copy() 
