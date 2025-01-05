@@ -11,10 +11,10 @@ import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime
 
-# st.set_page_config(
-#     page_title = 'PROGRAM GROWTH',
-#     page_icon =":bar_chart"
-#     )
+st.set_page_config(
+    page_title = 'NS TRACKER',
+    page_icon =":bar_chart"
+    )
 
 #st.header('CODE UNDER MAINTENANCE, TRY AGAIN TOMORROW')
 #st.stop()
@@ -35,82 +35,93 @@ if 'tx' not in st.session_state:
      try:
         #cola,colb= st.columns(2)
         conn = st.connection('gsheets', type=GSheetsConnection)
-        exist = conn.read(worksheet= 'NS', usecols=list(range(12)),ttl=5)
+        exist = conn.read(worksheet= 'ALLNS', usecols=list(range(20)),ttl=5)
         tx = exist.dropna(how='all')
         st.session_state.tx = tx
      except:
          st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
          st.stop()
-dftx = st.session_state.tx.copy()
-#st.write(dftx.columns)
-#dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN', 'DUERN']] = dftx[['DUEFN','SUPP', 'NOTFN', 'NOTRN' 'DUERN']].apply(pd.to_numeric, errors='coerce')
-dftx['DUETOTAL'] = dftx['DUEFN'] + dftx['DUERN']
-dftx['TOTAL'] = dftx['DUEFN'] + dftx['DUERN'] +dftx['SUPP'] + dftx['NOTFN'] + dftx['NOTRN']
-#st.write(dftx)
-
+dfapt = st.session_state.tx.copy()
 #######################FILTERS
-#
-weeks = dftx['WEEK'].unique()
+if 'txa' not in st.session_state:     
+     try:
+        #cola,colb= st.columns(2)
+        conn = st.connection('gsheets', type=GSheetsConnection)
+        exist = conn.read(worksheet= 'SUP', usecols=list(range(12)),ttl=5)
+        txa = exist.dropna(how='all')
+        st.session_state.txa = txa
+     except:
+         st.write("POOR NETWORK, COULDN'T CONNECT TO DELIVERY DATABASE")
+         st.stop()
+dfr = st.session_state.txa.copy()
+dfall = pd.read_csv('ALLNS.csv')
+############################
+weeks = dftx['RWEEK'].unique()
 
 fac = dftx['FACILITY'].unique()
-districts = dftx['DISTRICT'].unique()
-
-#TO USE WHERE WEEKS ARE NOT NEEDED FOR TX
-dfy = []
-for every in fac:
-    dff = dftx[dftx['FACILITY']== every]
-    dff = dff.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfy.append(dff)
-water = pd.concat(dfy)
-
-
-#REMOVE DUPLICATES FROM TX SHEET # HOLD THIS IN SESSION LATER
-dfs=[]   
-for each in weeks:
-    dftx['WEEK'] = pd.to_numeric(dftx['WEEK'], errors='coerce')
-    dfa = dftx[dftx['WEEK']==each]
-    dfa = dfa.drop_duplicates(subset=['FACILITY'], keep = 'last')
-    dfs.append(dfa)
-dftx = pd.concat(dfs)
+clusters = dfall['CLUSTER'].unique()
 
 
 #FILTERS
 st.sidebar.subheader('**Filter from here**')
-DISTRICT = st.sidebar.multiselect('CHOOSE A DISTRICT', districts, key='a')
+CLUSTER = st.sidebar.multiselect('CHOOSE A CLUSTER', clusters, key='a')
 
 #create for the state
-if not DISTRICT:
-    dftx2 = dftx.copy()
-    water2 = water.copy() 
+if not CLUSTER:
+    dfr2 = dfr.copy()
+    dfall2 = dfall.copy()
+    dfapt2 = dfapt.copy() 
 else:
-    dftx['DISTRICT'] = dftx['DISTRICT'].astype(str)
-    dftx2 = dftx[dftx['DISTRICT'].isin(DISTRICT)]
+    dfr2 = dfr[dfr['CLUSTER'].isin(CLUSTER)].copy()
+    dfall2 = dfall[dfall['CLUSTER'].isin(CLUSTER)].copy()
+    dfapt2 = dfapt[dfapt['CLUSTER'].isin(CLUSTER)].copy()
     
-    water['DISTRICT'] = water['DISTRICT'].astype(str)
-    water2 = water[water['DISTRICT'].isin(DISTRICT)]
-
-facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dftx2['FACILITY'].unique(), key='c')
-if not facility:
-    dftx3 = dftx2.copy()
-    water3 = water2.copy()
+district = st.sidebar.multiselect('**CHOOSE A DISTRICT**', dfall2['DISTRICT'].unique(), key='d')
+#create for the state
+if not district:
+    dfr3 = dfr2.copy()
+    dfall3 = dfall2.copy()
+    dfapt3 = dfapt2.copy() 
 else:
-    dftx3 = dftx2[dftx2['FACILITY'].isin(facility)].copy()
-    water3 = water2[water2['FACILITY'].isin(facility)].copy()
+    dfr3 = dfr2[dfr2['DISTRICT'].isin(district)].copy()
+    dfall3 = dfall2[dfall2['DISTRICT'].isin(district)].copy()
+    dfapt3 = dfapt2[dfapt2['DISTRICT'].isin(district)].copy()
+
+facility = st.sidebar.multiselect('**CHOOSE A FACILITY**', dfall3['facility'].unique(), key='c')
+if not facility:
+    dfr4 = dfr3.copy()
+    dfall4 = dfall3.copy()
+    dfapt4 = dfapt3.copy() 
+else:
+    dfr4 = dfr3[dfr3['facility'].isin(facility)].copy()
+    dfall4 = dfall3[dfall3['facility'].isin(facility)].copy()
+    dfapt4 = dfapt3[dfapt3['facility'].isin(facility)].copy()
+
 
 # Base DataFrame to filter
-dftx = dftx3.copy()
-water = water3.copy()
+dfr = dfr4.copy()
+dfall = dfall4.copy()
+dfapt = dftapt.copy()
+
 # Apply filters based on selected criteria
+if CLUSTER:
+    dfr = dfr[dfr['CLUSTER'].isin(CLUSTER)].copy()
+    dfall = dfall[dfall['CLUSTER'].isin(CLUSTER)].copy()
+    dfapt = dfapt[dfapt['CLUSTER'].isin(CLUSTER)].copy()
 
 
-if DISTRICT:
-    water = water[water['DISTRICT'].isin(DISTRICT)].copy()
-    dftx = dftx[dftx['DISTRICT'].isin(DISTRICT)].copy()
+if district:
+    dfr = dfr[dfr['DISTRICT'].isin(district)].copy()
+    dfall = dfall[dfall['DISTRICT'].isin(district)].copy()
+    dfapt = dfapt[dfapt['DISTRICT'].isin(district)].copy()
 
 if facility:
-    water = water[water['FACILITY'].isin(facility)].copy()
-    dftx = dftx[dftx['FACILITY'].isin(facility)].copy()
+    dfr = dfr[dfr['facility'].isin(facility)].copy()
+    dfall = dfall[dfall['facility'].isin(facility)].copy()
+    dfapt = dfapt[dfapt['facility'].isin(facility)].copy()
+st.write(dfr)
 
+st.stop()
 watervl = water.copy() 
 dfvl = dftx.copy()
 check = water.shape[0]
