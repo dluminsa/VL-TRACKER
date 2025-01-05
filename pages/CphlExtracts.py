@@ -9,6 +9,7 @@ from pathlib import Path
 import traceback
 import time
 from datetime import datetime, date
+from streamlit_gsheets import GSheetsConnection
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
@@ -357,7 +358,10 @@ if df is not None and district is not None:
                         dfrb = dfb[dfb['ART'].isin(dfa['ART'])
                         dfallns.append(dfrb)
                 dfreb = pd.concat(dfallns)
-                #REPEAT THE SAME BUT READING THE DESTINATION
+                #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
+                conn = st.connection('gsheets', type=GSheetsConnection)
+                exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
+                existing= exist.dropna(how='all')
                 dfalln = []
                 for facilit in facilitiz:
                         dfreb['facility'] = dfreb['facility.astype(str)
