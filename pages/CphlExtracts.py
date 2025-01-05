@@ -347,7 +347,7 @@ if df is not None and district is not None:
                 dfallns = []
 
                 for facilit in facilitiz:
-                        dfns['facility'] = dfns['facility.astype(str)
+                        dfns['facility'] = dfns['facility'].astype(str)
                         allns['facility'] = allns['facility'].astype(str)
                 
                         dfa = dfns[dfns['facility']==facilit]
