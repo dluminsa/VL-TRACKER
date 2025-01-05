@@ -194,10 +194,10 @@ aw = awr.shape[0]
 due = dfnots[((dfnots['Vyear']<2024) | ((dfnots['Vyear'] ==2024) & (dfnots['Vmonth'] <10)))].copy()
 du = due.shape[0]
 
-cola, colb,colc, cold, cole = st.columns(5)
+cola, colb,colc, cold = st.columns(4)
 cola.write('**ACTIVE**')
-colb.write('**REBLED**')
-colc.write('**AWR**')
+colb.write('**REBLED (cphl)**')
+colc.write('**AWR (emr)**')
 cold.write('**DUE**')
 
 
@@ -205,6 +205,53 @@ cola.write(f'**{ac}**')
 colb.write(f'**{bled}**')
 colc.write(f'**{aw}**')
 cold.write(f'**{du}**')
+
+st.write('**APPOINTMENTS OF THOSE WHO ARE DUE**')
+today = datetime.now()
+todayd = today.strftime("%Y-%m-%d")# %H:%M")
+
+mon = today.strftime("%m"))
+mon = int(mon)
+
+day = today.strftime("%d")
+day = int(day)
+wk = today.strftime("%V")
+week = int(wk)-39
+
+due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']] = due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']].apply(pd.to_numeric, errors='coerce')
+
+tude = due[((due['Ryear']==2024) & (due['Rmonth']==mon) & (due['Rday']== day))].copy()
+tud = tude.shape[0]
+
+wiki = due[((due['Ryear']==2024) & (due['RWEEK']==week))].copy()
+wik = wiki.shape[0]
+
+jan = due[((due['Ryear']==2024) & (due['Rmonth']==1))].copy()
+ja = jan.shape[0]
+
+feb = due[((due['Ryear']==2024) & (due['Rmonth']==2))].copy()
+fe = feb.shape[0]
+
+marc = due[((due['Ryear']==2024) & (due['Rmonth']==3))].copy()
+mar = marc.shape[0]
+
+others = due[((due['Ryear']==2024) & (due['Rmonth']>4))].copy()
+other = others.shape[0]
+
+cola, colb,colc, cold, cole, colf = st.columns(6)
+cola.write('**TODAY**')
+colb.write('**THIS WEEK**')
+colc.write('**JAN**')
+cold.write('**FEB**')
+cole.write('**MARCH**')
+colf.write('**OTHER Qtrs**')
+
+cola.write(f'**{tud}**')
+colb.write(f'**{wik}**')
+colc.write(f'**{ja}**')
+cold.write(f'**{fe}**')
+cole.write(f'**{mar}**')
+colf.write(f'**{other}**')
 
 
 
