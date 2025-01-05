@@ -401,7 +401,6 @@ if df is not None and district is not None:
 
 if df is not None and district is not None:
 
-                dfe = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
                 dfe = dfe.reset_index()     
                 st.write(dfe)
