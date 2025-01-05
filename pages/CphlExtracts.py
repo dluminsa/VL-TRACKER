@@ -410,7 +410,7 @@ if df is not None and district is not None:
                         return 'background-color: yellow'
                     else:
                         return 'background-color: red'
-                styler = dfe.style.map(lambda x: kusiiga(x), subset = ['VL COV'])
+                styler = dfe.style.map(lambda x: kusiiga(x), subset = ['VL COV'])format("{:.1f}", na_rep="Missing")
                 st.write(styler)
                 st.write(dfe)
         
