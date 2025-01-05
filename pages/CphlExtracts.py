@@ -399,9 +399,7 @@ if df is not None and district is not None:
                         pass
                         
 
-if not st.session_state.submited:
-        st.stop()       
-if st.session_state.submited:
+if df is not None and district is not None:
 
                 dfe = dupliks()
                 dfe = dfe.drop(columns = 'DISTRICT')
