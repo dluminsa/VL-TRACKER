@@ -359,7 +359,7 @@ if df is not None and district is not None:
                         
                         #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
                         conn = st.connection('gsheets', type=GSheetsConnection)
-                        exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
+                        exist = conn.read(worksheet= 'SUP', usecols=list(range85)),ttl=5)
                         dfr = exist.dropna(how='all')
                         dfra = dfr.copy()
                         dfalln = []
@@ -376,7 +376,7 @@ if df is not None and district is not None:
                                 dfalln.append(dfrb)
                                 if len(dfalln)>0:
                                    dftreb = pd.concat(dfalln)
-                                   if district == 'KALANGALA'
+                                   if district == 'KALANGALA':
                                         cluster = 'KALANGALA'
                                    elif district == 'WAKISO':
                                         cluster = 'WAKISO'
