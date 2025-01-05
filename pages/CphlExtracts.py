@@ -374,27 +374,27 @@ if df is not None and district is not None:
                                 dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
                                 dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
                                 dfalln.append(dfrb)
-                                if len(dfalln)>0:
-                                   dftreb = pd.concat(dfalln)
-                                   if district == 'KALANGALA':
-                                        cluster = 'KALANGALA'
-                                   elif district == 'WAKISO':
-                                        cluster = 'WAKISO'
-                                   elif district in ['MPIGI', 'GOMBA', 'BUTAMBALA']:
-                                        cluster = 'MPIGI'
-                                   elif district in ['RAKAI', 'KYOTERA']:
-                                        cluster = 'KYOTERA'
-                                   elif district in ['LYANTONDE', 'LWENGO']:
-                                        cluster = 'LYANTONDE'
-                                   elif district in ['SEMBABULE', 'BUKOMANSIMBI', 'KALUNGU','MASAKA CITY', 'MASAKA DISTRICT']:
-                                        cluster = 'MASAKA'
-                                           
-                                   dftreb['CLUSTER'] = cluster
-                                   dftreb = dftreb[['CLUSTER', 'DISTRICT', 'facility', 'art_number','ART', 'result_numeric', 'date_collected']].copy()
-                                   updated = pd.concat([dfra, dftreb], ignore_index =True)
-                                   conn.update(worksheet = 'SUP', data = updated) 
-                                else:
-                                        pass
+                        if len(dfalln)>0:
+                           dftreb = pd.concat(dfalln)
+                           if district == 'KALANGALA':
+                                cluster = 'KALANGALA'
+                           elif district == 'WAKISO':
+                                cluster = 'WAKISO'
+                           elif district in ['MPIGI', 'GOMBA', 'BUTAMBALA']:
+                                cluster = 'MPIGI'
+                           elif district in ['RAKAI', 'KYOTERA']:
+                                cluster = 'KYOTERA'
+                           elif district in ['LYANTONDE', 'LWENGO']:
+                                cluster = 'LYANTONDE'
+                           elif district in ['SEMBABULE', 'BUKOMANSIMBI', 'KALUNGU','MASAKA CITY', 'MASAKA DISTRICT']:
+                                cluster = 'MASAKA'
+                                   
+                           dftreb['CLUSTER'] = cluster
+                           dftreb = dftreb[['CLUSTER', 'DISTRICT', 'facility', 'art_number','ART', 'result_numeric', 'date_collected']].copy()
+                           updated = pd.concat([dfra, dftreb], ignore_index =True)
+                           conn.update(worksheet = 'SUP', data = updated) 
+                        else:
+                                pass
                 else:
                         pass
                         
