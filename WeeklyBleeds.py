@@ -184,7 +184,32 @@ for facilit in facz:
     dfbled.append(dfbld)
 
 dfbleds = pd.concat(dfbled)
+bled = dfbleds.shape[0]
 dfnots = pd.concat(dfnot)
+
+rebleds = dfbleds.shape[0]
+dfnots[['Vmonth', 'Vyear']] = dfnots[['Vmonth', 'Vyear']].apply(pd.to_numeric, errors='coerce')
+awr = dfnots[((dfnots['Vyear']>2024) | ((dfnots['Vyear'] == 2024) & (dfnots['Vmonth'] > 9)))].copy()
+aw = awr.shape[0]
+due = dfnots[((dfnots['Vyear']<2024) | ((dfnots['Vyear'] ==2024) & (dfnots['Vmonth'] <10)))].copy()
+du = due.shape[0]
+
+cola, colb,colc, cold, cole = st.columns(5)
+cola.write('**ACTIVE**')
+colb.write('**REBLED**')
+colc.write('**AWR**')
+cold.write('**DUE**')
+
+
+cola.write(f'**{ac}**')
+colb.write(f'**{bled}**')
+colc.write(f'**{aw}**')
+cold.write(f'**{du}**')
+
+
+
+
+
          
             
 
