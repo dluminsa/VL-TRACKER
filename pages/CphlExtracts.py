@@ -336,9 +336,10 @@ if df is not None and district is not None:
         #WHO HAS BEEN REBLED AT CPHL
                 allns = pd.read_csv('ALLNS.csv')
                 allns = allns[allns['DISTRICT']==district].copy()
-                st.write(allns)
+               
                 dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
                 dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
+                 st.write(dfns)
                 facilitiz = dft['facility'].unique()
                 dfallns = []
 
