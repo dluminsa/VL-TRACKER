@@ -344,17 +344,18 @@ if df is not None and district is not None:
                 dfallns = []
 
                 for facilit in facilitiz:
-                        dfns['facility'] = dfns['facility'].astype(str)
-                        allns['facility'] = allns['facility'].astype(str)
-                
-                        dfa = dfns[dfns['facility']==facilit]
-                        dfb = allns[allns['facility'] == facilit]
+                        dfns['facility'] = dfns['facility'].astype(str) #NEW BLEEDS
+                        allns['facility'] = allns['facility'].astype(str) #NS
+
+                        dfa = allns[allns['facility'] == facilit]
+                        dfb = dfns[dfns['facility']==facilit]  
                 
                         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])].copy()
+                        dfrb = dfa[dfa['ART'].isin(dfb['ART'])].copy()
                         dfallns.append(dfrb)
                 dfreb = pd.concat(dfallns)
+                st.write(dfreb)
                         
                 #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
                 conn = st.connection('gsheets', type=GSheetsConnection)
