@@ -402,7 +402,16 @@ if df is not None and district is not None:
 if df is not None and district is not None:
 
                 dfe = dfe.drop(columns = 'DISTRICT')
-                dfe = dfe.reset_index()     
+                dfe = dfe.reset_index() 
+                def kusiiga(x):
+                    if x >94:
+                        return 'background-color: green'
+                    elif x >89:
+                        return 'background-color: yellow'
+                    else:
+                        return 'background-color: red'
+                styler = dfe.style.map(lambda x: kusiiga(x), subset = ['VL COV'])
+                st.write(styler)
                 st.write(dfe)
         
         #DOWNLOADS
