@@ -176,7 +176,7 @@ for facilit in facz:
     dfb = dfr[dfr['facility']==facilit].copy()
 
     dfa['ARTN'] = pd.to_numeric(dfa['ARTN'], errors = 'coerce')
-    dfb['ART'] = pd.to_numeric(dfba['ART'], errors = 'coerce')
+    dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
 
     dfbld = dfa[dfa['ARTN'].isin(dfb['ART'])]
     dfnt = dfa[~dfa['ARTN'].isin(dfb['ART'])]
