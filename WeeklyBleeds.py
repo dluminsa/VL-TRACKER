@@ -219,6 +219,7 @@ wk = today.strftime("%V")
 week = int(wk)-39
 
 due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']] = due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']].apply(pd.to_numeric, errors='coerce')
+st.write(due)
 
 tude = due[((due['Ryear']==2024) & (due['Rmonth']==mon) & (due['Rday']== day))].copy()
 tud = tude.shape[0]
