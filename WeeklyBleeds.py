@@ -210,7 +210,7 @@ cola.write(f'**{ac}**')
 colb.write(f'**{bled}**')
 colc.write(f'**{aw}**')
 cold.write(f'**{du}**')
-st.markdown('**KEY: AWR>> AWAITING RESULTS, HAS RECENT VL RESULTS IN EMR**')
+st.markdown('**KEY: AWR>> AWAITING RESULTS, HAS RECENT VL DATE IN EMR**')
 
 html_table = """
 <h6><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h6>
