@@ -195,11 +195,6 @@ if file is not None:
             
         
             for facility in facilities:
-                # if facility not in facextr:
-                #     st.write (f'**THIS EXTRACT DOES NOT HAVE FACILITIES IN {district}**')
-                #     st.write('**You either uploaded a wrong exract or chose a wrong district, please try again!!**')
-                #     st.stop()
-                # else:
                     facilitys = fac['facility'].unique().tolist()
                     df = df[df['facility'].isin(facilitys)].copy()
                     df['ART'] = df['art_number'].replace('[^0-9]','',regex=True)
@@ -341,6 +336,7 @@ if df is not None and district is not None:
         #WHO HAS BEEN REBLED AT CPHL
                 allns = pd.read_csv('ALLNS.csv')
                 allns = allns[allns['DISTRICT']==district].copy()
+                st.write(allns)
                 dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
                 dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
                 facilitiz = dft['facility'].unique()
