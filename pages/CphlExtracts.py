@@ -410,7 +410,11 @@ if df is not None and district is not None:
                         return 'background-color: yellow'
                     else:
                         return 'background-color: red'
-                styler = dfe.style.format("{:.1f}").map(lambda x: kusiiga(x), subset = ['VL COV'])
+                styler = (
+                            dfe.style
+                            .format("{:.1f}", subset=['VL COV'])  # Format 'VL COV' to one decimal place
+                            .applymap(kusiiga, subset=['VL COV'])  # Apply cell-wise styling
+                        )
                 st.write(styler)
                 st.write(dfe)
         
