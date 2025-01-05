@@ -145,7 +145,7 @@ to = dfapt[dfapt['TO'].notna()]
 totalto = to.shape[0]
 dfapt = dfapt[dfapt['TO'].isnull()].copy()
 #####ACTIVE
-dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce)
+dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce')
 active = dfapt[dfapt['Ryear']==2025]
 ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
