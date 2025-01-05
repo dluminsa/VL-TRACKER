@@ -13,7 +13,7 @@ from streamlit_gsheets import GSheetsConnection
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
 from openpyxl.styles import PatternFill, Font, Alignment, Border, Side
-st.stop()
+
 st.cache_data.clear()
 st.cache_resource.clear()
 #from openpyxl import * #load_workbook
@@ -358,6 +358,7 @@ if df is not None and district is not None:
                         dfrb = dfb[dfb['ART'].isin(dfa['ART'])
                         dfallns.append(dfrb)
                 dfreb = pd.concat(dfallns)
+                        
                 #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
                 conn = st.connection('gsheets', type=GSheetsConnection)
                 exist = conn.read(worksheet= 'SUP', usecols=list(range(5)),ttl=5)
