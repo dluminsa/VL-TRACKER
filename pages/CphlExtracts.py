@@ -224,7 +224,7 @@ if file is not None:
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df['Dyear'] = df['Dyear'].replace(24, 2024, regex=False)
-                    df = df[((df['Dyear']>2024])| ((df['Dyear']==2024) & (df['Dmonth']>3)))].copy()
+                    df = df[((df['Dyear']>2024)| ((df['Dyear']==2024) & (df['Dmonth']>3)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                     def Viremia (x):
