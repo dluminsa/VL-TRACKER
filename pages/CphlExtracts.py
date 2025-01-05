@@ -355,7 +355,7 @@ if df is not None and district is not None:
                 
                         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfb[dfb['ART'].isin(dfa['ART']))
+                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])].copy()
                         dfallns.append(dfrb)
                 dfreb = pd.concat(dfallns)
                         
@@ -373,7 +373,7 @@ if df is not None and district is not None:
                 
                         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfb[dfb['ART'].isin(dfa['ART']))
+                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])].copy()
                         dfalln.append(dfrb)
                 dftreb = pd.concat(dfalln)
 
