@@ -414,9 +414,9 @@ if df is not None and district is not None:
                             dfe.style
                             .format("{:.0f}", subset = ['VL COV','BLEEDS','Q3CURR', 'BALANCE TO 95%', 'HLVs', 'LLVs'])  # Format 'VL COV' to one decimal place
                             .applymap(kusiiga, subset=['VL COV'])  # Apply cell-wise styling
+                            .hide_index()
                         )
                 st.write(styler)
-                st.write(dfe)
         
         #DOWNLOADS
         #if df is not None and district is not None:
