@@ -58,10 +58,7 @@ dfr = st.session_state.txa.copy()
 dfall = pd.read_csv('ALLNS.csv')
 ############################
 
-
-fac = dftx['FACILITY'].unique()
 clusters = dfall['CLUSTER'].unique()
-
 
 #FILTERS
 st.sidebar.subheader('**Filter from here**')
