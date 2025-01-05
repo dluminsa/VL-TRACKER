@@ -403,7 +403,7 @@ if df is not None and district is not None:
 
                 dfe = dfe.drop(columns = 'DISTRICT')
                 dfe = dfe.reset_index() 
-                dfe.set_index('facility')
+                
                 def kusiiga(x):
                     if x >94:
                         return 'background-color: green'
