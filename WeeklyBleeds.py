@@ -222,24 +222,23 @@ week = int(wk)-39
 
 due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']] = due[['Ryear', 'Rmonth', 'Rday', 'RWEEK']].apply(pd.to_numeric, errors='coerce')
 
+tude = due[((due['Ryear']==2025) & (due['Rmonth']==mon) & (due['Rday']== day))].copy()
 
-tude = due[((due['Ryear']==2024) & (due['Rmonth']==mon) & (due['Rday']== day))].copy()
-st.write(tude)
 tud = tude.shape[0]
 
-wiki = due[((due['Ryear']==2024) & (due['RWEEK']==week))].copy()
+wiki = due[((due['Ryear']==2025) & (due['RWEEK']==week))].copy()
 wik = wiki.shape[0]
 
-jan = due[((due['Ryear']==2024) & (due['Rmonth']==1))].copy()
+jan = due[((due['Ryear']==2025) & (due['Rmonth']==1))].copy()
 ja = jan.shape[0]
 
-feb = due[((due['Ryear']==2024) & (due['Rmonth']==2))].copy()
+feb = due[((due['Ryear']==2025) & (due['Rmonth']==2))].copy()
 fe = feb.shape[0]
 
-marc = due[((due['Ryear']==2024) & (due['Rmonth']==3))].copy()
+marc = due[((due['Ryear']==2025) & (due['Rmonth']==3))].copy()
 mar = marc.shape[0]
 
-others = due[((due['Ryear']==2024) & (due['Rmonth']>4))].copy()
+others = due[((due['Ryear']>2025) | ((due['Ryear']==2025) & (due['Rmonth']>4)))].copy()
 other = others.shape[0]
 
 cola, colb,colc, cold, cole, colf = st.columns(6)
