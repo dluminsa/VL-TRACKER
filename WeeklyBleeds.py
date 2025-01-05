@@ -166,7 +166,10 @@ cold.write(f'**{totalto}**')
 cole.write(f'**{dd}**')
 
 ###########
-st.write('**REBLEEDING AMONGST THOSE ACTIVE**')
+html_table = """
+<h4><b><u style="color: green;">REBLEEDING AMONGST THOSE ACTIVE</u></b></h4>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
 facz = active['facility'].unique()
 
 dfnot = []
@@ -205,7 +208,11 @@ colb.write(f'**{bled}**')
 colc.write(f'**{aw}**')
 cold.write(f'**{du}**')
 
-st.write('**APPOINTMENTS OF THOSE WHO ARE DUE**')
+html_table = """
+<h4><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h4>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
+
 today = datetime.now()
 todayd = today.strftime("%Y-%m-%d")# %H:%M")
 
