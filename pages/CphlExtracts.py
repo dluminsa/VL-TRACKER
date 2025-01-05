@@ -339,7 +339,7 @@ if df is not None and district is not None:
                
                 dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
                 dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
-                 st.write(dfns)
+                st.write(dfns)
                 facilitiz = dft['facility'].unique()
                 dfallns = []
 
