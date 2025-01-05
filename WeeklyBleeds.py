@@ -259,7 +259,6 @@ with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
     due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)'})
     due = due.reset_index()
     due = due.drop(columns = 'index')
-    due = due.set_index('facility')
     st.write(due.head(5))
     csv_data = due.to_csv(index=False)
     st.download_button(
