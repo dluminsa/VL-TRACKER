@@ -121,11 +121,13 @@ if facility:
 s1 = dfall['facility'].unique()
 s2 = dfapt['facility'].unique()
 notemr = set(s1) - set(s2)
-# if facility not in s2:
-#     st.warning('**EMR EXTRACT FOR THIS FACILITY HAS NOT BEEN UPLOADED YET**')
-#     st.stop()
-# else:
-#     pass
+
+if facility:
+    if facility not in s2:
+        st.warning('**EMR EXTRACT FOR THIS FACILITY HAS NOT BEEN UPLOADED YET**')
+        st.stop()
+    else:
+        pass
 
 num = len(list(notemr))
 if not facility:
