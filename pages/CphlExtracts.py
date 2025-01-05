@@ -361,6 +361,8 @@ if df is not None and district is not None:
                         
                 #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
                 conn = st.connection('gsheets', type=GSheetsConnection)
+                worksheets = conn.spreadsheet.worksheets()
+                st.write([ws.title for ws in worksheets])
                 exist = conn.read(worksheet= 'ALLNS', usecols=list(range(5)),ttl=5)
                 existing= exist.dropna(how='all')
                 dfalln = []
