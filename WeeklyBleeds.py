@@ -31,10 +31,6 @@ colb.write(f"**CURRENT WEEK:    {week}**")
 dd = int(week)
 k = int(wk)
 
-conn = st.connection('gsheets', type=GSheetsConnection)
-exist = conn.read(worksheet= 'ALLNS', usecols=list(range(20)),ttl=5)
-tx = exist.dropna(how='all')
-st.session_state.tx = tx
 
 if 'tx' not in st.session_state:     
      try:
@@ -61,7 +57,7 @@ if 'txa' not in st.session_state:
 dfr = st.session_state.txa.copy()
 dfall = pd.read_csv('ALLNS.csv')
 ############################
-weeks = dftx['RWEEK'].unique()
+
 
 fac = dftx['FACILITY'].unique()
 clusters = dfall['CLUSTER'].unique()
