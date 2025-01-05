@@ -339,7 +339,7 @@ if df is not None and district is not None:
                
                 dft[['Dyear', 'Dmonth']] = dft[['Dyear', 'Dmonth']].apply(pd.to_numeric, errors='coerce')
                 dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
-                st.write(dfns)
+                
                 facilitiz = dft['facility'].unique()
                 dfallns = []
 
@@ -349,13 +349,13 @@ if df is not None and district is not None:
 
                         dfa = allns[allns['facility'] == facilit]
                         dfb = dfns[dfns['facility']==facilit]  
-                
+                #of the NS, who has been rebled?
                         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
                         dfrb = dfa[dfa['ART'].isin(dfb['ART'])].copy()
                         dfallns.append(dfrb)
                 dfreb = pd.concat(dfallns)
-                st.write(dfreb)
+                
                         
                 #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
                 conn = st.connection('gsheets', type=GSheetsConnection)
@@ -363,15 +363,15 @@ if df is not None and district is not None:
                 dfr = exist.dropna(how='all')
                 dfalln = []
                 for facilit in facilitiz:
-                        dfreb['facility'] = dfreb['facility'].astype(str)
-                        dfr['facility'] = dfr['facility'].astype(str)
+                        dfreb['facility'] = dfreb['facility'].astype(str) #THE NEW BLEEDS
+                        dfr['facility'] = dfr['facility'].astype(str) #THE GOOGLE SHEET NUMBERS
                 
                         dfa = dfreb[dfreb['facility']==facilit]
                         dfb = dfr[dfr['facility'] == facilit]
                 
                         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
                         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfb[dfb['ART'].isin(dfa['ART'])].copy()
+                        dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
                         dfalln.append(dfrb)
                 dftreb = pd.concat(dfalln)
                 st.write(dftreb)
