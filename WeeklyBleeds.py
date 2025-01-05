@@ -208,6 +208,7 @@ cold.write(f'**{du}**')
 
 st.write('**APPOINTMENTS OF THOSE WHO ARE DUE**')
 today = datetime.now()
+st.write(today)
 todayd = today.strftime("%Y-%m-%d")# %H:%M")
 
 mon = today.strftime("%m")
@@ -215,6 +216,7 @@ mon = int(mon)
 
 day = today.strftime("%d")
 day = int(day)
+st.write(day)
 wk = today.strftime("%V")
 week = int(wk)-39
 
