@@ -200,7 +200,6 @@ colb.write('**REBLED (cphl)**')
 colc.write('**AWR (emr)**')
 cold.write('**DUE**')
 
-
 cola.write(f'**{ac}**')
 colb.write(f'**{bled}**')
 colc.write(f'**{aw}**')
@@ -208,7 +207,6 @@ cold.write(f'**{du}**')
 
 st.write('**APPOINTMENTS OF THOSE WHO ARE DUE**')
 today = datetime.now()
-st.write(today)
 todayd = today.strftime("%Y-%m-%d")# %H:%M")
 
 mon = today.strftime("%m")
@@ -216,7 +214,6 @@ mon = int(mon)
 
 day = today.strftime("%d")
 day = int(day)
-st.write(day)
 wk = today.strftime("%V")
 week = int(wk)-39
 
@@ -256,7 +253,18 @@ cold.write(f'**{fe}**')
 cole.write(f'**{mar}**')
 colf.write(f'**{other}**')
 
-
+st.write('**DOWNLOADS**')
+with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
+    due = due[['facility','ART','result_numeric', 'date_collected','RD', 'VD', 'TO','DD']].copy()
+    due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)', 'TO': 'T/O DATE', 'DD': 'DEATH DATE'})
+    st.write(due.head(10))
+    csv_data = due.to_csv(index=False)
+    st.download_button(
+                        label=" DOWNLOAD THIS DATA SET",
+                        data=csv_data,
+                        file_name="ACTIVITIES.csv",
+                        mime="text/csv")
+             
 
 
 
