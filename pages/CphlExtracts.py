@@ -365,7 +365,7 @@ if df is not None and district is not None:
                 existing= exist.dropna(how='all')
                 dfalln = []
                 for facilit in facilitiz:
-                        dfreb['facility'] = dfreb['facility.astype(str)
+                        dfreb['facility'] = dfreb['facility'].astype(str)
                         dfr['facility'] = dfr['facility'].astype(str)
                 
                         dfa = dfreb[dfreb['facility']==facilit]
