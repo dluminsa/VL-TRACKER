@@ -332,6 +332,7 @@ st.markdown(html_table, unsafe_allow_html=True)
 
 ager = ager[['facility', 'ART', 'AG']].copy()
 ager['AG'] = pd.to_numeric(ager['AG'], errors='coerce')
+st.write(ager)
 def band(x):
    if x < 10:
        return '0 to 9'
