@@ -275,7 +275,7 @@ cole.write(f'**{mar}**')
 colf.write(f'**{other}**')
 
 st.write('**DOWNLOADS**')
-with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
+with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST ON APPOINTMENT**'):
     cola,colb = st.columns(2)
     optioniz = ['TODAY', 'THIS WEEK', 'JAN', 'FEB', 'MARCH', 'OTHER Qtrs']
     perd = colb.selectbox('**FILTER BY RETURN PERIOD**', optioniz, index=None)
@@ -325,6 +325,8 @@ colc.write(f'**0**')
 cold.write(f'**0**')
 cole.write(f'**0**')
 colf.write(f'**0**')
+with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
+    pass
 st.divider()          
 html_table = """
 <h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
@@ -358,13 +360,16 @@ fig = px.histogram(ager, x='BAND', text_auto=True,
 
 # Customize layout
 fig.update_layout(xaxis_title="Age Band",
-                  yaxis_title="Count of IDs",
+                  yaxis_title="Count of NS",
                   bargap=0.2)
 
 # Show the figure
 st.plotly_chart(fig)
-          
-
+st.divider()        
+html_table = """
+<h6><b><u style="color: trend;">TREND LINE FOR REBLEEDING</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
          
             
 
