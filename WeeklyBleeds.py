@@ -347,9 +347,10 @@ def band(x):
        return '40 to 49'
    else:
        return 'Above 50'
-
+       
 
 ager['BAND'] = ager['AG'].apply(band)
+ager = ager.sort_values(by = 'AG')
 
 fig = px.histogram(ager, x='BAND', text_auto=True,
                    title="Histogram of Age Bands",
