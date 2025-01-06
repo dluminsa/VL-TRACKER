@@ -154,6 +154,7 @@ dfapt = dfapt[dfapt['TO'].isnull()].copy()
 #####ACTIVE
 dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce')
 active = dfapt[dfapt['Ryear']==2025]
+ager = active.copy()
 ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
@@ -304,9 +305,37 @@ with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
                         data=csv_data,
                         file_name="ACTIVITIES.csv",
                         mime="text/csv")
-             
+    
+html_table = """
+<h6><b><u style="color: purple;">FOR THOSE THAT WERE ON APPOINTMENT, LAST MONTH, HOW MANY WERE BLED</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
+cola, colb,colc, cold, cole, colf = st.columns(6)
+cola.write('**ON APP'T**')
+colb.write('**ATTENDED**')
+colc.write('**MISSED**')
+cold.write('**REBLED(cphl)**')
+cole.write('**AWR(emr)**')
+colf.write('**NOT BLED**')
+
+cola.write(f'**7**')
+colb.write(f'**0**')
+colc.write(f'**0**')
+cold.write(f'**0**')
+cole.write(f'**0**')
+colf.write(f'**0**')
+           
+html_table = """
+<h6><b><u style="color: purple;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
+"""
+st.markdown(html_table, unsafe_allow_html=True)
+
+ager['AG'] = pd.to_numeric(ager['AG'], errors='coerce')
+# def band(x):
+#    if x < 10:
 
 
+          
 
          
             
