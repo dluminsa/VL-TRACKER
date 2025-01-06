@@ -311,7 +311,7 @@ html_table = """
 """
 st.markdown(html_table, unsafe_allow_html=True)
 cola, colb,colc, cold, cole, colf = st.columns(6)
-cola.write('**ON APP'T**')
+cola.write('**ON APPT**')
 colb.write('**ATTENDED**')
 colc.write('**MISSED**')
 cold.write('**REBLED(cphl)**')
@@ -330,11 +330,25 @@ html_table = """
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
+ager = ager[['facility', 'ART', 'AG']].copy()
 ager['AG'] = pd.to_numeric(ager['AG'], errors='coerce')
-# def band(x):
-#    if x < 10:
+def band(x):
+   if x < 10:
+       return '0 to 9'
+   elif x < 20:
+       return '10 to 19'
+   elif x < 30:
+       return '20 to 29'
+   elif x < 40:
+       return '30 t0 39'
+   elif x < 50:
+       return '40 to 49'
+   else:
+       return 'Above 50'
 
 
+ager['BAND'] = ager['AG'].apply(band)
+st.write(band)
           
 
          
