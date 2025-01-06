@@ -175,7 +175,7 @@ colb.write(f'**{ac}**')
 colc.write(f'**{los}**')
 cold.write(f'**{totalto}**')
 cole.write(f'**{dd}**')
-
+st.divider()
 ###########
 html_table = """
 <h6><b><u style="color: green;">REBLEEDING AMONGST THOSE THAT ARE ACTIVE</u></b></h6>
@@ -221,7 +221,7 @@ colb.write(f'**{bled}**')
 colc.write(f'**{aw}**')
 cold.write(f'**{du}**')
 st.markdown('**KEY: AWR>> AWAITING RESULTS, HAS RECENT VL DATE IN EMR**')
-
+st.divider()
 html_table = """
 <h6><b><u style="color: red;">FOR THOSE THAT ARE DUE, WHEN ARE THEY ON APPOINTMENT</u></b></h6>
 """
@@ -305,6 +305,7 @@ with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
                         data=csv_data,
                         file_name="ACTIVITIES.csv",
                         mime="text/csv")
+st.divider()
     
 html_table = """
 <h6><b><u style="color: purple;">FOR THOSE THAT WERE ON APPOINTMENT, LAST MONTH, HOW MANY WERE BLED</u></b></h6>
@@ -341,7 +342,7 @@ def band(x):
    elif x < 30:
        return '20 to 29'
    elif x < 40:
-       return '30 t0 39'
+       return '30 to 39'
    elif x < 50:
        return '40 to 49'
    else:
@@ -349,7 +350,18 @@ def band(x):
 
 
 ager['BAND'] = ager['AG'].apply(band)
-st.write(ager)
+
+fig = px.histogram(ager, x='BAND', text_auto=True,
+                   title="Histogram of Age Bands",
+                   labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
+
+# Customize layout
+fig.update_layout(xaxis_title="Age Band",
+                  yaxis_title="Count of IDs",
+                  bargap=0.2)
+
+# Show the figure
+st.plotlyshow(fig)
           
 
          
