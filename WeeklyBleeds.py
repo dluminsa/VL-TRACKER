@@ -325,9 +325,9 @@ colc.write(f'**0**')
 cold.write(f'**0**')
 cole.write(f'**0**')
 colf.write(f'**0**')
-           
+st.divider()          
 html_table = """
-<h6><b><u style="color: purple;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
+<h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
@@ -361,7 +361,7 @@ fig.update_layout(xaxis_title="Age Band",
                   bargap=0.2)
 
 # Show the figure
-st.plotlyshow(fig)
+st.plotly_chart(fig)
           
 
          
