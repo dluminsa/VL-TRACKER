@@ -326,7 +326,7 @@ cold.write(f'**0**')
 cole.write(f'**0**')
 colf.write(f'**0**')
 with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
-    pass
+    st.write('BEING DEVELOPED')
 st.divider()          
 html_table = """
 <h6><b><u style="color: blue;">AGE DISTRIBUTION FOR ACTIVE NS</u></b></h6>
