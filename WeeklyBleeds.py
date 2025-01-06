@@ -275,6 +275,24 @@ colf.write(f'**{other}**')
 
 st.write('**DOWNLOADS**')
 with st.expander('**CLICK HERE TO DOWNLOAD NS LINELIST**'):
+    cola,colb = st.columns(2)
+    optioniz = ['TODAY', 'THIS WEEK', 'JAN', 'FEB', 'MARCH', 'OTHER Qtrs']
+    perd = colb.selectbox('**FILTER BY RETURN PERIOD**', optioniz, index=None)
+    if perd =='TODAY':
+        due = tude.copy()
+    elif perd == 'THIS WEEK':
+        due = wiki.copy()
+    elif perd == 'JAN':
+        due = jan.copy()
+    elif perd == 'FEB':
+        due = feb.copy()
+    elif perd == 'MARCH':
+        due = marc.copy()
+    elif perd == 'OTHER Qtrs':
+        due = others.copy()
+    else:
+        due = due.copy()
+    
     due = due[['facility','ART','result_numeric', 'date_collected','RD', 'VD']].copy()
     due = due.rename(columns = {'RD': 'RETURN DATE', 'VD': 'VL DATE(EMR)'})
     due = due.reset_index()
