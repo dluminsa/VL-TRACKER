@@ -355,13 +355,13 @@ ager['BAND'] = ager['AG'].apply(band)
 ager = ager.sort_values(by = 'AG')
 
 fig = px.histogram(ager, x='BAND', text_auto=True,
-                   title="Distribution of NS by Age Bands",
+                   title="Distribution of NS by their Age Bands",
                    labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
 
 # Customize layout
 fig.update_layout(xaxis_title="Age Band",
                   yaxis_title="Count of NS",
-                  bargap=0.2)
+                  bargap=0.1)
 
 # Show the figure
 st.plotly_chart(fig)
