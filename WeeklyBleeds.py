@@ -355,7 +355,7 @@ ager['BAND'] = ager['AG'].apply(band)
 ager = ager.sort_values(by = 'AG')
 
 fig = px.histogram(ager, x='BAND', text_auto=True,
-                   title="Histogram of Age Bands",
+                   title="Distribution of NS by Age Bands",
                    labels={'BAND': 'Age Band', 'count': 'Number of IDs'})
 
 # Customize layout
