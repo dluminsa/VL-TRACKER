@@ -220,7 +220,7 @@ for fac in checka:
     losta = dfapta[dfapta['Ryear']<2025]
     losa = losta.shape[0]
     
-    cola.write(f'**{faca}**')
+    cola.write(f'**{fac}**')
     colb.write(f'**{totala}**')
     colc.write(f'**{aca}**')
     cold.write(f'**{losa}**')
