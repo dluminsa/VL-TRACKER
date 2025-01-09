@@ -203,6 +203,7 @@ cold.write('**LTFU**')
 cole.write('**T/O**')
 colf.write('**DEAD**')
 for fac in checka:
+    dfapt['USE'] = dfapt['USE'].astype(str)
     dfapta= dfapt[dfapt['USE']==fac].copy()
     totala = dfapta.shape[0]
     deada = dfapta[dfapta['DD'].notna()]
