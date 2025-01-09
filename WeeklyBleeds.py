@@ -176,7 +176,7 @@ los = lost.shape[0]
 
 if len(checkd)>1:
     html_table = """
-    <h6><b><u style="color: purple;">QUICK SUMMARY</u></b></h6>
+    <h6><b><u style="color: purple;">QUICK SUMMARY COMBINED</u></b></h6>
     """
     st.markdown(html_table, unsafe_allow_html=True)
     
