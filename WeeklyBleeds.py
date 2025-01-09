@@ -180,7 +180,7 @@ lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
 cola, colb = st.columns([1,4])
 colb.write('**PART ONE: NUMBER OF NS THAT ARE STILL ACTIVE AND DUE**')
-
+st.divider()
 if len(checkd)>1  or len(checkf) >1:
     html_table = """
     <h6><b><u style="color: purple;">SUMMARY (ALL COMBINED)</u></b></h6>
@@ -239,7 +239,6 @@ for fac in checka:
     colf.write(f'**{dda}**')
 st.divider()
     
-st.divider()
 ###########
 html_table = """
 <h6><b><u style="color: green;">REBLEEDING AMONGST THOSE THAT ARE ACTIVE</u></b></h6>
