@@ -196,31 +196,37 @@ html_table = """
     """
 st.markdown(html_table, unsafe_allow_html=True)
 cola, colb,colc, cold, cole, colf = st.columns(6)
+st.write(f'**{word}**')
+cola.write('**ALL**')
+colb.write('**TOTAL DUE**')
+colc.write('**ACTIVE**')
+cold.write('**LTFU**')
+cole.write('**T/O**')
+colf.write('**DEAD**')
 for fac in checka:
-    dfapt = dfapt[dfapt['USE']==fac].copy()
-    st.write(f'**{word}**')
-    total = dfapt.shape[0]
-    dead = dfapt[dfapt['DD'].notna()]
-    dd = dead.shape[0]
+    dfapta= dfapt[dfapt['USE']==fac].copy()
+    total = dfapta.shape[0]
+    deada = dfapta[dfapta['DD'].notna()]
+    dda = deada.shape[0]
     ########### REMAINING NS AFTER THE DEAD THEN TO
-    dfapt = dfapt[dfapt['DD'].isnull()].copy()
-    to = dfapt[dfapt['TO'].notna()]
-    totalto = to.shape[0]
-    dfapt = dfapt[dfapt['TO'].isnull()].copy()
+    dfapta = dfapta[dfapta['DD'].isnull()].copy()
+    toa = dfapta[dfapta['TO'].notna()]
+    totaltoa = toa.shape[0]
+    dfapta = dfapta[dfapta['TO'].isnull()].copy()
     #####ACTIVE
-    dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce')
-    active = dfapt[dfapt['Ryear']==2025]
-    ager = active.copy()
-    ac = active.shape[0]
-    lost = dfapt[dfapt['Ryear']<2025]
-    los = lost.shape[0]
+    dfapta['Ryear'] = pd.to_numeric(dfapta['Ryear'], errors='coerce')
+    activea = dfapta[dfapta['Ryear']==2025]
+    agera = activea.copy()
+    aca = activea.shape[0]
+    losta = dfapta[dfapta['Ryear']<2025]
+    losa = losta.shape[0]
     
-    cola.write(f'**{fac}**')
-    colb.write(f'**{total}**')
-    colc.write(f'**{ac}**')
-    cold.write(f'**{los}**')
-    cole.write(f'**{totalto}**')
-    colf.write(f'**{dd}**')
+    cola.write(f'**{faca}**')
+    colb.write(f'**{totala}**')
+    colc.write(f'**{aca}**')
+    cold.write(f'**{losa}**')
+    cole.write(f'**{totaltoa}**')
+    colf.write(f'**{dda}**')
 st.divider()
     
 st.divider()
