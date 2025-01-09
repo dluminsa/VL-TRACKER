@@ -109,11 +109,13 @@ if len(checkd)>1:
     dfall['USE'] = dfall4['DISTRICT']
     dfapt['USE'] = dfapt['DISTRICT']
     word ='DISTRICT'
+    checka = dfapt['USE'].unique()
 elif len(checkd) ==1:
     dfr['USE']  = dfr4['facility'].map(mapper)
     dfall['USE'] = dfall4['facility'].map(mapper)
     dfapt['USE'] = dfapt['facility'].map(mapper)
     word ='FACILITY'
+    checka = dfapt['USE'].unique()
 
 # Apply filters based on selected criteria
 if CLUSTER:
@@ -134,7 +136,6 @@ if facility:
 s1 = dfall['facility'].unique()
 s2 = dfapt['facility'].unique()
 notemr = set(s1) - set(s2)
-checka = dfapt['USE'].unique()
 
 if facility:
     if facility not in s2:
