@@ -101,7 +101,16 @@ dfr = dfr4.copy()
 dfall = dfall4.copy()
 dfapt = dfapt.copy()
 checkd = dfapt['DISTRICT'].unique()
-st.write(checkd)
+if len(checkd)>1:
+    dfr['USE']  = dfr4['DISTRICT']
+    dfall['USE'] = dfall4['DISTRICT']
+    dfapt['USE'] = dfapt['DISTRICT']
+elif len(checkd) ==1:
+    dfr['USE']  = dfr4['facility']
+    dfall['USE'] = dfall4['facility']
+    dfapt['USE'] = dfapt['facility']
+st.write(dfapt)
+    
 
 # Apply filters based on selected criteria
 if CLUSTER:
