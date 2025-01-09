@@ -204,7 +204,7 @@ cole.write('**T/O**')
 colf.write('**DEAD**')
 for fac in checka:
     dfapta= dfapt[dfapt['USE']==fac].copy()
-    total = dfapta.shape[0]
+    totala = dfapta.shape[0]
     deada = dfapta[dfapta['DD'].notna()]
     dda = deada.shape[0]
     ########### REMAINING NS AFTER THE DEAD THEN TO
