@@ -196,8 +196,7 @@ html_table = """
     """
 st.markdown(html_table, unsafe_allow_html=True)
 cola, colb,colc, cold, cole, colf = st.columns(6)
-st.write(f'**{word}**')
-cola.write('**ALL**')
+cola.write(f'**{word}**')
 colb.write('**TOTAL DUE**')
 colc.write('**ACTIVE**')
 cold.write('**LTFU**')
