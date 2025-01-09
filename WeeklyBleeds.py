@@ -178,6 +178,8 @@ ager = active.copy()
 ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
+cola, colb = st.columns([1:6])
+colb.columns('**PART ONE: NUMBER OF NS THAT ARE STILL ACTIVE AND DUE**')
 
 if len(checkd)>1  or len(checkf) >1:
     html_table = """
