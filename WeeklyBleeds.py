@@ -195,7 +195,7 @@ html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
 st.markdown(html_table, unsafe_allow_html=True)
-for fac in chceka:
+for fac in checka:
     dfapt = dfapt[dfapt['USE']==fac].copy()
     st.write(f'**{word}**')
     total = dfapt.shape[0]
