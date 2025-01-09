@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
-from datetime import datetime
+from datetime import datetime 
 
 st.set_page_config(
     page_title = 'NS TRACKER',
@@ -144,7 +144,8 @@ if not facility:
         st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
 #######################################
 checkd = dfapt['DISTRICT'].unique()
-mapper = {'Ssembabule HC IV': 'Sembabule'}
+#REPLACE LONG FACILITIES
+dfr4['facility'] = dfr4['facility'].str.replace('Ssembabule HC IV', 'Sembabule', regex=False)
 
 if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
