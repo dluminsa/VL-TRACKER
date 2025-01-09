@@ -147,7 +147,8 @@ checkd = dfapt['DISTRICT'].unique()
 checkf = dfapt['facility'].unique()
 #REPLACE LONG FACILITIES
 dfapt['facility'] = dfapt['facility'].astype(str)
-dfapt['facility'] = dfapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule', regex=False)
+dfapt['facility'] = dfapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule IV', regex=False)
+dfapt['facility'] = dfapt['facility'].str.replace('Kalangala HC IV', 'Kalangala IV', regex=False)
 
 if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
