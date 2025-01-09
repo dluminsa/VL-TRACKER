@@ -101,21 +101,6 @@ dfr = dfr4.copy()
 dfall = dfall4.copy()
 dfapt = dfapt.copy()
 
-checkd = dfapt['DISTRICT'].unique()
-mapper = {'Ssembabule HC IV': 'Sembabule'}
-
-if len(checkd)>1:
-    dfr['USE']  = dfr4['DISTRICT']
-    dfall['USE'] = dfall4['DISTRICT']
-    dfapt['USE'] = dfapt['DISTRICT']
-    word ='DISTRICT'
-    checka = dfapt['USE'].unique()
-elif len(checkd) ==1:
-    dfr['USE']  = dfr4['facility'].map(mapper)
-    dfall['USE'] = dfall4['facility'].map(mapper)
-    dfapt['USE'] = dfapt['facility'].map(mapper)
-    word ='FACILITY'
-    checka = dfapt['USE'].unique()
 
 # Apply filters based on selected criteria
 if CLUSTER:
@@ -157,6 +142,22 @@ if not facility:
                 st.write(notemr)
     else:
         st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
+#######################################
+checkd = dfapt['DISTRICT'].unique()
+mapper = {'Ssembabule HC IV': 'Sembabule'}
+
+if len(checkd)>1:
+    dfr['USE']  = dfr4['DISTRICT']
+    dfall['USE'] = dfall4['DISTRICT']
+    dfapt['USE'] = dfapt['DISTRICT']
+    word ='DISTRICT'
+    checka = dfapt['USE'].unique()
+elif len(checkd) ==1:
+    dfr['USE']  = dfr4['facility'].map(mapper)
+    dfall['USE'] = dfall4['facility'].map(mapper)
+    dfapt['USE'] = dfapt['facility'].map(mapper)
+    word ='FACILITY'
+    checka = dfapt['USE'].unique()
 ##################NS THAT ARE DEAD
 dfaptd = dfapt.copy()    
 total = dfapt.shape[0]
