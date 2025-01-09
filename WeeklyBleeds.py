@@ -183,7 +183,7 @@ colb.write('**PART ONE: NUMBER OF NS THAT ARE STILL ACTIVE AND DUE**')
 
 if len(checkd)>1  or len(checkf) >1:
     html_table = """
-    <h6><b><u style="color: purple;">QUICK SUMMARY COMBINED</u></b></h6>
+    <h6><b><u style="color: purple;">SUMMARY (ALL COMBINED)</u></b></h6>
     """
     st.markdown(html_table, unsafe_allow_html=True)
     
@@ -201,7 +201,7 @@ if len(checkd)>1  or len(checkf) >1:
     cole.write(f'**{totalto}**')
     colf.write(f'**{dd}**')
 html_table = """
-    <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
+    <h6><b><u style="color: purple;">SUMMARY AT DISTRICT/FACILITY LEVEL</u></b></h6>
     """
 st.markdown(html_table, unsafe_allow_html=True)
 
