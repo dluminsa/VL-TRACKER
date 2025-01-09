@@ -204,6 +204,7 @@ colc.write('**ACTIVE**')
 cold.write('**LTFU**')
 cole.write('**T/O**')
 colf.write('**DEAD**')
+st.write(checka)
 for fac in checka:
     dfapt['USE'] = dfaptd['USE'].astype(str)
     dfapta= dfaptd[dfaptd['USE']==fac].copy()
