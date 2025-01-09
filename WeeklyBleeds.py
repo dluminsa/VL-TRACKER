@@ -105,19 +105,18 @@ if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
     dfall['USE'] = dfall4['DISTRICT']
     dfapt['USE'] = dfapt['DISTRICT']
+    word ='DISTRICT'
 elif len(checkd) ==1:
     dfr['USE']  = dfr4['facility']
     dfall['USE'] = dfall4['facility']
     dfapt['USE'] = dfapt['facility']
-st.write(dfapt)
-    
+    word ='FACILITY'
 
 # Apply filters based on selected criteria
 if CLUSTER:
     dfr = dfr[dfr['CLUSTER'].isin(CLUSTER)].copy()
     dfall = dfall[dfall['CLUSTER'].isin(CLUSTER)].copy()
     dfapt = dfapt[dfapt['CLUSTER'].isin(CLUSTER)].copy()
-
 
 if district:
     dfr = dfr[dfr['DISTRICT'].isin(district)].copy()
@@ -154,6 +153,7 @@ if not facility:
     else:
         st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
 ##################NS THAT ARE DEAD
+    
 total = dfapt.shape[0]
 dead = dfapt[dfapt['DD'].notna()]
 dd = dead.shape[0]
@@ -174,18 +174,51 @@ html_table = """
 """
 st.markdown(html_table, unsafe_allow_html=True)
 
-cola, colb,colc, cold, cole = st.columns(5)
-cola.write('**TOTAL**')
-colb.write('**ACTIVE**')
-colc.write('**LTFU**')
-cold.write('**T/O**')
-cole.write('**DEAD**')
+cola, colb,colc, cold, cole, colf = st.columns(6)
+cola.write('**ALL**')
+colb.write('**TOTAL DUE**')
+colc.write('**ACTIVE**')
+cold.write('**LTFU**')
+cole.write('**T/O**')
+colf.write('**DEAD**')
 
-cola.write(f'**{total}**')
-colb.write(f'**{ac}**')
-colc.write(f'**{los}**')
-cold.write(f'**{totalto}**')
-cole.write(f'**{dd}**')
+colb.write(f'**{total}**')
+colc.write(f'**{ac}**')
+cold.write(f'**{los}**')
+cole.write(f'**{totalto}**')
+colf.write(f'**{dd}**')
+st.divider()
+    html_table = """
+    <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
+    """
+st.markdown(html_table, unsafe_allow_html=True)
+for fac in chcekd:
+    dfapt = dfapt[dfapt['USE']==fac].copy()
+    st.write(f'**{word}**')
+    total = dfapt.shape[0]
+    dead = dfapt[dfapt['DD'].notna()]
+    dd = dead.shape[0]
+    ########### REMAINING NS AFTER THE DEAD THEN TO
+    dfapt = dfapt[dfapt['DD'].isnull()].copy()
+    to = dfapt[dfapt['TO'].notna()]
+    totalto = to.shape[0]
+    dfapt = dfapt[dfapt['TO'].isnull()].copy()
+    #####ACTIVE
+    dfapt['Ryear'] = pd.to_numeric(dfapt['Ryear'], errors='coerce')
+    active = dfapt[dfapt['Ryear']==2025]
+    ager = active.copy()
+    ac = active.shape[0]
+    lost = dfapt[dfapt['Ryear']<2025]
+    los = lost.shape[0]
+    
+    cola.write(f'**{fac}**')
+    colb.write(f'**{total}**')
+    colc.write(f'**{ac}**')
+    cold.write(f'**{los}**')
+    cole.write(f'**{totalto}**')
+    colf.write(f'**{dd}**')
+st.divider()
+    
 st.divider()
 ###########
 html_table = """
