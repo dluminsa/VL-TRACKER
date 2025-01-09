@@ -102,6 +102,7 @@ dfall = dfall4.copy()
 dfapt = dfapt.copy()
 
 checkd = dfapt['DISTRICT'].unique()
+mapper = {'Ssembabule HC IV': 'Sembabule'}
 
 if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
@@ -109,9 +110,9 @@ if len(checkd)>1:
     dfapt['USE'] = dfapt['DISTRICT']
     word ='DISTRICT'
 elif len(checkd) ==1:
-    dfr['USE']  = dfr4['facility']
-    dfall['USE'] = dfall4['facility']
-    dfapt['USE'] = dfapt['facility']
+    dfr['USE']  = dfr4['facility'].map(mapper)
+    dfall['USE'] = dfall4['facility'].map(mapper)
+    dfapt['USE'] = dfapt['facility'].map(mapper)
     word ='FACILITY'
 checka = dfapt['USE'].unique()
 
