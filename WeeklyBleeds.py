@@ -173,25 +173,27 @@ ager = active.copy()
 ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
-html_table = """
-<h6><b><u style="color: purple;">QUICK SUMMARY</u></b></h6>
-"""
-st.markdown(html_table, unsafe_allow_html=True)
 
-cola, colb,colc, cold, cole, colf = st.columns(6)
-cola.write('**ALL**')
-colb.write('**TOTAL DUE**')
-colc.write('**ACTIVE**')
-cold.write('**LTFU**')
-cole.write('**T/O**')
-colf.write('**DEAD**')
-
-colb.write(f'**{total}**')
-colc.write(f'**{ac}**')
-cold.write(f'**{los}**')
-cole.write(f'**{totalto}**')
-colf.write(f'**{dd}**')
-st.divider()
+if facility and not (CLUSTER or district):
+    html_table = """
+    <h6><b><u style="color: purple;">QUICK SUMMARY</u></b></h6>
+    """
+    st.markdown(html_table, unsafe_allow_html=True)
+    
+    cola, colb,colc, cold, cole, colf = st.columns(6)
+    cola.write('**ALL**')
+    colb.write('**TOTAL DUE**')
+    colc.write('**ACTIVE**')
+    cold.write('**LTFU**')
+    cole.write('**T/O**')
+    colf.write('**DEAD**')
+    
+    colb.write(f'**{total}**')
+    colc.write(f'**{ac}**')
+    cold.write(f'**{los}**')
+    cole.write(f'**{totalto}**')
+    colf.write(f'**{dd}**')
+    st.divider()
 html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
