@@ -145,8 +145,8 @@ if not facility:
 #######################################
 checkd = dfapt['DISTRICT'].unique()
 #REPLACE LONG FACILITIES
-dfapt['facility'] = dfrapt['facility'].astype(str)
-dfapt['facility'] = dfrapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule', regex=False)
+dfapt['facility'] = dfapt['facility'].astype(str)
+dfapt['facility'] = dfapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule', regex=False)
 
 if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
@@ -209,7 +209,6 @@ colc.write('**ACTIVE**')
 cold.write('**LTFU**')
 cole.write('**T/O**')
 colf.write('**DEAD**')
-st.write(checka)
 for fac in checka:
     dfapt['USE'] = dfaptd['USE'].astype(str)
     dfapta= dfaptd[dfaptd['USE']==fac].copy()
