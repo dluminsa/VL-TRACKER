@@ -100,6 +100,8 @@ else:
 dfr = dfr4.copy()
 dfall = dfall4.copy()
 dfapt = dfapt.copy()
+checkd = dfapt['DISTRICT'].unique()
+st.write(dfapt)
 
 # Apply filters based on selected criteria
 if CLUSTER:
