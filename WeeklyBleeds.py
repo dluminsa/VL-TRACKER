@@ -100,7 +100,9 @@ else:
 dfr = dfr4.copy()
 dfall = dfall4.copy()
 dfapt = dfapt.copy()
+
 checkd = dfapt['DISTRICT'].unique()
+
 if len(checkd)>1:
     dfr['USE']  = dfr4['DISTRICT']
     dfall['USE'] = dfall4['DISTRICT']
@@ -111,6 +113,7 @@ elif len(checkd) ==1:
     dfall['USE'] = dfall4['facility']
     dfapt['USE'] = dfapt['facility']
     word ='FACILITY'
+checka = dfapt['USE'].unique()
 
 # Apply filters based on selected criteria
 if CLUSTER:
@@ -192,7 +195,7 @@ html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
 st.markdown(html_table, unsafe_allow_html=True)
-for fac in chcekd:
+for fac in chceka:
     dfapt = dfapt[dfapt['USE']==fac].copy()
     st.write(f'**{word}**')
     total = dfapt.shape[0]
