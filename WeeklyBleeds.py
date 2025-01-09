@@ -193,7 +193,6 @@ if len(checkd)>1:
     cold.write(f'**{los}**')
     cole.write(f'**{totalto}**')
     colf.write(f'**{dd}**')
-    st.divider()
 html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
