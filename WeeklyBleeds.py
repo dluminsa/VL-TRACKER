@@ -153,9 +153,9 @@ if len(checkd)>1:
     word ='DISTRICT'
     checka = dfapt['USE'].unique()
 elif len(checkd) ==1:
-    dfr['USE']  = dfr4['facility'].map(mapper)
-    dfall['USE'] = dfall4['facility'].map(mapper)
-    dfapt['USE'] = dfapt['facility'].map(mapper)
+    dfr['USE']  = dfr4['facility']
+    dfall['USE'] = dfall4['facility']#.map(mapper)
+    dfapt['USE'] = dfapt['facility']#.map(mapper)
     word ='FACILITY'
     checka = dfapt['USE'].unique()
 ##################NS THAT ARE DEAD
