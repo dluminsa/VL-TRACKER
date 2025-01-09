@@ -174,7 +174,7 @@ ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
 
-if facility and not (CLUSTER or district):
+if CLUSTER or district and not facility:
     html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY</u></b></h6>
     """
