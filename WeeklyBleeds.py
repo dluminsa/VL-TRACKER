@@ -196,10 +196,10 @@ if len(checkd)>1:
     cole.write(f'**{totalto}**')
     colf.write(f'**{dd}**')
 html_table = """
-    <h6><b><u style="color: purple;">f'QUICK SUMMARY BY {word}'</u></b></h6>
+    <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
 st.markdown(html_table, unsafe_allow_html=True)
-st.write(dfapt)
+
 cola, colb,colc, cold, cole, colf = st.columns(6)
 cola.write(f'**{word}**')
 colb.write('**TOTAL DUE**')
@@ -207,7 +207,7 @@ colc.write('**ACTIVE**')
 cold.write('**LTFU**')
 cole.write('**T/O**')
 colf.write('**DEAD**')
-
+st.write(checka)
 for fac in checka:
     dfapt['USE'] = dfaptd['USE'].astype(str)
     dfapta= dfaptd[dfaptd['USE']==fac].copy()
