@@ -101,7 +101,7 @@ dfr = dfr4.copy()
 dfall = dfall4.copy()
 dfapt = dfapt.copy()
 checkd = dfapt['DISTRICT'].unique()
-st.write(dfapt)
+st.write(checkd)
 
 # Apply filters based on selected criteria
 if CLUSTER:
