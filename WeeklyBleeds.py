@@ -144,6 +144,7 @@ if not facility:
         st.write('**ALL EMR EXTRACTS HAVE BEEN UPLOADED**')
 #######################################
 checkd = dfapt['DISTRICT'].unique()
+checkf = dfapt['facility'].unique()
 #REPLACE LONG FACILITIES
 dfapt['facility'] = dfapt['facility'].astype(str)
 dfapt['facility'] = dfapt['facility'].str.replace('Ssembabule HC IV', 'Sembabule', regex=False)
@@ -178,7 +179,7 @@ ac = active.shape[0]
 lost = dfapt[dfapt['Ryear']<2025]
 los = lost.shape[0]
 
-if len(checkd)>1:
+if len(checkd)>1  or len(checkf) >1:
     html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY COMBINED</u></b></h6>
     """
