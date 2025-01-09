@@ -188,7 +188,7 @@ cold.write(f'**{los}**')
 cole.write(f'**{totalto}**')
 colf.write(f'**{dd}**')
 st.divider()
-    html_table = """
+html_table = """
     <h6><b><u style="color: purple;">QUICK SUMMARY BY DISTRICT/FACILITY</u></b></h6>
     """
 st.markdown(html_table, unsafe_allow_html=True)
