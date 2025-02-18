@@ -10,7 +10,6 @@ import traceback
 import time
 from streamlit_gsheets import GSheetsConnection
 from datetime import datetime 
-sssssssssssss
 
 st.set_page_config(
     page_title = 'NS TRACKER',
