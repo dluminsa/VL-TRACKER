@@ -415,6 +415,7 @@ if df is not None and district is not None:
                             .format("{:.0f}", subset = ['VL COV','BLEEDS','Q3CURR', 'BALANCE TO 95%', 'HLVs', 'LLVs'])  # Format 'VL COV' to one decimal place
                             .applymap(kusiiga, subset=['VL COV'])  # Apply cell-wise styling
                         )
+                st.stop()
                 st.write(styler)
         
         #DOWNLOADS
