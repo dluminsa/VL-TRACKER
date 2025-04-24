@@ -242,7 +242,7 @@ if file is not None:
                     dfdups = df.copy()
                     dfa = []
                     for facility in facilities:
-                        dfs = df[df['facility']==facility]
+                        dfs = df[df['facility']==facility].copy()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
                         if dfs.empty:
                            continue
                         dfs = dfs.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
@@ -275,11 +275,11 @@ if file is not None:
                     dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
                     #st.write(dfc)
                     #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
-                    dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q3CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
-                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q3CURR'])
+                    dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
+                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q1CURR'])
                     dfc = dfc.dropna(subset=['VL COV'])
                     dfc['VL COV'] = dfc['VL COV'].astype(int)
-                    dfc['BALANCE'] = (dfc['Q3CURR']*0.95)-(dfc['BLEEDS'])
+                    dfc['BALANCE'] = (dfc['Q1CURR']*0.95)-(dfc['BLEEDS'])
                     dfc['BALANCE'] = dfc['BALANCE'].astype(int)
                     def achieve (v):
                         if v < 0:
@@ -291,8 +291,8 @@ if file is not None:
 if df is not None and district is not None: 
         dfq =dfc.reset_index().copy()
         dfq = dfq[['facility', 'Q1CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
-        dfq['Q3CURR'] = dfq['Q1CURR'].astype(int)
-        r = dfq['Q3CURR'].sum()
+        #dfq['Q3CURR'] = dfq['Q1CURR'].astype(int)
+        r = dfq['Q1CURR'].sum()
         #st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
         y = dfq['BALANCE TO 95%'].sum()
@@ -340,62 +340,62 @@ if df is not None and district is not None:
                 dfns = dft[((dft['Dyear']==2025) | ((dft['Dyear']== 2024) & (dft['Dmonth']>9)))].copy()
                 
                 facilitiz = dft['facility'].unique()
-                dfallns = []
+                # dfallns = []
 
-                for facilit in facilitiz:
-                        dfns['facility'] = dfns['facility'].astype(str) #NEW BLEEDS
-                        allns['facility'] = allns['facility'].astype(str) #NS
+                # for facilit in facilitiz:
+                #         dfns['facility'] = dfns['facility'].astype(str) #NEW BLEEDS
+                #         allns['facility'] = allns['facility'].astype(str) #NS
 
-                        dfa = allns[allns['facility'] == facilit]
-                        dfb = dfns[dfns['facility']==facilit]  
-                #of the NS, who has been rebled?
-                        dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
-                        dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                        dfrb = dfa[dfa['ART'].isin(dfb['ART'])].copy()
-                        dfallns.append(dfrb)
-                if len(dfallns) > 0:
-                        dfreb = pd.concat(dfallns)        
+                #         dfa = allns[allns['facility'] == facilit]
+                #         dfb = dfns[dfns['facility']==facilit]  
+                # #of the NS, who has been rebled?
+                #         dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+                #         dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+                #         dfrb = dfa[dfa['ART'].isin(dfb['ART'])].copy()
+                #         dfallns.append(dfrb)
+                # if len(dfallns) > 0:
+                #         dfreb = pd.concat(dfallns)        
                         
-                        #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
-                        conn = st.connection('gsheets', type=GSheetsConnection)
-                        exist = conn.read(worksheet= 'SUP', usecols=list(range(8)),ttl=5)
-                        dfr = exist.dropna(how='all')
-                        dfra = dfr.copy()
-                        dfalln = []
-                        for facilit in facilitiz:
-                                dfreb['facility'] = dfreb['facility'].astype(str) #THE NEW BLEEDS
-                                dfr['facility'] = dfr['facility'].astype(str) #THE GOOGLE SHEET NUMBERS
+                #         #CHECKING IF THE ART NUMBERS ARE NOT IN THE GOOGLE SHHET ARLEADY
+                #         conn = st.connection('gsheets', type=GSheetsConnection)
+                #         exist = conn.read(worksheet= 'SUP', usecols=list(range(8)),ttl=5)
+                #         dfr = exist.dropna(how='all')
+                #         dfra = dfr.copy()
+                #         dfalln = []
+                #         for facilit in facilitiz:
+                #                 dfreb['facility'] = dfreb['facility'].astype(str) #THE NEW BLEEDS
+                #                 dfr['facility'] = dfr['facility'].astype(str) #THE GOOGLE SHEET NUMBERS
                         
-                                dfa = dfreb[dfreb['facility']==facilit]
-                                dfb = dfr[dfr['facility'] == facilit]
+                #                 dfa = dfreb[dfreb['facility']==facilit]
+                #                 dfb = dfr[dfr['facility'] == facilit]
                         
-                                dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
-                                dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
-                                dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
-                                dfalln.append(dfrb)
-                        if len(dfalln)>0:
-                           dftreb = pd.concat(dfalln)
-                           if district == 'KALANGALA':
-                                cluster = 'KALANGALA'
-                           elif district == 'WAKISO':
-                                cluster = 'WAKISO'
-                           elif district in ['MPIGI', 'GOMBA', 'BUTAMBALA']:
-                                cluster = 'MPIGI'
-                           elif district in ['RAKAI', 'KYOTERA']:
-                                cluster = 'KYOTERA'
-                           elif district in ['LYANTONDE', 'LWENGO']:
-                                cluster = 'LYANTONDE'
-                           elif district in ['SEMBABULE', 'BUKOMANSIMBI', 'KALUNGU','MASAKA CITY', 'MASAKA DISTRICT']:
-                                cluster = 'MASAKA'
+                #                 dfa['ART'] = pd.to_numeric(dfa['ART'], errors = 'coerce')
+                #                 dfb['ART'] = pd.to_numeric(dfb['ART'], errors = 'coerce')
+                #                 dfrb = dfa[~dfa['ART'].isin(dfb['ART'])].copy()
+                #                 dfalln.append(dfrb)
+                #         if len(dfalln)>0:
+                #            dftreb = pd.concat(dfalln)
+                #            if district == 'KALANGALA':
+                #                 cluster = 'KALANGALA'
+                #            elif district == 'WAKISO':
+                #                 cluster = 'WAKISO'
+                #            elif district in ['MPIGI', 'GOMBA', 'BUTAMBALA']:
+                #                 cluster = 'MPIGI'
+                #            elif district in ['RAKAI', 'KYOTERA']:
+                #                 cluster = 'KYOTERA'
+                #            elif district in ['LYANTONDE', 'LWENGO']:
+                #                 cluster = 'LYANTONDE'
+                #            elif district in ['SEMBABULE', 'BUKOMANSIMBI', 'KALUNGU','MASAKA CITY', 'MASAKA DISTRICT']:
+                #                 cluster = 'MASAKA'
                                    
-                           dftreb['CLUSTER'] = cluster
-                           dftreb = dftreb[['CLUSTER', 'DISTRICT', 'facility', 'art_number','ART', 'result_numeric', 'date_collected']].copy()
-                           updated = pd.concat([dfra, dftreb], ignore_index =True)
-                           conn.update(worksheet = 'SUP', data = updated) 
-                        else:
-                                pass
-                else:
-                        pass
+                #            dftreb['CLUSTER'] = cluster
+                #            dftreb = dftreb[['CLUSTER', 'DISTRICT', 'facility', 'art_number','ART', 'result_numeric', 'date_collected']].copy()
+                #            updated = pd.concat([dfra, dftreb], ignore_index =True)
+                #            conn.update(worksheet = 'SUP', data = updated) 
+                #         else:
+                #                 pass
+                # else:
+                #         pass
                         
 
 if df is not None and district is not None:
