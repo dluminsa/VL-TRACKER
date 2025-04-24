@@ -218,7 +218,7 @@ if file is not None:
                     
                     df[['Dyear', 'Dmonth', 'Dday']]= df[['Dyear', 'Dmonth', 'Dday']].apply(pd.to_numeric, errors='coerce')
                     df['Dyear'] = df['Dyear'].replace(24, 2024, regex=False)
-                    df = df[((df['Dyear']>2024)| ((df['Dyear']==2024) & (df['Dmonth']>3)))].copy()
+                    df = df[((df['Dyear']>2024)| ((df['Dyear']==2024) & (df['Dmonth']>6)))].copy()
                     df = df.sort_values(by= ['Dyear', 'Dmonth', 'Dday'], ascending=False)
 
                     def Viremia (x):
@@ -287,11 +287,11 @@ if file is not None:
                         else:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                    dfc = dfc[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
+                    dfc = dfc[['facility', 'Q1CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
 if df is not None and district is not None: 
         dfq =dfc.reset_index().copy()
-        dfq = dfq[['facility', 'Q3CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
-        dfq['Q3CURR'] = dfq['Q3CURR'].astype(int)
+        dfq = dfq[['facility', 'Q1CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
+        dfq['Q3CURR'] = dfq['Q1CURR'].astype(int)
         r = dfq['Q3CURR'].sum()
         #st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
@@ -302,7 +302,7 @@ if df is not None and district is not None:
         # #dfc= dfq.copy()
         dfq.loc[len(dfq), 'facility'] = 'TOTAL'
         #st.write(dfc)
-        dfq.loc[len(dfq)-1, 'Q3CURR'] = int(r)
+        dfq.loc[len(dfq)-1, 'Q1CURR'] = int(r)
         dfq.loc[len(dfq)-1, 'BLEEDS'] = t
         dfq.loc[len(dfq)-1, 'VL COV'] = o
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
@@ -311,7 +311,7 @@ if df is not None and district is not None:
 if df is not None and district is not None:   
         dfe = dfq.set_index('facility')
         dfvl = dfe.reset_index()
-        dfe = dfe.sort_values(by = ['Q3CURR'])#, ascending=False)
+        dfe = dfe.sort_values(by = ['Q1CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         
         @st.cache_data
@@ -325,7 +325,7 @@ if df is not None and district is not None:
 
 current_time = time.localtime()
 week = time.strftime("%V", current_time)
-week = int(week)-39
+week = int(week) + 13
 if df is not None and district is not None: 
                 def nodups():
                       dfg = dfnodups.copy()
