@@ -406,7 +406,7 @@ if df is not None and district is not None:
                 def kusiiga(x):
                     if x >94:
                         return 'background-color: green'
-                    elif x >89:
+                    elif x >85:
                         return 'background-color: yellow'
                     else:
                         return 'background-color: red'
