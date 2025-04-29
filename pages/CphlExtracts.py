@@ -402,7 +402,6 @@ if df is not None and district is not None:
 
                 dfe = dfe.drop(columns = 'DISTRICT')
                 dfe = dfe.reset_index() 
-                st.write(dfe)
                 
                 def kusiiga(x):
                     if x >94:
@@ -432,7 +431,7 @@ if df is not None and district is not None:
         
                 ws.insert_rows(0)
                 ws['A1'] = 'FACILITY'
-                ws['B1'] = 'Q3 CURR'
+                ws['B1'] = 'Q1 CURR'
                 ws['C1'] = 'BLEEDS'
                 ws['D1'] = 'VL COV'
                 ws['E1'] = 'BALANCE TO 95%'
