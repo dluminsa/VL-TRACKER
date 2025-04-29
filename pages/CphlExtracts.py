@@ -402,7 +402,7 @@ if df is not None and district is not None:
 
                 dfe = dfe.drop(columns = 'DISTRICT')
                 dfe = dfe.reset_index() 
-               st.write(dfe)
+                st.write(dfe)
                 
                 def kusiiga(x):
                     if x >94:
