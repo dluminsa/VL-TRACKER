@@ -397,7 +397,6 @@ if df is not None and district is not None:
                 # else:
                 #         pass
                         
-st.write(dfe)
 if df is not None and district is not None:
 
                 dfe = dfe.drop(columns = 'DISTRICT')
