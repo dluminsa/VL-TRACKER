@@ -125,6 +125,7 @@ if file is not None:
         df['facility'] =  df['facility'].str.replace('/', '-')
         #df['facility'] =  df['facility'].str.replace('Kinoni Welfare Medical Centre CLINIC', 'KINONI')
         df['facility'] =  df['facility'].str.replace('Mukwano Medical Centre CLINIC', 'Lukaya HC III')
+        df['facility'] =  df['facility'].str.replace('Gombe (Butambala) Hospital', 'Gombe HOSPITAL')
         df['facility'] =  df['facility'].str.replace('St. Francis Maternity Home HC II', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('Teguzibirwa Dom Clinic', 'Lukaya HC III')
         df['facility'] =  df['facility'].str.replace('Bulwadda HC II', 'Kifampa HC III')
