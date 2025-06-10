@@ -514,7 +514,8 @@ if df is not None and district is not None:
             
                         #if df is not None and district is not None:
                 dft = dft.copy()
-                st.write(dft)
+                DFT = dft.drop(columns = ['Dyear', 'Dmonth', 'Dday']
+                st.write(DFT)
                 uniques = dft['facility'].unique()
                 # st.download_button(
                 #                 label=f"Download CSV for {district} without duplicates",
