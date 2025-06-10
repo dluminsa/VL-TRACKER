@@ -514,15 +514,15 @@ if df is not None and district is not None:
             
                         #if df is not None and district is not None:
                 dft = dft.copy()
-                DFT = dft.drop(columns = ['Dyear', 'Dmonth', 'Dday']
-                st.write(DFT)
+                DFT = dft.drop(columns = ['Dyear', 'Dmonth', 'Dday'])
+                
                 uniques = dft['facility'].unique()
-                # st.download_button(
-                #                 label=f"Download CSV for {district} without duplicates",
-                #                         data=dft.copy(),
-                #                         file_name=f"{district}_data_without_duplicates.csv",
-                #                         mime="text/csv"
-                #                     )
+                st.download_button(
+                                label=f"Download CSV for {district} without duplicates",
+                                        data=DFT.to_csv(index=False),
+                                        file_name=f"{district}_data_without_duplicates.csv",
+                                        mime="text/csv"
+                                    )
             
                             # Create an expander to contain the download buttons
                 with st.expander(f"Download files for {district} Facilities without duplicates"):
