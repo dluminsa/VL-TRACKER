@@ -520,7 +520,7 @@ if df is not None and district is not None:
                 st.download_button(
                                 label=f"Download CSV for {district} without duplicates",
                                         data=DFT.to_csv(index=False),
-                                        file_name=f"{district}_data_without_duplicates.csv",
+                                        file_name=f"{district}.csv",
                                         mime="text/csv"
                                     )
             
