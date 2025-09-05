@@ -276,11 +276,11 @@ if file is not None:
                     dfc = pd.merge(dfb,dtc, on = 'facility', how = 'left')
                     #st.write(dfc)
                     #file = r"C:\Users\Desire Lumisa\Desktop\New folder (2)\THISBP.csv"
-                    dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q1CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
-                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q1CURR'])
+                    dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']] = dfc[['Q2CURR', 'BLEEDS', 'HLVs', 'LLVs']].apply(pd.to_numeric, errors='coerce')
+                    dfc['VL COV'] = (dfc['BLEEDS']*100)/ (dfc['Q2CURR'])
                     dfc = dfc.dropna(subset=['VL COV'])
                     dfc['VL COV'] = dfc['VL COV'].astype(int)
-                    dfc['BALANCE'] = (dfc['Q1CURR']*0.95)-(dfc['BLEEDS'])
+                    dfc['BALANCE'] = (dfc['Q2CURR']*0.95)-(dfc['BLEEDS'])
                     dfc['BALANCE'] = dfc['BALANCE'].astype(int)
                     def achieve (v):
                         if v < 0:
@@ -288,12 +288,12 @@ if file is not None:
                         else:
                             return v
                     dfc['BALANCE TO 95%'] = dfc['BALANCE'].apply(achieve)
-                    dfc = dfc[['facility', 'Q1CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
+                    dfc = dfc[['facility', 'Q2CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']]                                     
 if df is not None and district is not None: 
         dfq =dfc.reset_index().copy()
-        dfq = dfq[['facility', 'Q1CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
-        #dfq['Q3CURR'] = dfq['Q1CURR'].astype(int)
-        r = dfq['Q1CURR'].sum()
+        dfq = dfq[['facility', 'Q2CURR', 'BLEEDS','VL COV','BALANCE TO 95%', 'HLVs', 'LLVs']].copy()
+        #dfq['Q3CURR'] = dfq['Q2CURR'].astype(int)
+        r = dfq['Q2CURR'].sum()
         #st.write(f'{r}, hello')
         t = dfq['BLEEDS'].sum()
         y = dfq['BALANCE TO 95%'].sum()
@@ -303,7 +303,7 @@ if df is not None and district is not None:
         # #dfc= dfq.copy()
         dfq.loc[len(dfq), 'facility'] = 'TOTAL'
         #st.write(dfc)
-        dfq.loc[len(dfq)-1, 'Q1CURR'] = int(r)
+        dfq.loc[len(dfq)-1, 'Q2CURR'] = int(r)
         dfq.loc[len(dfq)-1, 'BLEEDS'] = t
         dfq.loc[len(dfq)-1, 'VL COV'] = o
         dfq.loc[len(dfq)-1, 'BALANCE TO 95%'] = y
@@ -312,7 +312,7 @@ if df is not None and district is not None:
 if df is not None and district is not None:   
         dfe = dfq.set_index('facility')
         dfvl = dfe.reset_index()
-        dfe = dfe.sort_values(by = ['Q1CURR'])#, ascending=False)
+        dfe = dfe.sort_values(by = ['Q2CURR'])#, ascending=False)
         #with st.expander(f'**CLICK HERE TO VIEW VL COV FOR {district}**'):
         
         @st.cache_data
@@ -412,7 +412,7 @@ if df is not None and district is not None:
                         return 'background-color: red'
                 styler = (
                             dfe.style
-                            .format("{:.0f}", subset = ['VL COV','BLEEDS','Q1CURR', 'BALANCE TO 95%', 'HLVs', 'LLVs'])  # Format 'VL COV' to one decimal place
+                            .format("{:.0f}", subset = ['VL COV','BLEEDS','Q2CURR', 'BALANCE TO 95%', 'HLVs', 'LLVs'])  # Format 'VL COV' to one decimal place
                             .applymap(kusiiga, subset=['VL COV'])  # Apply cell-wise styling
                         )
                 #st.stop()
@@ -544,6 +544,7 @@ if df is not None and district is not None:
         
         #############################################################################
         
+
 
 
 
