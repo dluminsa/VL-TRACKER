@@ -1,4 +1,4 @@
-facility,Q1 CURR,DISTRICT_x,PIRS UnitID,DISTRICT_y,Q2CURR
+facility,Q1 CURR,DISTRICT,PIRS UnitID,DISTRICT_y,Q2CURR
 Kabayanda HC II,103,LYANTONDE,aRs9kg1lEWy,Lyantonde District,99
 Lyakajura HC II,490,LYANTONDE,e3pk4rlUWj7,Lyantonde District,514
 Lyantonde Hospital,4445,LYANTONDE,Gje6ykVPZKQ,Lyantonde District,4446
@@ -187,3 +187,4 @@ Nsangi HC III,2869,WAKISO,aFlGqyWRQfr,Wakiso District,2910
 Nurture Africa II Special Clinic,2619,WAKISO,dQprl8P1Uae,Wakiso District,2662
 Wakiso EPI HC III,609,WAKISO,a0plh70j00D,Wakiso District,628
 Wakiso HC IV,4065,WAKISO,UTcf3vkubN9,Wakiso District,4244
+
